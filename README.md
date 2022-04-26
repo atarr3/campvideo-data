@@ -32,7 +32,7 @@ Recreating all figures, tables and results in the [Validation](#Validation) step
 #### Python Dependencies
 All Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on [TestPyPi package repository](https://test.pypi.org/project/campvideo/). This package can be installed within a Python environment via the command
 
-  pip install -i https://test.pypi.org/simple/ campvideo
+    pip install -i https://test.pypi.org/simple/ campvideo
 
 ## Feature Extraction
 
