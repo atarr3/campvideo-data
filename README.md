@@ -68,6 +68,9 @@ This file may also be sourced from within an IDE, such as RStudio. Be sure to se
       Rscript scripts/tableS1-1.R
 
 #### Text Validation
+This section gives instructions for replicating issue mention (Section 4.1, S11), opponent mention (Section 4.2, S12), and ad negativity classification (Section 4.3, S14.2, S14.3) results
+
+-
 
 #### Face Recognition Validation
 
@@ -76,5 +79,6 @@ This file may also be sourced from within an IDE, such as RStudio. Be sure to se
 #### Video Summary Validation
 
 ## Feature Extraction
+To replicate the feature extraction step for creating all data in ``data\intermediate``, follow the instructions below in order as they appear. 
 
 ## Additional Notes
