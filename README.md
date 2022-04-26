@@ -27,12 +27,28 @@ Replication relies on two datasets. [Feature Extraction](#Feature-Extraction) re
 ## Validation
 
 ### Installation
-Recreating all figures, tables and results in the [Validation](#Validation) step requires working installations of [Python](https://www.python.org/downloads/) and [R](https://cran.r-project.org/src/base/R-4/). All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine.
+Recreating all figures, tables and results in the [Validation](#Validation) step requires working installations of [Python](https://www.python.org/downloads/) and [R](https://cran.r-project.org/src/base/R-4/). All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
 
 #### Python Dependencies
-All Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on [TestPyPi package repository](https://test.pypi.org/project/campvideo/). This package can be installed within a Python environment via the command
+Most Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on [TestPyPi package repository](https://test.pypi.org/project/campvideo/). This package can be installed within a Python environment via the command
 
     pip install -i https://test.pypi.org/simple/ campvideo
+
+Additionally, the Python code depends on ``matplotlib, seaborn``, which can be installed via command line:
+
+    pip install <PACKAGE_NAME>
+    
+#### R Dependencies
+All R code uses the following packages: ``quanteda, readstata13, readtext, stringr, xtable``, which can be installed from within the R environment via via
+
+    install.packages("<PACKAGE_NAME>")
+
+#### spaCy Model Download
+The ``spacy`` text modeling package requires downloading a model. After installing the Python packages, enter the following in the command line:
+
+    python -m spacy download en_core_web_md
+    
+ 
 
 ## Feature Extraction
 
