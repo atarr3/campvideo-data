@@ -39,7 +39,7 @@ Additionally, the Python code depends on ``matplotlib, seaborn``, which can be i
     pip install <PACKAGE_NAME>
     
 #### R Dependencies
-All R code uses the following packages: ``quanteda, readstata13, readtext, stringr, xtable``, which can be installed from within the R environment via via
+All R code uses the following packages: ``quanteda, readstata13, readtext, stringr, xtable``, which can be installed from within the R environment via
 
     install.packages("<PACKAGE_NAME>")
 
@@ -48,7 +48,22 @@ The ``spacy`` text modeling package requires downloading a model. After installi
 
     python -m spacy download en_core_web_md
     
- 
+### Preprocessing the WMP Data
+Before any results can be produced, the WMP data must be cleaned. After placing the Stata files into ``data\wmp``, clean the data via
+
+    Rscript scripts/Replication_Preprocess.R
+    
+This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, ``campvideo-data``.
+
+### Coverage Tables
+
+### Video Summary Validation
+
+### Face Recognition Validation
+
+### Text Validation
+
+### Music Mood Validation
 
 ## Feature Extraction
 
