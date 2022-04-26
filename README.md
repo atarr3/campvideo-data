@@ -19,7 +19,7 @@ This repository is split into several folders: ``data``, ``figs``, ``results``, 
 -  ``tables``: Raw text files showing confusion matrices corresponding to tables in the paper.
 
 ## Data
-There are two datasets used in this study: the collection of YouTube videos in MP4 format, and the human labels provided by WMP. Unfortunately, neither of these datasets can be provided publicly.
+Replication uses two different datasets. [feature extraction](#Feature-Extraction) requires the collection of YouTube videos in MP4 format, while [validation](#Validation) requires the human-coded labels provided by WMP. Unfortunately, neither of these datasets can be provided publicly.
 
 ## Validation
 
