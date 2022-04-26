@@ -59,6 +59,7 @@ This file may also be sourced from within an IDE, such as RStudio. Be sure to se
 ### Result Replication
 
 #### Coverage Tables
+This section gives instructions for replicating the coverage tables (Section 2.2, Appendix S1).
 - Table 1 in the main text is replicated via
 
       Rscript scripts/table1.R
@@ -77,6 +78,8 @@ This section gives instructions for replicating issue mention (Section 4.1, Appe
   
       python scripts/text_validation.py --calculate
       
+  The ``calculate`` flag forces the script to retrain the models described in the paper using the WMP data as ground truth. The resulting predictions are then saved to the ``results`` folder.
+  
 - Figure 5 is replicated via
 
       Rscript scripts/fig5.R
