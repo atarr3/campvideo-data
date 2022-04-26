@@ -22,9 +22,12 @@ This repository is split into several folders: ``data``, ``figs``, ``results``, 
 Replication relies on two datasets. [Feature Extraction](#Feature-Extraction) requires the collection of YouTube videos in MP4 format, while [Validation](#Validation) requires the human-coded labels provided by WMP. Unfortunately, neither of these datasets can be provided publicly.
 
 - YouTube Videos: We provide a list of the YouTube Video IDs used in the study in <JUNE'S FILE: TBD>. Users able to obtain these videos should place them in the ``data\videos`` folder, with each video file titled ``<YouTubeID>.mp4``. ``<YouTubeID>`` is the unique YouTube video ID.
-- WMP Data: The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential, 2012 Non-Presidential, and 2014 data. The WMP data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the ``data\wmp`` folder.
+- WMP Data: The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential, 2012 Non-Presidential, and 2014 data. The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the ``data\wmp`` folder.
 
 ## Validation
+
+### Installation
+Recreating all figures, tables and results in the [Validation](#Validation) step requires working installations of [Python](https://www.python.org/downloads/) and [R](https://cran.r-project.org/src/base/R-4/). All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine.
 
 ## Feature Extraction
 
