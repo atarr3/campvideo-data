@@ -25,6 +25,7 @@ Replication relies on two datasets. [Feature Extraction](#Feature-Extraction) re
 - WMP Data: The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential, 2012 Non-Presidential, and 2014 data. The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the ``data\wmp`` folder.
 
 ## Validation
+To replicate the results in the paper, follow the instructions below in order as they appear. 
 
 ### Installation
 Recreating all figures, tables and results in the [Validation](#Validation) step requires working installations of [Python](https://www.python.org/downloads/) and [R](https://cran.r-project.org/src/base/R-4/). All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
@@ -55,15 +56,24 @@ Before any results can be produced, the WMP data must be cleaned. After placing 
     
 This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, ``campvideo-data``.
 
-### Coverage Tables
+### Result Replication
 
-### Video Summary Validation
+#### Coverage Tables
+- Table 1 in the main text can be replicated via
 
-### Face Recognition Validation
+      Rscript scripts/table1.R
 
-### Text Validation
+- Table S1.1 in the appendix is replicated via
 
-### Music Mood Validation
+      Rscript scripts/tableS1-1.R
+
+#### Text Validation
+
+#### Face Recognition Validation
+
+#### Music Mood Validation
+
+#### Video Summary Validation
 
 ## Feature Extraction
 
