@@ -127,7 +127,7 @@ This section gives instructions for replicating music mood classificaiton result
       python scripts/mood_validation.py
 
 #### Video Summary Validation
-This section gives instructions for replicating results in the summary validation study (Appendix S7)
+This section gives instructions for replicating results in the summary validation study (Appendix S7).
 
 - Figure S7.4 is replicated via
 
@@ -138,6 +138,20 @@ This section gives instructions for replicating results in the summary validatio
       python scripts/summary_validation.py --calculate
       
   The ``calculate`` flag forces the script to compute all relevants metrics for each video summary. The results are then saved to the ``results`` folder.
+  
+#### Ad Negativity Classification with LSD
+This section gives instructions for replicating ad negativity classification results using LSD (Appendix S14.3).
+
+- Table S14.7 is replicated via
+
+      Rscript scripts/tableS14-7.R
+
+#### Kaplan *et al.* (2006) Replication
+This section gives instructions for replicating the issue convergence study using our predicted labels (Appendix S14.4).
+
+- Table S14.7 is replicated via
+      
+      Rscript scripts/tableS14-7.R
 
 ## Feature Extraction
 To replicate the feature extraction step for creating all data in ``data\intermediate``, follow the instructions below in order as they appear. 
