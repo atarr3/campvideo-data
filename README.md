@@ -21,3 +21,5 @@ This repository is split into several folders: ``data``, ``figs``, ``results``, 
 ## Validation
 
 ## Feature Extraction
+
+## Additional Notes
