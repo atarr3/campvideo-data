@@ -57,6 +57,7 @@ Before any results can be produced, the WMP data must be cleaned. After placing 
 This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, ``campvideo-data``.
 
 ### Result Replication
+The following commands recreate the tables and figures in the paper. The generated figures are found in the ``figs`` folder, while the tables are stored in raw text files in the ``tables`` folder. Additionally, performance metrics discussed in the paper as well as our predicted labels are stored in the ``results`` folder.
 
 #### Coverage Tables
 This section gives instructions for replicating the coverage tables (Section 2.2, Appendix S1).
@@ -69,26 +70,74 @@ This section gives instructions for replicating the coverage tables (Section 2.2
       Rscript scripts/tableS1-1.R
 
 #### Text Validation
-This section gives instructions for replicating issue mention (Section 4.1, Appendix S11), opponent mention (Section 4.2, Appendix S12), and ad negativity classification (Section 4.3, Appendix S14.2, Appendix S14.3) results
+This section gives instructions for replicating issue mention (Section 4.1, Appendix S11), opponent mention (Section 4.2, Appendix S12), and ad negativity classification (Section 4.5, Appendix S14.2, Appendix S14.3) results.
 - Table 2, Table 3, Table 6, and Table S14.2 are replicated via
 
       python scripts/text_validation.py
   
-  Note that this script uses pre-computed results in the ``results`` folder to construct the tables. To recreate the results and create the tables, type the command
+  Note that this script uses pre-computed results in the ``results`` folder to construct the tables. To recreate the data in ``results``, type the command
   
       python scripts/text_validation.py --calculate
       
-  The ``calculate`` flag forces the script to retrain the models described in the paper using the WMP data as ground truth. The resulting predictions are then saved to the ``results`` folder.
+  The ``calculate`` flag forces the script to scan the auto-generated transcipts for issue and opponent mentions and to retrain the text models described in the paper using the WMP data as ground truth. The resulting predictions are then saved to the ``results`` folder.
   
 - Figure 5 is replicated via
 
       Rscript scripts/fig5.R
+      
+- Performance metrics for issue mentions and opponent mentions are found in ``results\issue_results.txt`` and ``results\issue_results.txt``, which are replicated with
+
+      python scripts/text_validation.py
 
 #### Face Recognition Validation
+This section gives instructions for replicating face recognition results (Section 4.3, Appendix S13).
+- Table 4 and Figure S13.8 are replicated via
+
+      python scripts/facerec_validation.py
+      
+  Note that this script uses pre-computed results in the ``results`` folder to construct the tables and figures. To recreate the data in ``results``, type the command
+  
+      python scripts/facerec_validation.py --calculate
+      
+  The ``calculate`` flag forces the script to detect and recognize faces in the keyframes of each video and to recompute the distance threshold. The resulting predictions are then saved to the ``results`` folder.
+  
+- Performance metrics for face recognition are found in ``results\facerec_results.txt``, which are replicated with
+
+      python scripts/text_validation.py
 
 #### Music Mood Validation
+This section gives instructions for replicating music mood classificaiton results (Section 4.4, Appendix S14.1).
+
+- Table 5, and Table S14.5 are replicated via
+
+      python scripts/mood_validation.py
+      
+  Note that this script uses pre-computed results in the ``results`` folder to construct the tables. To recreate the data in ``results``, type the command
+  
+      python scripts/mood_validation.py --calculate
+      
+  The ``calculate`` flag forces the script to retrain the music mood models described in the paper using the WMP data as ground truth.. The resulting predictions are then saved to the ``results`` folder.
+      
+- Figure 8, Figure S14.9, and Figure S14.10 are replicated via
+
+      Rscript scripts/figs8_14-9_14-10.R
+      
+- Performance metrics for music mood classification are found in ``results\mood_results.txt``, which are replicated with
+
+      python scripts/mood_validation.py
 
 #### Video Summary Validation
+This section gives instructions for replicating results in the summary validation study (Appendix S7)
+
+- Figure S7.4 is replicated via
+
+      python scripts/summary_validation.py
+      
+  Note that this script uses pre-computed results in the ``results`` folder to construct the figure. To recreate the data in ``results``, type the command
+  
+      python scripts/summary_validation.py --calculate
+      
+  The ``calculate`` flag forces the script to compute all relevants metrics for each video summary. The results are then saved to the ``results`` folder.
 
 ## Feature Extraction
 To replicate the feature extraction step for creating all data in ``data\intermediate``, follow the instructions below in order as they appear. 
