@@ -59,7 +59,7 @@ This file may also be sourced from within an IDE, such as RStudio. Be sure to se
 ### Result Replication
 
 #### Coverage Tables
-- Table 1 in the main text can be replicated via
+- Table 1 in the main text is replicated via
 
       Rscript scripts/table1.R
 
@@ -68,9 +68,18 @@ This file may also be sourced from within an IDE, such as RStudio. Be sure to se
       Rscript scripts/tableS1-1.R
 
 #### Text Validation
-This section gives instructions for replicating issue mention (Section 4.1, S11), opponent mention (Section 4.2, S12), and ad negativity classification (Section 4.3, S14.2, S14.3) results
+This section gives instructions for replicating issue mention (Section 4.1, Appendix S11), opponent mention (Section 4.2, Appendix S12), and ad negativity classification (Section 4.3, Appendix S14.2, Appendix S14.3) results
+- Table 2, Table 3, Table 6, and Table S14.2 are replicated via
 
--
+      python scripts/text_validation.py
+  
+  Note that this script uses pre-computed results in the ``results`` folder to construct the tables. To recreate the results and create the tables, type the command
+  
+      python scripts/text_validation.py --calculate
+      
+- Figure 5 is replicated via
+
+      Rscript scripts/fig5.R
 
 #### Face Recognition Validation
 
