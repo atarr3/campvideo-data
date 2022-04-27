@@ -85,7 +85,7 @@ This section gives instructions for replicating issue mention (Section 4.1, Appe
 
       Rscript scripts/fig5.R
       
-- Performance metrics for issue mentions and opponent mentions are found in ``results\issue_results.txt`` and ``results\issue_results.txt``, which are replicated with
+- Performance metrics for issue mentions and opponent mentions are found in ``results\issue_results.txt`` and ``results\oppment_results.txt``, which are replicated with
 
       python scripts/text_validation.py
 
