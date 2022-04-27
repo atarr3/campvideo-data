@@ -166,7 +166,9 @@ Recreating the intermediate results in the [Feature Extraction](#Feature-Extract
 We **strongly recommended** that users with access to a dedicated GPU for computing install [CUDA](https://developer.nvidia.com/cuda-downloads) and [cuDNN](https://developer.nvidia.com/cudnn). While optional, using a dedicated GPU for face recognition will greatly improve accuracy and computation time.
 
 #### Google Cloud Platform (GCP)
-Image text recognition and speech transcription are performed using GCP. Enabling GCP on your machine requires creating a project and setting up a billing account [here](https://cloud.google.com/docs/get-started). Once the account is setup, be sure to add the Cloud Vision API and the Cloud Video Intelligence API to your project.
+Image text recognition and speech transcription are performed using GCP. Enabling GCP on your machine requires creating a project and setting up a billing account [here](https://cloud.google.com/docs/get-started). Once the account is setup, be sure to enable the following APIs:
+- Google Cloud Vision API
+- Google Cloud Video Intelligence API
 
 **Note that using GCP costs money**. Setting up a GCP account and replicating this section will result in charges being made to your billing account.
 
