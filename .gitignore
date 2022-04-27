@@ -1,3 +1,4 @@
-# video and Stata files
+# ignore video files, Stata files, and .Rhistory
 *.mp4
 *.dta
+*.Rhistory
