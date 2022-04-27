@@ -176,7 +176,7 @@ All Python package dependencies can be installed by installing the project-relat
     pip install -i https://test.pypi.org/simple/ campvideo
 
 #### dlib
-The C++ machine learning library ``dlib`` must be compiled from source in order to use CUDA and cuDNN. See [this link](http://dlib.net/compile.html) for instructions on how to do this.
+The Python package ``dlib`` must be compiled from source in order to use CUDA and cuDNN. See [this link](http://dlib.net/compile.html) for instructions on how to do this.
 
 #### Model Download
 After installing the ``campvideo`` package, download the relevant models via the command
