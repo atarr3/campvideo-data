@@ -154,6 +154,44 @@ This section gives instructions for replicating the issue convergence study usin
       Rscript scripts/tableS14-7.R
 
 ## Feature Extraction
-To replicate the feature extraction step for creating all data in ``data\intermediate``, follow the instructions below in order as they appear. 
+To replicate the feature extraction step for creating all data in ``data\intermediate``, follow the instructions below in order as they appear.
+
+### Data
+As stated previously, this section can only be replicated if the user has access to the YouTube videos in the study. If a user manages to obtain access to all videos, they must be placed in the ``data\videos`` folder. The videos should be in MP4 format and titled ``<YouTubeID>.mp4``.
+
+### Installation
+Recreating the intermediate results in the [Feature Extraction](#Feature-Extraction) step requires a working installations of [Python](https://www.python.org/downloads/). All code in this repo was tested under Python version 3.9.7 on a Windows 10 machine.
+
+#### CUDA and cuDNN
+We **strongly recommended** that users with access to a dedicated GPU for computing install [CUDA](https://developer.nvidia.com/cuda-downloads) and [cuDNN](https://developer.nvidia.com/cudnn). While optional, using a dedicated GPU for face recognition will greatly improve accuracy and computation time.
+
+#### Google Cloud Platform (GCP)
+Image text recognition and speech transcription are performed using GCP. Enabling GCP on your machine requires creating a project and setting up a billing account [here](https://cloud.google.com/docs/get-started). Once the account is setup, be sure to add the Cloud Vision API and the Cloud Video Intelligence API to your project.
+
+**Note that using GCP costs money**. Setting up a GCP account and replicating this section will result in charges being made to your billing account.
+
+#### Python Dependencies
+All Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on [TestPyPi package repository](https://test.pypi.org/project/campvideo/). This package can be installed within a Python environment via the command
+
+    pip install -i https://test.pypi.org/simple/ campvideo
+
+#### dlib
+The C++ machine learning library ``dlib`` must be compiled from source in order to use CUDA and cuDNN. See [this link](http://dlib.net/compile.html) for instructions on how to do this.
+
+#### Model Download
+After installing the ``campvideo`` package, download the relevant models via the command
+
+    download_models
+    
+#### Feature Extraction
+The intermediate data in ``data\intermediate`` can be replicated via
+
+    python scripts/generate_data.py --overwrite
+    
+The ``overwrite`` flag signals the script to replace existing data in ``data\intermediate``. Without this flag, the script will skip over videos with existing data. If the user wishes to do partial replication of the feature extraction step **without** GCP, the command
+
+    python scripts/generate_data.py --overwrite --no-gcp
+    
+will compute audio features and video features only.
 
 ## Additional Notes
