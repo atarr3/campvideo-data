@@ -1,0 +1,20 @@
+Opponent Mention Results
+------------------------
+# of disagreements: 90 (4%)
+Increase in positive samples w/ images: 83 (3%)
+Increase in false positive samples w/ images: 9 (11%)
+Increase in true positive samples w/ images: 74 (89%)
+
+Opponent Mention Validation Study
+---------------------------------
+# of false positives: 67
+# of false negatives: 23
+
+# mistakes made by WMP for FP: 64
+# mistakes made by us for FP: 3
+# mistakes made by WMP for FN: 7
+# mistakes made by us for FN: 16
+
+# of FN mistakes made by us due to transcript: 13
+
+Overall accuracy accounting for WMP mistakes: 71 (79%)

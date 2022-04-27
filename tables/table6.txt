@@ -1,0 +1,28 @@
+== Non-linear SVM ==
+
+Text Only
+---------
+
+          Auto       
+            No    Yes
+WMP No  31.99%  8.77%
+    Yes  6.87% 52.37%
+
+
+Music Only
+----------
+
+          Auto       
+            No    Yes
+WMP No  27.73% 13.03%
+    Yes 11.37% 47.87%
+
+
+Text + Music
+------------
+
+          Auto       
+            No    Yes
+WMP No  31.28%  9.48%
+    Yes  5.92% 53.32%
+

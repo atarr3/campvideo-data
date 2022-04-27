@@ -1,0 +1,12 @@
+Music Mood Results
+------------------
+# of ads containing music: 2250 (91%)
+# of ads w/ multiple labels: 358 (16%)
+
+# of ads labeled Ominous/Tense: 712 (32%)
+# of ads labeled Uplifting: 1586 (70%)
+# of ads labeled Sad/Sorrowful: 312 (14%)
+
+Music Mood MTurk Results
+------------------------
+Majority of MTurk coders agree with WMP in 86% of all cases

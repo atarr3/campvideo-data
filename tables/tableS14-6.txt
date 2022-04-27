@@ -1,0 +1,116 @@
+== Linear SVM ==
+
+Text Only
+---------
+
+          Auto       
+            No    Yes
+WMP No  30.09% 10.66%
+    Yes  5.69% 53.55%
+
+
+Music Only
+----------
+
+          Auto       
+            No    Yes
+WMP No  25.12% 15.64%
+    Yes  8.29% 50.95%
+
+
+Text + Music
+------------
+
+          Auto       
+            No    Yes
+WMP No  33.65%  7.11%
+    Yes  7.82% 51.42%
+
+
+== KNN ==
+
+Text Only
+---------
+
+          Auto       
+            No    Yes
+WMP No  21.33% 19.43%
+    Yes  1.18% 58.06%
+
+
+Music Only
+----------
+
+          Auto       
+            No    Yes
+WMP No  17.77% 22.99%
+    Yes  7.35% 51.90%
+
+
+Text + Music
+------------
+
+          Auto       
+            No    Yes
+WMP No  14.69% 26.07%
+    Yes  5.45% 53.79%
+
+
+== Random Forest ==
+
+Text Only
+---------
+
+          Auto       
+            No    Yes
+WMP No  28.67% 12.09%
+    Yes  5.21% 54.03%
+
+
+Music Only
+----------
+
+          Auto       
+            No    Yes
+WMP No  22.04% 18.72%
+    Yes  9.00% 50.24%
+
+
+Text + Music
+------------
+
+          Auto       
+            No    Yes
+WMP No  22.51% 18.25%
+    Yes  5.21% 54.03%
+
+
+== Naive Bayes ==
+
+Text Only
+---------
+
+          Auto       
+            No    Yes
+WMP No  31.28%  9.48%
+    Yes  6.16% 53.08%
+
+
+Music Only
+----------
+
+          Auto       
+            No    Yes
+WMP No  31.75%  9.00%
+    Yes 31.04% 28.20%
+
+
+Text + Music
+------------
+
+          Auto       
+            No    Yes
+WMP No  31.52%  9.24%
+    Yes 15.40% 43.84%
+
+

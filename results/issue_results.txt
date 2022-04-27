@@ -1,0 +1,31 @@
+Issue Mention Results
+---------------------
+
+Video-Issue Pairs: 204844
+
+Increase in positive samples w/ images: 655 (0.32%)
+Increase in false positive samples w/ images: 398 (61%)
+Increase in true positive samples w/ images: 257 (39%)
+
+FPR (Text): 0.72%
+FNR (Text): 24%
+FPR (Both): 0.92%
+FNR (Both): 21%
+
+Issue Mention Validation Study
+------------------------------
+# of false positives: 70
+# of false negatives: 50
+
+# mistakes made by WMP for FP: 48
+# mistakes made by us for FP: 22
+# mistakes made by WMP for FN: 19
+# mistakes made by us for FN: 31
+
+Issue Mention MTurk Study
+------------------------------
+# of samples: 500
+# of samples in agreement: 200
+# of samples in disagreement: 300
+# of false positives: 183
+# of false negatives: 117

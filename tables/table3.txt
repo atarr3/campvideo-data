@@ -1,0 +1,13 @@
+Opponent Mention (Text Only)
+----------------------------
+          Auto       
+            No    Yes
+WMP No  51.82%  2.37%
+    Yes  3.96% 41.85%
+
+Opponent Mention (Text + Image)
+-------------------------------
+          Auto       
+            No    Yes
+WMP No  51.45%  2.74%
+    Yes  0.94% 44.88%

@@ -1,0 +1,13 @@
+Issue Mention (Text Only)
+-------------------------
+          Auto      
+            No   Yes
+WMP No  95.75% 0.70%
+    Yes  0.87% 2.68%
+
+Issue Mention (Text + Image)
+----------------------------
+          Auto      
+            No   Yes
+WMP No  95.56% 0.89%
+    Yes  0.74% 2.81%
