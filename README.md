@@ -195,3 +195,7 @@ The ``overwrite`` flag signals the script to replace existing data in ``data\int
 will compute audio features and video features only.
 
 ## Additional Notes
+- Feature extraction, model training, and prediction require significant processing time. Expect full replication of the results in the paper to take several days. Conversely, recreating all figures and tables using pre-computed results and features takes very little time.
+- Image text recognition and speech transcription with GCP require a stable internet connection. Service interruptions during execution of ``scripts/generate_data.py`` may lead to missing data.
+- Exact replication for label prediction is only guaranteed for the models we train. Face recognition, image text recognition, and speech transcription all rely on external models which we have no control over. Future updates to these models may lead to slightly different results.
+- 'File not found' errors are likely due to issues with working directory. All code assumes this repo, `campvideo-data`, is the working directory.
