@@ -185,7 +185,7 @@ After installing the ``campvideo`` package, download the relevant models via the
 
     download_models
     
-#### Feature Extraction
+### Feature Extraction
 The intermediate data in ``data\intermediate`` can be replicated via
 
     python scripts/generate_data.py --overwrite
