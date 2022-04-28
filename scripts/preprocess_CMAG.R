@@ -98,6 +98,11 @@ final <- merged[merged$creative %in% final.ind, ]
 # sort by `creative`
 final <- final[order(final$creative), ]
 
+# insert YouTube ID variable after creative
+uid <- matches$uid[order(matches$creative)]
+uid <- uid[!(uid %in% c("NoMatch", "NoChannel"))]
+final <- cbind(creative=final[, 1], uid=uid, final[, 2:ncol(final)])
+
 # save processed files
 write.csv(matches, here::here("data", "matches", "matches_processed.csv"), 
           row.names = F)

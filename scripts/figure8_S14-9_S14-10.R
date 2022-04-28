@@ -6,11 +6,11 @@ mood.wmp <- read.csv(here::here("data", "wmp", "wmp_final.csv"),
                      stringsAsFactors=F)
 
 # read in MTurk data
-mood.mturk <- read.csv(here::here("data", "mturk", "mood_mturk.csv"), 
+mood.mturk <- read.csv(here::here("data", "mturk", "mood_mturk.csv"),
                        stringsAsFactors=F)
 
 # subset WMP data down to MTurk sample
-mood.wmp.sample <- mood.wmp[match(unique(mood.mturk$creative), 
+mood.wmp.sample <- mood.wmp[match(unique(mood.mturk$creative),
                                   mood.wmp$creative), ]
 
 # MTurk agreement with automated prediction indicator
