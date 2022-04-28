@@ -1,7 +1,7 @@
 library(dplyr)
 
 # set up root location
-here::i_am("scripts/fig5.R")
+here::i_am(file.path("scripts", "fig5.R"))
 
 # issue names
 issues <- c('prsment','gbush','reagan','gophse','demhse','gopsen','demsen','congmt',
@@ -19,7 +19,7 @@ issues <- c('prsment','gbush','reagan','gophse','demhse','gopsen','demsen','cong
             'issue98')
 
 # read in WMP data
-issue.wmp <- read.csv(here::here("data", "wmp"),
+issue.wmp <- read.csv(here::here("data", "wmp", "wmp_final.csv"),
                       stringsAsFactors=F)
 
 # merge issue30 (abortion) and issue58 (women's health)
@@ -49,8 +49,8 @@ n = nrow(issue.mturk)
 issue.mturk$wmp = 0
 
 for (i in seq(1, n, 5)) {
-  issue.mturk$wmp = issue.wmp[issue.wmp$creative == issue.mturk$creative[i], 
-                              issue.mturk$issue[i]]
+  issue.mturk$wmp[i:(i+4)] <- issue.wmp[issue.wmp$creative == issue.mturk$creative[i], 
+                                        issue.mturk$issue[i]]
 }
 
 
@@ -61,7 +61,7 @@ y.pred <- issue.mturk$pred[seq(1, n, 5)]
 agree <- (issue.mturk %>% group_by(creative, issue) 
                       %>% summarise(total=sum(pred == mturk), .groups = 'drop'))$total
 
-fname <- "figure5.pdf"
+fname <- here::here("figs/figure5.pdf")
 
 # set up figure
 pdf(fname, width=8.5, height=5)

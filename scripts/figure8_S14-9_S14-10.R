@@ -1,13 +1,17 @@
 # set up root location
-here::i_am("scripts/figure8_S14-9_S14-10.R")
+here::i_am(file.path("scripts", "figure8_S14-9_S14-10.R"))
 
 # read in WMP data
-mood.wmp <- read.csv(here::here("data", "wmp"),
+mood.wmp <- read.csv(here::here("data", "wmp", "wmp_final.csv"),
                      stringsAsFactors=F)
 
 # read in MTurk data
 mood.mturk <- read.csv(here::here("data", "mturk", "mood_mturk.csv"), 
                        stringsAsFactors=F)
+
+# subset WMP data down to MTurk sample
+mood.wmp.sample <- mood.wmp[match(unique(mood.mturk$creative), 
+                                  mood.wmp$creative), ]
 
 # MTurk agreement with automated prediction indicator
 agree.music1.pred <- mood.mturk$music1_mturk == mood.mturk$music1_pred
@@ -23,20 +27,20 @@ agree.music3.counts <- tapply(agree.music3.pred, mood.mturk$uid, sum)
 for (t in 1:3){
   # get relevant data
   if (t == 1) {
-    y.wmp <- mood.wmp$music1
-    y.pred <- mood.mturk$music1_pred
+    y.wmp <- mood.wmp.sample$music1
+    y.pred <- mood.mturk$music1_pred[seq(1, nrow(mood.mturk), 5)]
     agree <- agree.music1.counts
-    fname <- "figure8.pdf"
+    fname <- here::here("figs", "figure8.pdf")
   } else if (t == 2) {
-    y.wmp <- mood.wmp$music2
-    y.pred <- mood.mturk$music2_pred
+    y.wmp <- mood.wmp.sample$music2
+    y.pred <- mood.mturk$music2_pred[seq(1, nrow(mood.mturk), 5)]
     agree <- agree.music2.counts
-    fname <- "figureS14-10a.pdf"
+    fname <- here::here("figs", "figureS14-10a.pdf")
   } else {
-    y.wmp <- mood.wmp$music3
-    y.pred <- mood.mturk$music3_pred
+    y.wmp <- mood.wmp.sample$music3
+    y.pred <- mood.mturk$music3_pred[seq(1, nrow(mood.mturk), 5)]
     agree <- agree.music3.counts
-    fname <- "figureS14-10a.pdf"
+    fname <- here::here("figs", "figureS14-10b.pdf")
   }
   
   # set up figure

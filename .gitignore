@@ -2,3 +2,7 @@
 *.mp4
 *.dta
 *.Rhistory
+
+# files created during data preprocessing
+data/wmp/wmp_final.csv
+data/matches/matches_processed.csv
