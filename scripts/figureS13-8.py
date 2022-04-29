@@ -111,7 +111,7 @@ def main():
     axs[1].legend(fontsize=9, framealpha=1)
 
     fig.set_constrained_layout_pads(wspace=0.2)
-    plt.savefig(join(ROOT, 'figs','figS13-8.pdf'), dpi=200, bbox_inches='tight') 
+    plt.savefig(join(ROOT, 'figs','figureS13-8.pdf'), dpi=200, bbox_inches='tight') 
     
 if __name__ == '__main__':
     main()
