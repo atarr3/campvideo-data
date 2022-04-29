@@ -1,7 +1,7 @@
 # WMP/CMAG File Directory
 Place WMP Stata files here. This data can be acquired from [this link](https://mediaproject.wesleyan.edu/dataaccess/) for a fee. Three datasets are required for full replication:
-  - 2012 (non-presidential), Version 1.1
-  - 2012 (presidential), Version 1.2
+  - 2012 (Non-Presidential), Version 1.1
+  - 2012 Presidential, Version 1.2
   - 2014, Version 1.0
 
 ## File Manifest
