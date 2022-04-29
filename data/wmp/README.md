@@ -4,7 +4,7 @@ Place WMP Stata files here. This data can be acquired from [this link](https://m
   - 2012 (presidential), Version 1.2
   - 2014, Version 1.0
 
-# File Manifest
+## File Manifest
 The list of files provided by WMP that should be placed in this directory are:
   - `wmp-house-2012-v1.1.dta`
   - `wmp-senate-2012-v1.1.dta`
