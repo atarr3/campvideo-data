@@ -8,17 +8,22 @@ mood.wmp <- read.csv(here::here("data", "wmp", "wmp_final.csv"),
 # read in MTurk data
 mood.mturk <- read.csv(here::here("data", "mturk", "mood_mturk.csv"),
                        stringsAsFactors=F)
+n = nrow(mood.mturk)
 
 # subset WMP data down to MTurk sample
 mood.wmp.sample <- mood.wmp[match(unique(mood.mturk$creative),
                                   mood.wmp$creative), ]
+
+# sort data by uid for compatibility with tapply
+mood.mturk <- mood.mturk[order(mood.mturk$uid), ]
+mood.wmp.sample <- mood.wmp.sample[order(mood.wmp.sample$uid), ]
 
 # MTurk agreement with automated prediction indicator
 agree.music1.pred <- mood.mturk$music1_mturk == mood.mturk$music1_pred
 agree.music2.pred <- mood.mturk$music2_mturk == mood.mturk$music2_pred
 agree.music3.pred <- mood.mturk$music3_mturk == mood.mturk$music3_pred
 
-# agreement counts
+# agreement counts, note tapply sorts according to uid
 agree.music1.counts <- tapply(agree.music1.pred, mood.mturk$uid, sum)
 agree.music2.counts <- tapply(agree.music2.pred, mood.mturk$uid, sum)
 agree.music3.counts <- tapply(agree.music3.pred, mood.mturk$uid, sum)
@@ -28,17 +33,17 @@ for (t in 1:3){
   # get relevant data
   if (t == 1) {
     y.wmp <- mood.wmp.sample$music1
-    y.pred <- mood.mturk$music1_pred[seq(1, nrow(mood.mturk), 5)]
+    y.pred <- mood.mturk$music1_pred[seq(1, n, 5)]
     agree <- agree.music1.counts
     fname <- here::here("figs", "figure8.pdf")
   } else if (t == 2) {
     y.wmp <- mood.wmp.sample$music2
-    y.pred <- mood.mturk$music2_pred[seq(1, nrow(mood.mturk), 5)]
+    y.pred <- mood.mturk$music2_pred[seq(1, n, 5)]
     agree <- agree.music2.counts
     fname <- here::here("figs", "figureS14-10a.pdf")
   } else {
     y.wmp <- mood.wmp.sample$music3
-    y.pred <- mood.mturk$music3_pred[seq(1, nrow(mood.mturk), 5)]
+    y.pred <- mood.mturk$music3_pred[seq(1, n, 5)]
     agree <- agree.music3.counts
     fname <- here::here("figs", "figureS14-10b.pdf")
   }
@@ -70,7 +75,7 @@ for (t in 1:3){
       axis(2, at=seq(0, 100, 20), labels=c(seq(0, 80, 20), "100 (%)"))
       
       # floating text
-      text(2, 80, paste('No. of videos:', nrow(sub)), adj=0)
+      text(2, 80, paste('No. of videos:', length(sub)), adj=0)
       text(2, 72, paste('Mean:', sprintf('%.2f', mean(sub))), adj=0)
       text(2, 64, paste('St. dev.:', sprintf('%.2f', sd(sub))), adj=0)
     }

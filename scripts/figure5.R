@@ -1,7 +1,7 @@
 library(dplyr)
 
 # set up root location
-here::i_am(file.path("scripts", "fig5.R"))
+here::i_am(file.path("scripts", "figure5.R"))
 
 # issue names
 issues <- c('prsment','gbush','reagan','gophse','demhse','gopsen','demsen','congmt',
