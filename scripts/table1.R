@@ -3,10 +3,6 @@ library(xtable)
 # set up file location
 here::i_am(file.path("scripts", "table1.R"))
 
-# read in matches
-matches <- read.csv(here::here("data", "matches", "matches_processed.csv"), 
-                    stringsAsFactors=F)
-
 # video/candidate counts for all videos
 CMAGCover <- function(df, year=NULL, race=NULL, affiliation=NULL) {
   # null conditions
@@ -54,6 +50,9 @@ YTCover <- function(df, year=NULL, race=NULL, affiliation=NULL) {
   return(out)
 }
 
+# read in matches
+matches <- read.csv(here::here("data", "matches", "matches_processed.csv"), 
+                    stringsAsFactors=F)
 
 # video-candidate coverage table
 canvid.cmag <- rbind(CMAGCover(matches, race='PRESIDENT'),

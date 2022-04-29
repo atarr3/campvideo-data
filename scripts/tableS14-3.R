@@ -3,7 +3,7 @@ library("quanteda")
 library("quanteda.sentiment")
 
 # working directory
-here::here("scripts", "tableS14-3.R")
+here::i_am(file.path("scripts", "tableS14-3.R"))
 
 # create corpus
 transcripts <- corpus(readtext(here::here("data" ,"intermediate", "*", 

@@ -1,7 +1,7 @@
 library("lme4")
 library("stargazer")
 
-here::here("scripts", "tableS14-8.R")
+here::i_am(file.path("scripts", "tableS14-8.R"))
 
 # read in regression data
 data.full <- read.csv(here::here("data", "issueconv.csv"),
