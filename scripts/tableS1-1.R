@@ -24,7 +24,7 @@ CMAGCover <- function(df, year=NULL, race=NULL, affiliation=NULL) {
   return(out)
 }
 
-# function that returns YouTube coverage, broken down by video lengthy
+# function that returns YouTube coverage, broken down by video length
 YoutubeCover <- function(df, race=NULL){
   # null condition
   if (is.null(race)) {race <- unique(df$race)}
@@ -65,6 +65,7 @@ canvid.cmag <- rbind(CMAGCover(matches, race='PRESIDENT'),
                     )
 canvid.cmag <- as.data.frame(canvid.cmag)
 
+# create video-length coverage table
 canvid.yt <- rbind(YoutubeCover(yt.info, 'pre2012'),
                    YoutubeCover(yt.info, 'hou2012'),
                    YoutubeCover(yt.info, 'sen2012'),
