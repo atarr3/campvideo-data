@@ -12,4 +12,4 @@ The list of files provided by WMP that should be placed in this directory are:
   - `wmp-pres-2012-v1.2_compress.dta`
   - `wmp-house-2014-v1.0.dta`
   - `wmp-senate-2014-v1.0.dta`
-  - `wmp-gov-2012-v1.1.dta`
+  - `wmp-gov-2014-v1.0.dta`
