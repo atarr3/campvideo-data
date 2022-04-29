@@ -1,7 +1,8 @@
-# ignore video files, Stata files, and .Rhistory
+# ignore backup files, video files, Stata files, and .Rhistory
 *.mp4
 *.dta
 *.Rhistory
+*.bak
 
 # files created during data preprocessing
 data/wmp/wmp_final.csv

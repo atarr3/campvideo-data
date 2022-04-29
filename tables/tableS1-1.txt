@@ -1,0 +1,20 @@
+% latex table generated in R 4.2.0 by xtable 1.8-4 package
+% Fri Apr 29 15:32:53 2022
+\begin{table}[ht]
+\centering
+\caption{Summary of Channels and Videos Recovered from YouTube} 
+\begin{tabular}{lllllllll}
+  \hline
+Year & Office & All Candidates & Found Channels & Percentage & 15-sec. & 30-sec. & 60-sec. & All Videos \\ 
+  \hline
+2012 & President & 2 & 2 & 100 & 40 & 263 & 97 & 400 \\ 
+  2012 & House & 317 & 242 & 76.3 & 39 & 986 & 198 & 1223 \\ 
+  2012 & Senate & 64 & 48 & 75 & 16 & 519 & 146 & 681 \\ 
+  2012 & Governor & 25 & 20 & 80 & 15 & 143 & 36 & 194 \\ 
+  2014 & House & 250 & 191 & 76.4 & 53 & 804 & 173 & 1030 \\ 
+  2014 & Senate & 66 & 52 & 78.8 & 57 & 714 & 202 & 973 \\ 
+  2014 & Governor & 86 & 58 & 67.4 & 70 & 636 & 170 & 876 \\ 
+   & Total & 810 & 613 & 75.7 & 290 & 4065 & 1022 & 5377 \\ 
+   \hline
+\end{tabular}
+\end{table}

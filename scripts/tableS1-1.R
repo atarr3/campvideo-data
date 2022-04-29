@@ -1,4 +1,3 @@
-library(stringr)
 library(xtable)
 
 # set up file location
@@ -25,21 +24,21 @@ CMAGCover <- function(df, year=NULL, race=NULL, affiliation=NULL) {
   return(out)
 }
 
-# function that returns raw coverage
-RawCover <- function(df, race=NULL){
+# function that returns YouTube coverage, broken down by video lengthy
+YoutubeCover <- function(df, race=NULL){
   # null condition
   if (is.null(race)) {race <- unique(df$race)}
-  
-  # number of candidates = number of channels
-  chan <- nrow(unique(df[, c("yt_district", "candidate")]))
   
   # subset data
   sub <- df[df$race %in% race, ]
   
+  # number of candidates = number of channels
+  chan <- nrow(unique(sub[, c("yt_district", "candidate")]))
+  
   # video counts by length
-  vid15 <- nrow(df[(df$length >= 10) & (df$length <= 20), ])
-  vid30 <- nrow(df[(df$length >= 25) & (df$length <= 35), ])
-  vid60 <- nrow(df[(df$length >= 55) & (df$length <= 65), ])
+  vid15 <- sum(sub$length >= 10 & sub$length <= 20)
+  vid30 <- sum(sub$length >= 25 & sub$length <= 35)
+  vid60 <- sum(sub$length >= 55 & sub$length <= 65)
   vidall <- sum(vid15, vid30, vid60)
   
   # build row and return
@@ -64,56 +63,33 @@ canvid.cmag <- rbind(CMAGCover(matches, race='PRESIDENT'),
                      CMAGCover(matches, year=2014, race='US SENATE'),
                      CMAGCover(matches, year=2014, race='GOVERNOR')
                     )
+canvid.cmag <- as.data.frame(canvid.cmag)
 
-
-# ## create unique ids to subset raw videos by WMP records
-# ytid <- paste(substr(yt.info$race, 4, 7), yt.info$yt_district, yt.info$candidate, sep = '_')
-# 
-# ## function to recover last names of candidates
-# recover.candname <- function(df){
-#   out <- rep(NA, nrow(df))
-#   partyind <- df$affiliation
-#   out[partyind == 'REPUBLICAN'] <- sapply(str_split(df$rep[partyind == 'REPUBLICAN'], ','), head, 1)
-#   out[partyind == 'DEMOCRAT'] <- sapply(str_split(df$dem[partyind == 'DEMOCRAT'], ','), head, 1)
-#   out[is.na(out)] <- sapply(str_split(df$third[is.na(out)], ','), head, 1)
-#   return(out)
-# } 
-# 
-# ## candidate identifier database to serve as reference
-# cmid12 <- unique(paste(2012,
-#                        dm12$cdmatch,
-#                        recover.candname(dm12), sep = '_'))
-# cmid12p <- unique(paste(2012,
-#                         dm12p$cdmatch,
-#                         recover.candname(dm12p), sep = '_'))
-# cmid14 <- unique(paste(2014,
-#                        dm14$cdmatch,
-#                        recover.candname(dm14), sep = '_'))
-# cmid <- c(cmid12, cmid12p, cmid14)
-# 
-# ## limit candidates to those reported by the CMAG
-# cmindex <- ytid %in% cmid
-# yt.info <- yt.info[cmindex, ]
-# ytid <- ytid[cmindex]
-
-rawytnum <- rbind(RawCover(yt.info[yt.info$race == 'pre2012', ]),
-                  RawCover(yt.info[yt.info$race == 'hou2012', ]),
-                  RawCover(yt.info[yt.info$race == 'sen2012', ]),
-                  RawCover(yt.info[yt.info$race == 'gov2012', ]),
-                  RawCover(yt.info[yt.info$race == 'hou2014', ]),
-                  RawCover(yt.info[yt.info$race == 'sen2014', ]),
-                  RawCover(yt.info[yt.info$race == 'gov2014', ]))
+canvid.yt <- rbind(YoutubeCover(yt.info, 'pre2012'),
+                   YoutubeCover(yt.info, 'hou2012'),
+                   YoutubeCover(yt.info, 'sen2012'),
+                   YoutubeCover(yt.info, 'gov2012'),
+                   YoutubeCover(yt.info, 'hou2014'),
+                   YoutubeCover(yt.info, 'sen2014'),
+                   YoutubeCover(yt.info, 'gov2014')
+                  )
+canvid.yt <- as.data.frame(canvid.yt)
 
 ## appendix table 1 configuration
-rawytyear <- c(rep(2012, 4), rep(2014, 3))
-rawytrace <- c('President', 'House', 'Senate', 'Governor', 'House', 'Senate', 'Governor')
-rawyttab <- as.data.frame(cbind(rawytyear, rawytrace,
+yt.year <- c(rep(2012, 4), rep(2014, 3))
+yt.race <- c('President', 'House', 'Senate', 'Governor', 'House', 'Senate', 'Governor')
+yt.tab <- as.data.frame(cbind(yt.year, yt.race,
                                 canvid.cmag$can,
-                                rawytnum[, 1],
-                                round(rawytnum[, 1] / canvid.cmag$can * 100, 1),
-                                rawytnum[, -1]))
-colnames(rawyttab) <- c('Year', 'Office', 'All Candidates', 'Found Channels', 'Percentage', '15-sec.', '30-sec.', '60-sec.', 'All Videos')
-rawyttab <- rbind(rawyttab, c('', 'Total', colSums(apply(rawyttab[, -c(1:2)], 2, as.numeric))))
-rawyttab$Percentage[8] <- round(as.numeric(rawyttab$`Found Channels`[8]) / as.numeric(rawyttab$`All Candidates`[8]), 3) * 100
-print(xtable(rawyttab, caption = 'Summary of Channels and Videos Recovered from YouTube'),
-      caption.placement = 'top', include.rownames = F, digits = c(0, 0, 0, 0, 1, 0, 0, 0, 0))
+                                canvid.yt[, 1],
+                                round(canvid.yt[, 1] / canvid.cmag$can * 100, 1),
+                                canvid.yt[, -1]))
+colnames(yt.tab) <- c('Year', 'Office', 'All Candidates', 'Found Channels', 'Percentage', '15-sec.', '30-sec.', '60-sec.', 'All Videos')
+yt.tab <- rbind(yt.tab, c('', 'Total', colSums(apply(yt.tab[, -c(1:2)], 2, as.numeric))))
+yt.tab$Percentage[8] <- round(as.numeric(yt.tab$`Found Channels`[8]) / as.numeric(yt.tab$`All Candidates`[8]), 3) * 100
+
+# print output to tableS1-1.txt
+print(xtable(yt.tab, 
+             caption = 'Summary of Channels and Videos Recovered from YouTube',
+             digits = c(0, 0, 0, 0, 0, 1, 0, 0, 0, 0)),
+      caption.placement = 'top', include.rownames = F,
+      file=here::here("tables", "tableS1-1.txt"))
