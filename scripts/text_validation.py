@@ -1,14 +1,12 @@
 import cv2
 import json
 import numpy as np
-import os
 import pandas as pd
 import re
 import spacy
 
 from argparse import ArgumentParser
 from campvideo import Keyframes, Text
-from itertools import product
 from os.path import abspath, dirname, join
 from pkg_resources import resource_filename
 from sklearn.base import BaseEstimator, ClassifierMixin
@@ -230,39 +228,13 @@ class HeterogenousNB(BaseEstimator, ClassifierMixin):
     
         return self.classes_[np.argmax(jll_total, axis=1)]
 
-# function for reading in WMP / CMAG data and creating a single dataframe
+# function for reading in WMP / CMAG data
 def read_wmp():
-    # check for WMP / CMAG data
-    fpaths = [join(WMP_DIR, fname) for fname in os.listdir(WMP_DIR)]
+    # open file
+    wmp = pd.read_csv(join(WMP_DIR, 'wmp_final.csv'), index_col='creative')
     
-    # throw error if no files found
-    if len(fpaths) == 0:
-        raise Exception('no WMP files found in directory `%s`' % WMP_DIR)
-        
-    # read in all files and combine into a single data frame
-    res = pd.DataFrame()
-    for fpath in fpaths:
-        if fpath.endswith('.dta'):
-            cur_data = pd.read_stata(fpath)
-        elif fpath.endswith('.csv'):
-            cur_data = pd.read_csv(fpath)
-        else:
-            raise Exception('WMP files must be in .csv or .dta format')
-            
-        # determine year from `airdate` variable and add to cur_data
-        year = pd.DatetimeIndex(cur_data.airdate).year.max()
-        cur_data.insert(cur_data.columns.get_loc('race'), 'year', year)
-        
-        # concatenate and remove duplicates (keep first)
-        res = pd.concat([res, cur_data], ignore_index=True, sort=False
-                        ).drop_duplicates(subset='creative')
-        
-        # subset down to matches
-        matched = res.loc[res.creative.isin(MATCHES.values()), :]
-        matched = matched.set_index('creative')
-        matched = matched.sort_index()
-            
-    return matched
+    # sort index and return
+    return wmp.sort_index()
 
 # function for resizing image while preserving aspect-ratio
 def resize_im(im, max_dim=1280):
@@ -321,10 +293,10 @@ def namegen(name, return_plurals=True):
 
 def parse_arguments():
     parser = ArgumentParser()
-    parser.add_argument('-c', '--calculate', dest='calculate', 
-                        action='store_true', default=False, help='Flag for '
-                        'specifying whether or not to detect and compute face '
-                        'encodings and distances. If False, the script will '
+    parser.add_argument('-nc', '--no-calculate', dest='calculate', 
+                        action='store_false', default=True, help='Flag for '
+                        'specifying to not train text models and predict '
+                        'labels. If specified, the script will '
                         'check the `results` folder for a file called '
                         '`facerec_results.csv`.')
     
@@ -446,8 +418,19 @@ def main():
         
         # save results
         iss_pred['o_mention'] = oment_pred
+        uids = [MATCHES_CMAG[ele] for ele in iss_pred.index.get_level_values('creative')]
+        iss_pred.insert(0, 'uid', uids)
         iss_pred.to_csv(join(ROOT, 'results', 'mentions_results.csv'),
                         index=True)
+        
+        # update MTurk results
+        iss_mturk = pd.read_csv(join(MTURK_DIR, 'issue_mturk.csv'), 
+                                index_col=['creative', 'issue'])
+        iss_mturk.pred = iss_pred.xs('both', level='feature'
+                                ).drop(columns=['uid', 'o_mention']
+                                ).stack(
+                                ).loc[iss_mturk.index]
+        iss_mturk.to_csv(join(MTURK_DIR, 'issue_mturk.csv'))
         print("Done!")
         
         ###################
@@ -457,7 +440,6 @@ def main():
         print("Classifying ad negativity...")
         
         # read in features
-        uids = [MATCHES_CMAG[creative] for creative in tone_wmp.index]
         tpaths = [join(INT_DIR, uid, 'transcript.txt') for uid in uids]
         mfeats = np.array([np.load(open(join(INT_DIR, uid, 'audiofeat.npy'), 'rb'))
                            for uid in uids], dtype=float)
@@ -956,6 +938,10 @@ def main():
         # predictions
         neg_pred.loc[(feats.index, 'both', 'nb'), 'tone'] = nb_tm.predict(feats)
         
+        # insert column for YouTube IDS
+        uids = [MATCHES_CMAG[ele] for ele in neg_pred.index.get_level_values('creative')]
+        neg_pred.insert(0, 'uid', uids)
+        
         # save results
         neg_pred.to_csv(join(ROOT, 'results', 'negativity_results.csv'))
         
@@ -1012,75 +998,6 @@ def main():
                                          normalize='all'),
                         columns=cols, index=rows
                         )
-    
-    # save results
-    with open(join(ROOT, 'tables', 'table2.txt'), 'w') as fh:
-        print("Issue Mention (Text Only)", file=fh)
-        print("-------------------------", file=fh)
-        print(cm_iss_text, file=fh)
-        print(file=fh)
-        print("Issue Mention (Text + Image)", file=fh)
-        print("----------------------------", file=fh)
-        print(cm_iss_both, file=fh)
-    
-    with open(join(ROOT, 'tables', 'table3.txt'), 'w') as fh:
-        print("Opponent Mention (Text Only)", file=fh)
-        print("----------------------------", file=fh)
-        print(cm_oment_text, file=fh)
-        print(file=fh)
-        print("Opponent Mention (Text + Image)", file=fh)
-        print("-------------------------------", file=fh)
-        print(cm_oment_both, file=fh)
-    
-    # negativity results
-    model_name = {'lsvm': 'Linear SVM', 'nsvm': 'Non-linear SVM', 'knn': 'KNN',
-                  'rf': 'Random Forest', 'nb': 'Naive Bayes'}
-    feature_name = {'text': 'Text Only', 'music': 'Music Only', 
-                    'both': 'Text + Music'}
-    y_test.sort_index(inplace=True)
-    
-    # delete old files
-    if os.path.exists(join(ROOT, 'tables', 'tableS14-6.txt')):
-        os.remove(join(ROOT, 'tables', 'tableS14-6.txt'))
-    if os.path.exists(join(ROOT, 'tables', 'table6.txt')):
-        os.remove(join(ROOT, 'tables', 'table6.txt'))
-    
-    for model, feature in product(['lsvm', 'nsvm', 'knn', 'rf', 'nb'], 
-                                  ['text', 'music', 'both']):
-        # predictions
-        y_pred = neg_pred.xs((model, feature, 0), level=['model', 'feature', 'train'])
-    
-        # confusion matrix
-        cm = pd.DataFrame(confusion_matrix(y_test, y_pred, normalize='all'),
-                          columns=cols, index=rows
-                         )
-    
-        # write results
-        if model == 'nsvm':
-            with open(join(ROOT, 'tables', 'table6.txt'), 'a') as fh:
-                # model name
-                if feature == 'text': 
-                    print("== "+ model_name[model] + " ==", file=fh)
-                print(file=fh)
-                print(feature_name[feature], file=fh)
-                print('-' * len(feature_name[feature]), file=fh)
-                print(file=fh)
-                print(cm, file=fh)
-                print(file=fh)
-        else:
-            with open(join(ROOT, 'tables', 'tableS14-6.txt'), 'a') as fh:
-                # model name
-                if feature == 'text': 
-                    print("== "+ model_name[model] + " ==", file=fh)
-                print(file=fh)
-                print(feature_name[feature], file=fh)
-                print('-' * len(feature_name[feature]), file=fh)
-                print(file=fh)
-                print(cm, file=fh)
-                print(file=fh)
-                # extra newline for final entry
-                if feature == 'both':
-                    print(file=fh)
     
     ## issue mention stats
     n_iss = iss_wmp.size

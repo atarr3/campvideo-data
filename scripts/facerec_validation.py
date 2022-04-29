@@ -1,15 +1,11 @@
 import json
-import matplotlib.pyplot as plt
 import numpy as np
-import os
 import pandas as pd
 
 from argparse import ArgumentParser
 from campvideo.image import Keyframes
-from matplotlib import rc
 from os.path import abspath, join, dirname
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score 
-from sklearn.metrics import auc, roc_curve
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.svm import LinearSVC
 
@@ -41,46 +37,20 @@ SEED = 2002
 with open(join(ROOT, 'data', 'matches', 'matches.json'), 'r') as fh:
     MATCHES = json.load(fh)
 
-# function for reading in WMP / CMAG data and creating a single dataframe
+# function for reading in WMP / CMAG data
 def read_wmp():
-    # check for WMP / CMAG data
-    fpaths = [join(WMP_DIR, fname) for fname in os.listdir(WMP_DIR)]
+    # open file
+    wmp = pd.read_csv(join(WMP_DIR, 'wmp_final.csv'), index_col='creative')
     
-    # throw error if no files found
-    if len(fpaths) == 0:
-        raise Exception('no WMP files found in directory `%s`' % WMP_DIR)
-        
-    # read in all files and combine into a single data frame
-    res = pd.DataFrame()
-    for fpath in fpaths:
-        if fpath.endswith('.dta'):
-            cur_data = pd.read_stata(fpath)
-        elif fpath.endswith('.csv'):
-            cur_data = pd.read_csv(fpath)
-        else:
-            raise Exception('WMP files must be in .csv or .dta format')
-            
-        # determine year from `airdate` variable and add to cur_data
-        year = pd.DatetimeIndex(cur_data.airdate).year.max()
-        cur_data.insert(cur_data.columns.get_loc('race'), 'year', year)
-        
-        # concatenate and remove duplicates (keep first)
-        res = pd.concat([res, cur_data], ignore_index=True, sort=False
-                        ).drop_duplicates(subset='creative')
-        
-        # subset down to matches
-        matched = res.loc[res.creative.isin(MATCHES.values()), :]
-        matched = matched.set_index('creative')
-        matched = matched.sort_index()
-            
-    return matched
+    # sort index and return
+    return wmp.sort_index()
 
 def parse_arguments():
     parser = ArgumentParser()
-    parser.add_argument('-c', '--calculate', dest='calculate', 
-                        action='store_true', default=False, help='Flag for '
-                        'specifying whether or not to detect and compute face '
-                        'encodings and distances. If False, the script will '
+    parser.add_argument('-nc', '--no-calculate', dest='calculate', 
+                        action='store_false', default=True, help='Flag for '
+                        'specifying to not detect and compute face encodings and '
+                        'distances. If specified, the script will '
                         'check the `results` folder for a file called '
                         '`facerec_results.csv`.')
     
@@ -107,6 +77,7 @@ def main():
         n = len(senate.index)
         fmins = np.ones(n)
         omins = np.ones(n)
+        uids = [''] * n
         for i, creative in enumerate(senate.index):
             end = '\r' if i < n-1 else '\n'
             print('Processing video %d of %d...' %(i+1, n), end=end, flush=True)
@@ -114,6 +85,7 @@ def main():
             # metadata 
             metadata = meta.loc[creative]
             uid = metadata.uid
+            uids[i] = uid
             fav_path = metadata.fav_path
             opp_paths = metadata.opp_paths
             
@@ -152,7 +124,7 @@ def main():
                 for opp_enc in opp_encs:
                     odist, _ = kf.facerec(opp_enc, return_dists=True)
                     omins[i] = min(omins[i], odist.min()) if len(odist) > 0 else omins[i]
-                    
+        
         # compute threshold
         xo_train, xo_test, yo_train, yo_test = train_test_split(omins.reshape(-1,1),
                                                                 senate.o_picture,
@@ -173,10 +145,12 @@ def main():
         f_pred = (fmins < thr_o).astype(int)
                     
         # save results
-        facerec = pd.DataFrame({'f_picture': f_pred, 'f_dist': fmins, 
+        facerec = pd.DataFrame({'uid': uids, 
+                                'f_picture': f_pred, 'f_dist': fmins, 
                                 'o_picture': o_pred, 'o_dist': omins}, 
                                index=senate.index)
         facerec.to_csv(join(ROOT, 'results', 'facerec_results.csv'), index=True)
+        print("Done!")
     else:
         facerec = pd.read_csv(join(ROOT, 'results', 'facerec_results.csv'), 
                               index_col='creative')
@@ -241,16 +215,6 @@ def main():
     cols = pd.MultiIndex.from_tuples([('Auto', 'No'), ('Auto', 'Yes')])
     rows = pd.MultiIndex.from_tuples([('WMP', 'No'), ('WMP', 'Yes')])
     
-    # original
-    cm_o = pd.DataFrame(
-                confusion_matrix(o_wmp, o_pred, normalize='all'),
-                columns=cols, index=rows
-                )
-    cm_f = pd.DataFrame(
-                confusion_matrix(f_wmp, f_pred, normalize='all'),
-                columns=cols, index=rows
-                )
-    
     # corrected
     cm_o_corr = pd.DataFrame(
                     confusion_matrix(o_wmp_corr, o_pred_corr, normalize='all'),
@@ -281,16 +245,6 @@ def main():
     r_fav = recall_score(f_wmp_corr, f_pred_corr)
     a_opp = accuracy_score(o_wmp_corr, o_pred_corr)
     a_fav = accuracy_score(f_wmp_corr, f_pred_corr)
-    
-    # confusion matrix (uncorrected, Table 4)
-    with open(join(ROOT, 'tables', 'table4.txt'), 'w') as fh:
-        print("Favored Candidate", file=fh)
-        print("-----------------", file=fh)
-        print(cm_f, file=fh)
-        print(file=fh)
-        print("Opposing Candidate", file=fh)
-        print("------------------", file=fh)
-        print(cm_o, file=fh)
         
     # facerec statistics
     with open(join(ROOT, 'results', 'facerec_results.txt'), 'w') as fh:
@@ -338,59 +292,7 @@ def main():
               file=fh)
         print("Opposing Pre, Rec, Acc: {:.2}, {:.2}, {:.2}".format(p_opp, r_opp, 
                                                                    a_opp),
-              file=fh)
-    
-    # ROC curves
-    rc('text', usetex=True)
-    rc('text.latex', preamble=r'\usepackage{amsmath}')
-
-    # original
-    fpr_orig_f, tpr_orig_f, _ = roc_curve(f_wmp, fmins, pos_label=0)
-    auc_orig_f = auc(fpr_orig_f, tpr_orig_f)
-    fpr_orig_o, tpr_orig_o, _ = roc_curve(o_wmp, omins, pos_label=0)
-    auc_orig_o = auc(fpr_orig_o, tpr_orig_o)
-
-    # corrected
-    fpr_corr_f, tpr_corr_f, _ = roc_curve(f_wmp_corr, fmins, pos_label=0)
-    auc_corr_f = auc(fpr_corr_f, tpr_corr_f)
-    fpr_corr_o, tpr_corr_o, _ = roc_curve(o_wmp_corr, omins, pos_label=0)
-    auc_corr_o = auc(fpr_corr_o, tpr_corr_o)
-    
-    fig, axs = plt.subplots(1, 2, figsize=(6.5, 4.333), sharey=True, 
-                            constrained_layout=True)
-
-    # ticks
-    ticks = [0, 0.2, 0.4, 0.6, 0.8, 1.0]
-
-    # original data
-    axs[0].plot(fpr_orig_f, tpr_orig_f, label=r'Favored (AUC = %0.2f)' % auc_orig_f, 
-                lw=1.5, alpha=1)
-    axs[0].plot(fpr_orig_o, tpr_orig_o, label=r'Opponent (AUC = %0.2f)' % auc_orig_o, 
-                lw=1.5, alpha=1)
-    axs[0].set_xlabel(r'False Positive Rate', fontsize=15)
-    axs[0].set_ylabel(r'True Positive Rate', fontsize=15)
-    axs[0].set_xticks(ticks)
-    axs[0].set_yticks(ticks)
-    axs[0].tick_params(labelsize=12)
-    axs[0].set_aspect(1 / axs[0].get_data_ratio())    
-    axs[0].grid(True)
-    axs[0].legend(fontsize=9, framealpha=1)
-
-    # corrected data
-    axs[1].plot(fpr_corr_f, tpr_corr_f, label=r'Favored (AUC = %0.2f)' % auc_corr_f, 
-                lw=1.5, alpha=1)
-    axs[1].plot(fpr_corr_o, tpr_corr_o, label=r'Opponent (AUC = %0.2f)' % auc_corr_o, 
-                lw=1.5, alpha=1)
-    axs[1].set_xlabel(r'False Positive Rate', fontsize=15)
-    axs[1].set_xticks(ticks)
-    axs[1].set_yticks(ticks)
-    axs[1].tick_params(labelsize=12)
-    axs[1].set_aspect(1 / axs[1].get_data_ratio())    
-    axs[1].grid(True)
-    axs[1].legend(fontsize=9, framealpha=1)
-
-    fig.set_constrained_layout_pads(wspace=0.2)
-    plt.savefig(join(ROOT, 'figs','figS13-8.pdf'), dpi=200, bbox_inches='tight')            
+              file=fh)           
 
 if __name__ == '__main__':
     main()

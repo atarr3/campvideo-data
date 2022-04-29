@@ -2,15 +2,15 @@ Music Mood Results (Ominous/Tense)
 ----------------------------------
          MTurk       
             No    Yes
-WMP No  60.89%  6.89%
-    Yes  7.78% 24.44%
+WMP No  60.89%  7.33%
+    Yes  7.78% 24.00%
 
 Music Mood Results (Uplifting)
 ------------------------------
          MTurk       
             No    Yes
-WMP No  24.89%  4.44%
-    Yes  9.56% 61.11%
+WMP No  24.44%  4.67%
+    Yes  9.78% 61.11%
 
 Music Mood Results (Sad/Sorrowful)
 ----------------------------------
