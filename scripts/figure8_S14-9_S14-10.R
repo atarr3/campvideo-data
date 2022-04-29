@@ -40,12 +40,12 @@ for (t in 1:3){
     y.wmp <- mood.wmp.sample$music2
     y.pred <- mood.mturk$music2_pred[seq(1, n, 5)]
     agree <- agree.music2.counts
-    fname <- here::here("figs", "figureS14-10a.pdf")
+    fname <- here::here("figs", "figureS14-9.pdf")
   } else {
     y.wmp <- mood.wmp.sample$music3
     y.pred <- mood.mturk$music3_pred[seq(1, n, 5)]
     agree <- agree.music3.counts
-    fname <- here::here("figs", "figureS14-10b.pdf")
+    fname <- here::here("figs", "figureS14-10.pdf")
   }
   
   # set up figure
