@@ -38,7 +38,7 @@ pip install cmake
 ```
 
 #### CUDA and cuDNN
-We **strongly recommended** that users with access to a dedicated GPU for computing install [CUDA](https://developer.nvidia.com/cuda-downloads) and [cuDNN](https://developer.nvidia.com/cudnn). Without GPU support, results will differ for face recognition, and performance will be much slower.
+We **strongly recommended** that users with access to a dedicated GPU for computing install [CUDA](https://developer.nvidia.com/cuda-downloads) and [cuDNN](https://developer.nvidia.com/cudnn). Without GPU support, results in [``results``](results), and performance will be much slower.
 
 ### Python Dependencies
 #### dlib
