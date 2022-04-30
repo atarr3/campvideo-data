@@ -42,7 +42,7 @@ We **strongly recommended** that users with access to a dedicated GPU for comput
 
 ### Python Dependencies
 #### dlib
-Windows users must build the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
+Windows users must build and install the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
 
 ```sh
 python setup.py install --no DLIB_GIF_SUPPORT
