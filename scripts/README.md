@@ -1,5 +1,5 @@
 # Feature Extraction
-To replicate the feature extraction step for creating all data in ``data\intermediate``, follow the instructions below in order as they appear.
+To replicate the feature extraction step for creating all data in ``data\intermediate``, follow the instructions below in order as they appear. Note that some instructions in [Installation](#Installation) are duplicates from the [Validation](../README.md#Validation) step. If these steps have already been performed, users may skip them.
 
 ## Data
 Replication of the [Feature Extraction](#Feature-Extraction) step requires the collection of YouTube videos in MP4 format. Unfortunately, this dataset can be provided publicly. We provide a list of the YouTube Video IDs used in [``data/matches/matches.csv``](../data/matches/matches.csv) under the `uid` variable. Users able to obtain these videos should place them in the [``data/videos``](../data/video) folder, with each video file titled ``<YouTubeID>.mp4``. ``<YouTubeID>`` is the unique YouTube video ID.
