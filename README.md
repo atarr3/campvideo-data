@@ -43,7 +43,9 @@ All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 
 
 ### Prequisites
 #### CMake and C++ Compiler
-Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied. Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the appropriate Windows SDK for your Windows platform.
+Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied. Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the appropriate Windows SDK for your Windows platform. For example, a Windows 10 user would install
+-
+-
 
 CMake can be installed via the command
 
@@ -52,7 +54,11 @@ pip install cmake
 ```
 
 #### CUDA and cuDNN
-We **strongly recommended** that users with access to a dedicated GPU for computing install [CUDA](https://developer.nvidia.com/cuda-downloads) and [cuDNN](https://developer.nvidia.com/cudnn). Without GPU support, results in [``results``](results) will differ, and performance will be much slower.
+We **strongly recommended** that users with access to a dedicated GPU for computing install 
+- [CUDA](https://developer.nvidia.com/cuda-downloads)
+- [cuDNN](https://developer.nvidia.com/cudnn). 
+ 
+Without GPU support, results in [``results``](results) will differ, and performance will be much slower.
 
 ### Python Dependencies
 #### dlib
