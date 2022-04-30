@@ -143,7 +143,7 @@ and R scripts can be executed via
 Rscript scripts/<SCRIPT>
 ```
 
-where ``<SCRIPT>`` is given by the name in the "File" column in the table above.
+where ``<SCRIPT>`` is given by the name in the "Script" column in the table above.
 
 ## Results Replication
 The replication code for the figures and tables relies on pre-computed results in the [``results``](results) folder. The CSV files in this folder contain the predicted labels and some feature information. The following table describes the different results files, the associated classification tasks, the script for generating the results file, and the Figures and Tables which depend on those results.
@@ -156,108 +156,24 @@ The replication code for the figures and tables relies on pre-computed results i
 | [``mood_results.csv``](results/mood_results.csv)           | Music Mood Classification    | [``mood_validation.py``](scripts/mood_validation.py)       | Figure 8, Figure S14.9, Figure S14.10, Table 5, Table S14.1 |
 | [``negativity_results.csv``](results/mentions_results.csv) | Ad Negativity Classification | [``text_validation.py``](scripts/text_validation.py)       | Table 6, Table S14.3, Table S14.6                           | 
 
+These scripts can be executed via
 
-
-### Coverage Tables
-This section gives instructions for replicating the coverage tables (Section 2.2, Appendix S1).
-- Table 1 in the main text is replicated via
-
-```sh
-Rscript scripts/table1.R
+```
+python scripts/<SCRIPT>
 ```
 
-- Table S1.1 in the appendix is replicated via
+where ``<SCRIPT>`` is given by the name in the "Script" column in the table above.
 
-```sh
-Rscript scripts/tableS1-1.R
+In addition to the CSV files, these scripts also produces raw text files containing various performance metrics reported in the main text. Like the figures and tables, these files rely on data in the CSV files. These files can be recreated without overwriting the CSV files via
+
+```
+python scripts/<SCRIPT> --no-calculate
 ```
 
-### Text Validation
-This section gives instructions for replicating issue mention (Section 4.1, Appendix S11), opponent mention (Section 4.2, Appendix S12), and ad negativity classification (Section 4.5, Appendix S14.2, Appendix S14.3) results.
-- Table 2, Table 3, Table 6, and Table S14.2 are replicated via
-
-      python scripts/text_validation.py
-  
-  Note that this script uses pre-computed results in the ``results`` folder to construct the tables. To recreate the data in ``results``, type the command
-  
-      python scripts/text_validation.py --calculate
-      
-  The ``calculate`` flag forces the script to scan the auto-generated transcipts for issue and opponent mentions and to retrain the text models described in the paper using the WMP data as ground truth. The resulting predictions are then saved to the ``results`` folder.
-  
-- Figure 5 is replicated via
-
-      Rscript scripts/fig5.R
-      
-- Performance metrics for issue mentions and opponent mentions are found in ``results\issue_results.txt`` and ``results\oppment_results.txt``, which are replicated with
-
-      python scripts/text_validation.py
-
-### Face Recognition Validation
-This section gives instructions for replicating face recognition results (Section 4.3, Appendix S13).
-- Table 4 and Figure S13.8 are replicated via
-
-      python scripts/facerec_validation.py
-      
-  Note that this script uses pre-computed results in the ``results`` folder to construct the tables and figures. To recreate the data in ``results``, type the command
-  
-      python scripts/facerec_validation.py --calculate
-      
-  The ``calculate`` flag forces the script to detect and recognize faces in the keyframes of each video and to recompute the distance threshold. The resulting predictions are then saved to the ``results`` folder.
-  
-- Performance metrics for face recognition are found in ``results\facerec_results.txt``, which are replicated with
-
-      python scripts/text_validation.py
-
-### Music Mood Validation
-This section gives instructions for replicating music mood classificaiton results (Section 4.4, Appendix S14.1).
-
-- Table 5, and Table S14.5 are replicated via
-
-      python scripts/mood_validation.py
-      
-  Note that this script uses pre-computed results in the ``results`` folder to construct the tables. To recreate the data in ``results``, type the command
-  
-      python scripts/mood_validation.py --calculate
-      
-  The ``calculate`` flag forces the script to retrain the music mood models described in the paper using the WMP data as ground truth.. The resulting predictions are then saved to the ``results`` folder.
-      
-- Figure 8, Figure S14.9, and Figure S14.10 are replicated via
-
-      Rscript scripts/figs8_14-9_14-10.R
-      
-- Performance metrics for music mood classification are found in ``results\mood_results.txt``, which are replicated with
-
-      python scripts/mood_validation.py
-
-### Video Summary Validation
-This section gives instructions for replicating results in the summary validation study (Appendix S7).
-
-- Figure S7.4 is replicated via
-
-      python scripts/summary_validation.py
-      
-  Note that this script uses pre-computed results in the ``results`` folder to construct the figure. To recreate the data in ``results``, type the command
-  
-      python scripts/summary_validation.py --calculate
-      
-  The ``calculate`` flag forces the script to compute all relevants metrics for each video summary. The results are then saved to the ``results`` folder.
-  
-### Ad Negativity Classification with LSD
-This section gives instructions for replicating ad negativity classification results using LSD (Appendix S14.3).
-
-- Table S14.7 is replicated via
-
-      Rscript scripts/tableS14-7.R
-
-### Kaplan *et al.* (2006) Replication
-This section gives instructions for replicating the issue convergence study using our predicted labels (Appendix S14.4).
-
-- Table S14.7 is replicated via
-      
-      Rscript scripts/tableS14-7.R
+where ``<SCRIPT>`` is given by the name in the "Script" column in the table above.
 
 ## Additional Notes
-- Feature extraction, model training, and prediction require significant processing time. Expect full replication of the results in the paper to take several days. Conversely, recreating all figures and tables using pre-computed results and features takes very little time.
-- Image text recognition and speech transcription with GCP require a stable internet connection. Service interruptions during execution of ``scripts/generate_data.py`` may lead to missing data.
-- Exact replication for label prediction is only guaranteed for the models we train. Face recognition, image text recognition, and speech transcription all rely on external models which we have no control over. Future updates to these models may lead to slightly different results.
+- Face recognition results will differ substantially if CUDA and cuDNN are not installed. This is due to the ``face_recognition`` package using differen face detection models in these scenarios.
+- Recreating the figures and tables using pre-computed results only takes a few minutes. Recreating the results CSV files is much more time-consuming. Expect this step to take several hours to run.
+- Exact replication for label prediction is only guaranteed for the models we train. Face recognition, image text recognition, and speech transcription all rely on external models which we have no control over. Future updates to these models may lead to slightly different results than those given in the paper.
 - 'File not found' errors are likely due to issues with working directory. All code assumes this repo, `campvideo-data`, is the working directory.
