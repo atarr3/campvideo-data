@@ -111,7 +111,7 @@ All figure and table replication scripts are in the [``scripts``](scripts) folde
 
 The full list of figures and tables and associated replication code is given below.
 
-| Result        | Language | File                                                         |
+| Result        | Language | Script                                                       |
 | :------------ | :------- | :----------------------------------------------------------- |
 | Figure 5      | R        | [``figure5.R``](scripts/figure5.R)                           |
 | Figure 8      | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
@@ -134,22 +134,25 @@ The full list of figures and tables and associated replication code is given bel
 Python scripts can be executed via
 
 ```
-python scripts/<FILE>
+python scripts/<SCRIPT>
 ```
 
 and R scripts can be executed via
 
 ```
-Rscript scripts/<FILE>
+Rscript scripts/<SCRIPT>
 ```
 
-where ``<FILE>`` is given by the name in the "File" column in the table above.
+where ``<SCRIPT>`` is given by the name in the "File" column in the table above.
 
 ## Results Replication
-The replication code for the figures and tables relies on pre-computed results in the ``results`` folder. The 
+The replication code for the figures and tables relies on pre-computed results in the ``results`` folder. The CSV files in this folder contain the predicted labels and some feature information. The following table describes the different classification tasks, the associated results file, the script for generating the results file, and the Figures and Tables which depend on those results.
 
-The
-The following commands recreate the tables and figures in the paper. The generated figures are found in the ``figs`` folder, while the tables are stored in raw text files in the ``tables`` folder. Additionally, performance metrics discussed in the paper as well as our predicted labels are stored in the ``results`` folder.
+| Task                         | Results File                                                 | Script                                                             | Figure and Table Dependencies |
+| ---------------------------" | :------------------------------------------------------------| :----------------------------------------------------------------- | ----------------------------- |
+| Summarization                | [``summary_results.csv``](results/summary_results.csv)       | [``scripts/summary_validation.py``](scripts/summary_validation.py) | Figure S7.4                   |
+| Issue Mentions               | [``mentions_results.csv``](results/mentions_results.csv)     | [``scripts/text_validation.py``](scripts/text_validation.py)       | Figure 5, Table                  |
+
 
 ### Coverage Tables
 This section gives instructions for replicating the coverage tables (Section 2.2, Appendix S1).
