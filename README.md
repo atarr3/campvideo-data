@@ -39,7 +39,7 @@ CMake can be installed via the command
     pip install cmake
 
 #### Python Dependencies
-Windows users must build the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repo, navigate to the folder and enter
+Windows users must build the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
 
     python setup.py install --no DLIB_GIF_SUPPORT
     
@@ -50,9 +50,13 @@ The remaining Python package dependencies can be installed by installing the pro
     pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
     
 #### R Dependencies
-All R code uses the following packages: ``quanteda, readstata13, readtext, stringr, xtable``, which can be installed from within the R environment via
+All R code uses the following packages: ``dplyr, lme4, quanteda, quanteda.sentiment, readstata13, readtext, stargazer, stringr, xtable``, most of which can be installed from within the R environment via
 
     install.packages("<PACKAGE_NAME>")
+    
+``quanteda.sentiment`` is not available on CRAN and must be installed via
+
+    devtools::install_github("quanteda/quanteda.sentiment")
 
 #### spaCy Model Download
 The ``spacy`` text modeling package requires downloading a model. After installing the Python packages, enter the following in the command line:
