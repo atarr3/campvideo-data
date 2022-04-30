@@ -32,7 +32,7 @@ To replicate the results in the paper, follow the instructions below in order as
 Recreating all figures, tables and results in the [Validation](#Validation) step requires working installations of [Python](https://www.python.org/downloads/) and [R](https://cran.r-project.org/src/base/R-4/). All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
 
 #### Prequisites
-Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied. For Windows users,
+Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied. Windows users can install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/).
 
 #### Python Dependencies
 Most Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on the [TestPyPi package repository](https://test.pypi.org/project/campvideo/). This package can be installed within a Python environment via the command
