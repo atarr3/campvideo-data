@@ -113,7 +113,9 @@ The full list of scripts and the figures and tables they replicate is
 
 | Result                   | Type    | File                                                         |
 | :----------------------- | :------ | :----------------------------------------------------------- |
-| Figures 8, S14.9, S14.10 | Figure  | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| Figure 8 | Figure  | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| Figure S14.9 | Figure | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| Figure S14.10 | Figure | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
 | Table 1                  | Table   | [``table1.R``](scripts/table1.R)                             |
 - Figures
   - Figure 5: [``figure5.R``](scripts/figure5.R)
