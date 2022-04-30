@@ -110,9 +110,14 @@ This file may also be sourced from within an IDE, such as RStudio. Be sure to se
 All figure and table replication scripts are named after the figures and tables they replicate. For example, [``figure5.R``](scripts/figure5.R) recreates Figure 5, and [``tableS14-6.py``] recreates Appendix Table S14.6. Note that some scripts create multiple tables or figures.
 
 The full list of scripts and the figures and tables they replicate is
+
+| Result                   | Type    | File                                                         |
+| :----------------------- | :------ | :----------------------------------------------------------- |
+| Figures 8, S14.9, S14.10 | Figure  | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| Table 1                  | Table   | [``table1.R``](scripts/table1.R)                             |
 - Figures
   - Figure 5: [``figure5.R``](scripts/figure5.R)
-  - Figures 8, S14.9, S14.10: [``figures8_S14-9_S14-10.R``](scripts/figures8_S14-9_S14-10.R)
+  - Figures 8, S14.9, S14.10: [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R)
   - Figure S7.4: [``figureS7-4.py``](scripts/figureS7-4.py)
   - Figure S13.4: [``figureS13-8.py``](scripts/figureS13-8.py)
 - Tables
