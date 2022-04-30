@@ -35,8 +35,9 @@ Recreating all figures, tables and results in the [Validation](#Validation) step
 Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied. Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the Windows SDK for the appropriate Windows platform.
 
 CMake can be installed via the command
-
+    ```python
     pip install cmake
+    ```
 
 #### Python Dependencies
 Windows users must build the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
