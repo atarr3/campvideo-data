@@ -30,7 +30,8 @@ Replication relies on two datasets. [Feature Extraction](#Feature-Extraction) re
 Recreating all figures, tables and results in the [Validation](#Validation) step requires working installations of [Python](https://www.python.org/downloads/) version 3.9 or greater and [R](https://cran.r-project.org/src/base/R-4/). All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
 
 ### Prequisites
-Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied. Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the Windows SDK for the appropriate Windows platform.
+#### CMake and C++ Compiler
+Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied. Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the appropriate Windows SDK for your Windows platform.
 
 CMake can be installed via the command
 
@@ -38,9 +39,11 @@ CMake can be installed via the command
 pip install cmake
 ```
 
-### Python Dependencies
+#### CUDA and cuDNN
+We **strongly recommended** that users with access to a dedicated GPU for computing install [CUDA](https://developer.nvidia.com/cuda-downloads) and [cuDNN](https://developer.nvidia.com/cudnn). Without GPU support, results will differ for face recognition, and performance will be much slower.
 
-## ``dlib``
+### Python Dependencies
+#### dlib
 Windows users must build the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
 
 ```sh
@@ -49,6 +52,7 @@ python setup.py install --no DLIB_GIF_SUPPORT
 
 macOS users may skip this step.
 
+#### Other packages
 The remaining Python package dependencies can be installed by installing the project-related ``campvideo`` package, which is available on the [TestPyPi package repository](https://test.pypi.org/project/campvideo/). Both Windows and macOS users should install this package via
 
 ```sh
