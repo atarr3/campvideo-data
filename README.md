@@ -35,7 +35,11 @@ This repository is split into several folders: ``data``, ``figs``, ``results``, 
 Replication in the [Feature Extraction](#Feature-Extraction) step requires the human-coded labels provided by WMP. Unfortunately, we cannot share this dataset publicly. The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential, 2012 Non-Presidential, and 2014 data. The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the [``data/wmp``](data/wmp) folder.
 
 ## Installation
-Recreating all figures, tables and results requires working installations of [Python](https://www.python.org/downloads/) version 3.9 or greater and [R](https://cran.r-project.org/src/base/R-4/). All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
+Recreating all figures, tables and results requires working installations
+- [Python](https://www.python.org/downloads/), version 3.9 or greater
+- [R](https://cran.r-project.org/src/base/R-4/), version 4.0 or greater
+
+All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
 
 ### Prequisites
 #### CMake and C++ Compiler
