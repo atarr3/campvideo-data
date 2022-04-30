@@ -1,8 +1,8 @@
 # Feature Extraction
-To replicate the feature extraction step for creating all data in ``data\intermediate``, follow the instructions below in order as they appear. Note that some instructions in [Installation](#Installation) are duplicates from the [validation step](README.md#Installation). If these steps have already been performed, users may skip them.
+To replicate the feature extraction step for creating all data in [``data\intermediate``](``data\intermediate``), follow the instructions below in order as they appear. Note that some instructions in [Installation](#Installation) are duplicates from the [validation step](README.md#Installation). If these steps have already been performed, users may skip them.
 
 ## Data
-Replication of the [Feature Extraction](#Feature-Extraction) step requires the collection of YouTube videos in MP4 format. Unfortunately, this dataset can be provided publicly. We provide a list of the YouTube Video IDs used in [``data/matches/matches.csv``](data/matches/matches.csv) under the `uid` variable. Users able to obtain these videos should place them in the [``data/videos``](data/video) folder, with each video file titled ``<YouTubeID>.mp4``. ``<YouTubeID>`` is the unique YouTube video ID.
+Replication of the [Feature Extraction](#Feature-Extraction) step requires the collection of YouTube videos in MP4 format. Unfortunately, this dataset can be provided publicly. We provide a list of the YouTube Video IDs used in [``data/matches/matches.csv``](data/matches/matches.csv) under the `uid` variable. Users able to obtain these videos should place them in the [``data/videos``](data/videos) folder, with each video file titled ``<YouTubeID>.mp4``. ``<YouTubeID>`` is the unique YouTube video ID.
 
 ## Installation
 Recreating the intermediate results in the [Feature Extraction](#Feature-Extraction) step requires a working installations of [Python](https://www.python.org/downloads/) verion 3.9 or greater. All code in this repo was tested under Python version 3.9.7 on a Windows 10 machine.
@@ -56,12 +56,14 @@ After installing the ``campvideo`` package, download the relevant models via the
     download_models
     
 ## Feature Extraction
-The intermediate data in ``data\intermediate`` can be replicated via
+The intermediate data in [``data\intermediate``](``data\intermediate``) can be replicated via
 
     python scripts/generate_data.py --overwrite
     
-The ``overwrite`` flag signals the script to replace existing data in ``data\intermediate``. Without this flag, the script will skip over videos with existing data. If the user wishes to do partial replication of the feature extraction step **without** GCP, the command
+The ``overwrite`` flag signals the script to replace existing data in [``data\intermediate``](``data\intermediate``). Without this flag, the script will skip over videos with existing data. If the user wishes to do partial replication of the feature extraction step **without** GCP, the command
 
     python scripts/generate_data.py --overwrite --no-gcp
     
 will compute audio features and video features only.
+
+## Important Notes
