@@ -133,16 +133,15 @@ The full list of figures and tables and associated replication code is given bel
 
 Python scripts can be executed via
 
-```sh
+```
 python scripts/<FILE>
 ```
 
 and R scripts can be executed via
 
-```sh
-Rscript scripts <FILE>
 ```
-,
+Rscript scripts/<FILE>
+```
 
 where ``<FILE>`` is given by the name in the "File" column in the table above.
 
