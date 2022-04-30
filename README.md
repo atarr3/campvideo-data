@@ -107,7 +107,7 @@ Rscript scripts/preprocess_CMAG.R
 This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, [``campvideo-data``](https://github.com/atarr3/campvideo-data). After running, a file called ``wmp_final.csv`` should be created in [``data/wmp``](data/wmp).
 
 ## Figure and Table Replication
-All figure and table replication scripts are named after the figures and tables they replicate. For example, [``figure5.R``](scripts/figure5.R) recreates Figure 5, and [``tableS14-6.py``] recreates Appendix Table S14.6. Note that some scripts create multiple tables or figures.
+All figure and table replication scripts are in the [``scripts``](scripts) folder. The files are named after the figures and tables they replicate. For example, [``figure5.R``](scripts/figure5.R) recreates Figure 5, and [``tableS14-6.py``](scripts/tableS14-6.py) recreates Appendix Table S14.6. Note that some scripts create multiple tables or figures.
 
 The full list of figures and tables and associated replication code is given below.
 
@@ -131,8 +131,24 @@ The full list of figures and tables and associated replication code is given bel
 | Table S14.6   | Python   | [``tableS14-6.py``](scripts/tableS14-6.py)                   |
 | Table S14.8   | R        | [``tableS14-8.R``](scripts/tableS14-8.R)                     |
 
+Python scripts can be executed via
+
+```sh
+python scripts/<FILE>
+```
+
+and R scripts can be executed via
+
+```sh
+Rscript scripts <FILE>
+```,
+
+where ``<FILE>`` is given by the name in the "File" column in the table above.
 
 ## Results Replication
+The replication code for the figures and tables relies on pre-computed results in the ``results`` folder. The 
+
+The
 The following commands recreate the tables and figures in the paper. The generated figures are found in the ``figs`` folder, while the tables are stored in raw text files in the ``tables`` folder. Additionally, performance metrics discussed in the paper as well as our predicted labels are stored in the ``results`` folder.
 
 ### Coverage Tables
