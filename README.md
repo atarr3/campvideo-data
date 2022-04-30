@@ -4,7 +4,7 @@ Replication data for ["Automated Coding of Political Campaign Advertisement Vide
 ## Overview
 Full replication of the results in the paper is a laborious process, involving significant setup and computation time on the part of the user. To simplify the procedure, we have split replication into two parts: Feature extraction and [Validation](#Validation). For those seeking only to validate the results in the paper, it is **highly recommended** to ignore feature extraction and follow the steps for validation, which uses pre-computed features from the feature extraction step.
 
-We provide instructions for replicating the [Validation](#Validation) step in this document, while instructions for replicating feature extraction are found in ``data/intermediate``, where the extracted features are located.
+We provide instructions for replicating the [Validation](#Validation) step in this document, while instructions for replicating feature extraction are found in ``scripts``.
 
 ## Repository Layout
 This repository is split into several folders: ``data``, ``figs``, ``results``, ``scripts`` and ``tables``.
@@ -22,12 +22,10 @@ This repository is split into several folders: ``data``, ``figs``, ``results``, 
 - ``tables``: Raw text files showing confusion matrices and coverage tables corresponding to tables in the paper.
 
 ## Data
-Replication relies on two datasets. [Feature Extraction](#Feature-Extraction) requires the collection of YouTube videos in MP4 format, while [Validation](#Validation) requires the human-coded labels provided by WMP. Unfortunately, neither of these datasets can be provided publicly.
-
-- WMP Data: The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential, 2012 Non-Presidential, and 2014 data. The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the ``data\wmp`` folder.
+Replication in the [Feature Extraction](#Feature-Extraction) step requires the human-coded labels provided by WMP. Unfortunately, we cannot share this dataset publicly. The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential, 2012 Non-Presidential, and 2014 data. The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the ``data\wmp`` folder.
 
 ## Installation
-Recreating all figures, tables and results in the [Validation](#Validation) step requires working installations of [Python](https://www.python.org/downloads/) version 3.9 or greater and [R](https://cran.r-project.org/src/base/R-4/). All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
+Recreating all figures, tables and results requires working installations of [Python](https://www.python.org/downloads/) version 3.9 or greater and [R](https://cran.r-project.org/src/base/R-4/). All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
 
 ### Prequisites
 #### CMake and C++ Compiler
