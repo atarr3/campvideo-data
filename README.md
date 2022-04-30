@@ -36,14 +36,14 @@ Installing the required Python packages requires both CMake and a C++ compiler. 
 
 CMake can be installed via the command
 
-```ps1
+```
 pip install cmake
 ```
 
 #### Python Dependencies
 Windows users must build the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
 
-```ps1
+```
 python setup.py install --no DLIB_GIF_SUPPORT
 ```
 
