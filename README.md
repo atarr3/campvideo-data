@@ -36,14 +36,14 @@ Installing the required Python packages requires both CMake and a C++ compiler. 
 
 CMake can be installed via the command
 
-```sh
+```console
 pip install cmake
 ```
 
 #### Python Dependencies
 Windows users must build the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
 
-```sh
+```console
 python setup.py install --no DLIB_GIF_SUPPORT
 ```
 
@@ -51,7 +51,7 @@ macOS users may skip this step.
 
 The remaining Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on the [TestPyPi package repository](https://test.pypi.org/project/campvideo/). Both Windows and macOS users should install this package via
 
-```sh
+```console
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
 ```
 
@@ -71,7 +71,7 @@ devtools::install_github("quanteda/quanteda.sentiment")
 #### spaCy Model Download
 The ``spacy`` text modeling package requires downloading a model. After installing the Python packages, enter the following in the command line:
 
-```sh
+```console
 python -m spacy download en_core_web_md
 ```    
     
