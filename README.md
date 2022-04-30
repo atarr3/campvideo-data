@@ -146,12 +146,16 @@ Rscript scripts/<SCRIPT>
 where ``<SCRIPT>`` is given by the name in the "File" column in the table above.
 
 ## Results Replication
-The replication code for the figures and tables relies on pre-computed results in the ``results`` folder. The CSV files in this folder contain the predicted labels and some feature information. The following table describes the different classification tasks, the associated results file, the script for generating the results file, and the Figures and Tables which depend on those results.
+The replication code for the figures and tables relies on pre-computed results in the [``results``](results) folder. The CSV files in this folder contain the predicted labels and some feature information. The following table describes the different results files, the associated classification tasks, the script for generating the results file, and the Figures and Tables which depend on those results.
 
-| Task                         | Results File                                                 | Script                                                             | Figure and Table Dependencies |
-| ---------------------------- | :------------------------------------------------------------| :----------------------------------------------------------------- | ----------------------------- |
-| Summarization                | [``summary_results.csv``](results/summary_results.csv)       | [``scripts/summary_validation.py``](scripts/summary_validation.py) | Figure S7.4                   |
-| Issue Mentions               | [``mentions_results.csv``](results/mentions_results.csv)     | [``scripts/text_validation.py``](scripts/text_validation.py)       | Figure 5, Table                  |
+| Results File                                               | Classification Task          | Script                                                     |  Figure and Table Dependencies                              |
+| ---------------------------------------------------------- | :----------------------------| :--------------------------------------------------------- | ----------------------------------------------------------- |
+| [``summary_results.csv``](results/summary_results.csv)     | Video Summarization          | [``summary_validation.py``](scripts/summary_validation.py) | Figure S7.4                                                 |
+| [``mentions_results.csv``](results/mentions_results.csv)   | Issue/Opponent Mentions      | [``text_validation.py``](scripts/text_validation.py)       | Figure 5, Table 2, Table 3                                  |
+| [``facerec_results.csv``](results/facerec_results.csv)     | Face Recognition             | [``facerec_validation.py``](scripts/facerec_validation.py) | Figure S13.8, Table 4                                       |
+| [``mood_results.csv``](results/mood_results.csv)           | Music Mood Classification    | [``mood_validation.py``](scripts/mood_validation.py)       | Figure 8, Figure S14.9, Figure S14.10, Table 5, Table S14.1 |
+| [``negativity_results.csv``](results/mentions_results.csv) | Ad Negativity Classification | [``text_validation.py``](scripts/text_validation.py)       | Table 6, Table S14.3, Table S14.6                           | 
+
 
 
 ### Coverage Tables
