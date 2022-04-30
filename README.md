@@ -49,7 +49,7 @@ python setup.py install --no DLIB_GIF_SUPPORT
 
 macOS users may skip this step.
 
-The remaining Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on the [TestPyPi package repository](https://test.pypi.org/project/campvideo/). Both Windows and macOS users should install this package via
+The remaining Python package dependencies can be installed by installing the project-related ``campvideo`` package, which is available on the [TestPyPi package repository](https://test.pypi.org/project/campvideo/). Both Windows and macOS users should install this package via
 
 ```sh
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
