@@ -36,15 +36,17 @@ Installing the required Python packages requires both CMake and a C++ compiler. 
 
 CMake can be installed via the command
 
-```python
+```ps1
 pip install cmake
 ```
 
 #### Python Dependencies
 Windows users must build the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
 
-    python setup.py install --no DLIB_GIF_SUPPORT
-    
+```python
+python setup.py install --no DLIB_GIF_SUPPORT
+```
+
 macOS users may skip this step.
 
 The remaining Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on the [TestPyPi package repository](https://test.pypi.org/project/campvideo/). Both Windows and macOS users should install this package via
