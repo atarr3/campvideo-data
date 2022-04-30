@@ -97,7 +97,7 @@ def main():
                        index=fnames)
     
     # save dataframe
-    res.to_csv(join(ROOT, 'results', 'summary_validation.csv'), index_label='uid')
+    res.to_csv(join(ROOT, 'results', 'summary_results.csv'), index_label='uid')
     print("Done!")
 
 if __name__ == '__main__':
