@@ -58,7 +58,9 @@ All R code uses the following packages: ``dplyr, here, lme4, quanteda, quanteda.
     
 ``quanteda.sentiment`` is not available on CRAN and must be installed via
 
-    devtools::install_github("quanteda/quanteda.sentiment")
+```r
+devtools::install_github("quanteda/quanteda.sentiment")
+```
 
 #### spaCy Model Download
 The ``spacy`` text modeling package requires downloading a model. After installing the Python packages, enter the following in the command line:
