@@ -2,15 +2,17 @@
 To replicate the feature extraction step for creating all data in ``data\intermediate``, follow the instructions below in order as they appear.
 
 ## Data
-As stated previously, this section can only be replicated if the user has access to the YouTube videos in the study. If a user manages to obtain access to all videos, they must be placed in the ``data\videos`` folder. The videos should be in MP4 format and titled ``<YouTubeID>.mp4``.
+Replication of the [Feature Extraction](#Feature-Extraction) step requires the collection of YouTube videos in MP4 format. Unfortunately, this dataset can be provided publicly.
+
+- YouTube Videos: We provide a list of the YouTube Video IDs used in the study in <JUNE'S FILE: TBD>. Users able to obtain these videos should place them in the ``data\videos`` folder, with each video file titled ``<YouTubeID>.mp4``. ``<YouTubeID>`` is the unique YouTube video ID.
 
 ## Installation
-Recreating the intermediate results in the [Feature Extraction](#Feature-Extraction) step requires a working installations of [Python](https://www.python.org/downloads/). All code in this repo was tested under Python version 3.9.7 on a Windows 10 machine.
+Recreating the intermediate results in the [Feature Extraction](#Feature-Extraction) step requires a working installations of [Python](https://www.python.org/downloads/) verions 3.9 or greater. All code in this repo was tested under Python version 3.9.7 on a Windows 10 machine.
 
 ### CUDA and cuDNN
-We **strongly recommended** that users with access to a dedicated GPU for computing install [CUDA](https://developer.nvidia.com/cuda-downloads) and [cuDNN](https://developer.nvidia.com/cudnn). While optional, using a dedicated GPU for face recognition will greatly improve accuracy and computation time.
+We **strongly recommended** that users with access to a dedicated GPU for computing install [CUDA](https://developer.nvidia.com/cuda-downloads) and [cuDNN](https://developer.nvidia.com/cudnn). Without GPU support, results will differ for face recognition.
 
-#### Google Cloud Platform (GCP)
+### Google Cloud Platform (GCP)
 Image text recognition and speech transcription are performed using GCP. Enabling GCP on your machine requires creating a project and setting up a billing account [here](https://cloud.google.com/docs/get-started). Once the account is setup, be sure to enable the following APIs:
 - Google Cloud Vision API
 - Google Cloud Video Intelligence API
@@ -18,14 +20,14 @@ Image text recognition and speech transcription are performed using GCP. Enablin
 **Note that using GCP costs money**. Setting up a GCP account and replicating this section will result in charges being made to your billing account.
 
 ### Python Dependencies
-All Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on [TestPyPi package repository](https://test.pypi.org/project/campvideo/). This package can be installed within a Python environment via the command
-
-    pip install -i https://test.pypi.org/simple/ campvideo
-
 ### dlib
 The Python package ``dlib`` must be compiled from source in order to use CUDA and cuDNN. See [this link](http://dlib.net/compile.html) for instructions on how to do this.
 
-### Model Download
+All other Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on [TestPyPi package repository](https://test.pypi.org/project/campvideo/). This package can be installed within a Python environment via the command
+
+    pip install -i https://test.pypi.org/simple/ campvideo
+
+## Model Download
 After installing the ``campvideo`` package, download the relevant models via the command
 
     download_models
