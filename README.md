@@ -1,6 +1,16 @@
 # campvideo-data
 Replication data for ["Automated Coding of Political Campaign Advertisement Videos: An Empirical Validation Study"]() by Alexander Tarr, June Hwang, and Kosuke Imai.
 
+## Table of Contents
+1. [Overview](#Overview)
+2. [Repository Layout](#Repository-Layout)
+3. [Data](#Data)
+4. [Installation](#Installation)
+5. [Preprocessing the WMP Data](#Preprocessing-the-WMP-Data)
+6. [Figure and Table Replication](#Figure-and-Table-Replication)
+7. [Results Replication](#Results-Replication)
+8. [Additional Notes](#Additional-Notes)
+
 ## Overview
 Full replication of the results in the paper is a laborious process, involving significant setup and computation time on the part of the user. To simplify the procedure, we have split replication into two parts: [Feature Extraction](README-FE.md#Feature-Extraction) and [Validation](#Validation). For those seeking only to validate the results in the paper, it is **highly recommended** to ignore feature extraction and follow the steps for validation, which uses pre-computed features from the feature extraction step.
 
