@@ -7,6 +7,15 @@ Replication of the [Feature Extraction](#Feature-Extraction) step requires the c
 ## Installation
 Recreating the intermediate results in the [Feature Extraction](#Feature-Extraction) step requires a working installations of [Python](https://www.python.org/downloads/) verion 3.9 or greater. All code in this repo was tested under Python version 3.9.7 on a Windows 10 machine.
 
+### CMake and C++ Compiler
+Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied. Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the appropriate Windows SDK for your Windows platform.
+
+CMake can be installed via the command
+
+```sh
+pip install cmake
+```
+
 ### CUDA and cuDNN
 We **strongly recommended** that users with access to a dedicated GPU for computing install [CUDA](https://developer.nvidia.com/cuda-downloads) and [cuDNN](https://developer.nvidia.com/cudnn). Without GPU support, results will differ for face recognition, and performance will be much slower.
 
@@ -19,14 +28,22 @@ Image text recognition and speech transcription are performed using GCP. Enablin
 
 ### Python Dependencies
 #### dlib
-The Python package ``dlib`` must be compiled from source in order to use CUDA and cuDNN. Windows users should follow the instructions [here](../readme.md#dlib). macOS users may skip to the next step below.
+Windows users must build the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
+
+```sh
+python setup.py install --no DLIB_GIF_SUPPORT
+```
+
+macOS users may skip this step and proceed to the step below.
 
 #### Other Packages
-All other Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on [TestPyPi package repository](https://test.pypi.org/project/campvideo/). This package can be installed within a Python environment via the command
+The remaining Python package dependencies can be installed by installing the project-related ``campvideo`` package, which is available on the [TestPyPi package repository](https://test.pypi.org/project/campvideo/). Both Windows and macOS users should install this package via
 
-    pip install -i https://test.pypi.org/simple/ campvideo
+```sh
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
+```
 
-## Model Download
+### Model Download
 After installing the ``campvideo`` package, download the relevant models via the command
 
     download_models
