@@ -44,8 +44,8 @@ All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 
 ### Prequisites
 #### CMake and C++ Compiler
 Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied. Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the appropriate Windows SDK for your Windows platform. For example, a Windows 10 user would install
-- MSVC
-- Windows 10 SDK
+- MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
+- Windows 10 SDK (Latest version)
 
 CMake can be installed via the command
 
