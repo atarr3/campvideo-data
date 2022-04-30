@@ -149,7 +149,7 @@ where ``<SCRIPT>`` is given by the name in the "File" column in the table above.
 The replication code for the figures and tables relies on pre-computed results in the ``results`` folder. The CSV files in this folder contain the predicted labels and some feature information. The following table describes the different classification tasks, the associated results file, the script for generating the results file, and the Figures and Tables which depend on those results.
 
 | Task                         | Results File                                                 | Script                                                             | Figure and Table Dependencies |
-| ---------------------------" | :------------------------------------------------------------| :----------------------------------------------------------------- | ----------------------------- |
+| ---------------------------- | :------------------------------------------------------------| :----------------------------------------------------------------- | ----------------------------- |
 | Summarization                | [``summary_results.csv``](results/summary_results.csv)       | [``scripts/summary_validation.py``](scripts/summary_validation.py) | Figure S7.4                   |
 | Issue Mentions               | [``mentions_results.csv``](results/mentions_results.csv)     | [``scripts/text_validation.py``](scripts/text_validation.py)       | Figure 5, Table                  |
 
