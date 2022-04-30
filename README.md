@@ -91,7 +91,7 @@ devtools::install_github("quanteda/quanteda.sentiment")
 ```
 
 ### spaCy Model Download
-The ``spacy`` text modeling package requires downloading a model. After installing the Python packages, enter the following in the command line:
+The ``spacy`` text modeling package requires downloading a model. After installing the Python packages, enter the following command:
 
 ```sh
 python -m spacy download en_core_web_md
@@ -107,6 +107,16 @@ Rscript scripts/preprocess_CMAG.R
 This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, [``campvideo-data``](https://github.com/atarr3/campvideo-data). After running, a file called ``wmp_final.csv`` should be created in [``data/wmp``](data/wmp).
 
 ## Figure and Table Replication
+All figure and table replication scripts are named after the figures and tables they replicate. For example, [``figure5.R``](scripts/figure5.R) recreates Figure 5, and [``tableS14-6.py``] recreates Appendix Table S14.6. Note that some scripts create multiple tables or figures.
+
+The full list of scripts and the figures and tables they replicate is
+- Figures
+  - Figure 5: [``figure5.R``](scripts/figure5.R)
+  - Figures 8, S14.9, S14.10: [``figures8_S14-9_S14-10.R``](scripts/figures8_S14-9_S14-10.R)
+  - Figure S7.4: [``figureS7-4.py``](scripts/figureS7-4.py)
+  - Figure S13.4: [``figureS13-8.py``](scripts/figureS13-8.py)
+- Tables
+  - Table 1: [``table1.R``](scripts/table1.R)
 
 ## Results Replication
 The following commands recreate the tables and figures in the paper. The generated figures are found in the ``figs`` folder, while the tables are stored in raw text files in the ``tables`` folder. Additionally, performance metrics discussed in the paper as well as our predicted labels are stored in the ``results`` folder.
