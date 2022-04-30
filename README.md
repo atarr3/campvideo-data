@@ -109,21 +109,23 @@ This file may also be sourced from within an IDE, such as RStudio. Be sure to se
 ## Figure and Table Replication
 All figure and table replication scripts are named after the figures and tables they replicate. For example, [``figure5.R``](scripts/figure5.R) recreates Figure 5, and [``tableS14-6.py``] recreates Appendix Table S14.6. Note that some scripts create multiple tables or figures.
 
-The full list of scripts and the figures and tables they replicate is
+The full list of figures and tables and the associate replication code is given below.
 
-| Result                   | Type    | File                                                         |
-| :----------------------- | :------ | :----------------------------------------------------------- |
-| Figure 8 | Figure  | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
-| Figure S14.9 | Figure | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
-| Figure S14.10 | Figure | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
-| Table 1                  | Table   | [``table1.R``](scripts/table1.R)                             |
-- Figures
-  - Figure 5: [``figure5.R``](scripts/figure5.R)
-  - Figures 8, S14.9, S14.10: [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R)
-  - Figure S7.4: [``figureS7-4.py``](scripts/figureS7-4.py)
-  - Figure S13.4: [``figureS13-8.py``](scripts/figureS13-8.py)
-- Tables
-  - Table 1: [``table1.R``](scripts/table1.R)
+| Result        | Language | File                                                         |
+| :------------ | :------- | :----------------------------------------------------------- |
+| Figure 5      | R        | [``figure5.R``](scripts/figure5.R)                           |
+| Figure 8      | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| Figure S7.4   | Python   | [``figureS7-4.py``](scripts/figureS7-4.py)                   |
+| Figure S13.8  | Python   | [``figureS13-8.py``](scripts/figureS13-8.py)                 |
+| Figure S14.9  | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| Figure S14.10 | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| Table 1       | R        | [``table1.R``](scripts/table1.R)                             |
+| Table 2       | Python   | [``table2.py``](scripts/table2.py)                           |
+| Table 3       | Python   | [``table3.py``](scripts/table3.py)                           |
+| Table 4       | Python   | [``table4.py``](scripts/table4.py)                           |
+| Table 5       | Python   | [``table5.py``](scripts/table5.py)                           |
+| Table 6       | Python   | [``table6.py``](scripts/table6.py)                           |
+
 
 ## Results Replication
 The following commands recreate the tables and figures in the paper. The generated figures are found in the ``figs`` folder, while the tables are stored in raw text files in the ``tables`` folder. Additionally, performance metrics discussed in the paper as well as our predicted labels are stored in the ``results`` folder.
