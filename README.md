@@ -84,9 +84,11 @@ Before any results can be produced, the WMP data must be cleaned. After placing 
 Rscript scripts/preprocess_CMAG.R
 ```
 
-This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, [``campvideo-data``](campvideo-data). After running, a file called ``wmp_final.csv`` should be created in [``data/wmp``](data/wmp).
+This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, [``campvideo-data``](https://github.com/atarr3/campvideo-data). After running, a file called ``wmp_final.csv`` should be created in [``data/wmp``](data/wmp).
 
-## Result Replication
+## Figure and Table Replication
+
+## Results Replication
 The following commands recreate the tables and figures in the paper. The generated figures are found in the ``figs`` folder, while the tables are stored in raw text files in the ``tables`` folder. Additionally, performance metrics discussed in the paper as well as our predicted labels are stored in the ``results`` folder.
 
 ### Coverage Tables
