@@ -50,7 +50,7 @@ The remaining Python package dependencies can be installed by installing the pro
     pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
     
 #### R Dependencies
-All R code uses the following packages: ``dplyr, lme4, quanteda, quanteda.sentiment, readstata13, readtext, stargazer, stringr, xtable``, most of which can be installed from within the R environment via
+All R code uses the following packages: ``dplyr, here, lme4, quanteda, quanteda.sentiment, readstata13, readtext, stargazer, xtable``, most of which can be installed from within the R environment via
 
     install.packages("<PACKAGE_NAME>")
     
@@ -66,7 +66,7 @@ The ``spacy`` text modeling package requires downloading a model. After installi
 ### Preprocessing the WMP Data
 Before any results can be produced, the WMP data must be cleaned. After placing the Stata files into ``data\wmp``, clean the data via
 
-    Rscript scripts/Replication_Preprocess.R
+    Rscript scripts/preprocess_CMAG.R
     
 This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, ``campvideo-data``.
 
