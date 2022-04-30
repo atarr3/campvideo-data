@@ -2,7 +2,7 @@
 To replicate the feature extraction step for creating all data in ``data\intermediate``, follow the instructions below in order as they appear.
 
 ## Data
-Replication of the [Feature Extraction](#Feature-Extraction) step requires the collection of YouTube videos in MP4 format. Unfortunately, this dataset can be provided publicly. We provide a list of the YouTube Video IDs used in the [here](../data/matches/matches.csv) under the `uid` variable. Users able to obtain these videos should place them in the ``data\videos`` folder, with each video file titled ``<YouTubeID>.mp4``. ``<YouTubeID>`` is the unique YouTube video ID.
+Replication of the [Feature Extraction](#Feature-Extraction) step requires the collection of YouTube videos in MP4 format. Unfortunately, this dataset can be provided publicly. We provide a list of the YouTube Video IDs used in [``data/matches/matches.csv``](../data/matches/matches.csv) under the `uid` variable. Users able to obtain these videos should place them in the [``data/videos``](../data/video) folder, with each video file titled ``<YouTubeID>.mp4``. ``<YouTubeID>`` is the unique YouTube video ID.
 
 ## Installation
 Recreating the intermediate results in the [Feature Extraction](#Feature-Extraction) step requires a working installations of [Python](https://www.python.org/downloads/) verion 3.9 or greater. All code in this repo was tested under Python version 3.9.7 on a Windows 10 machine.
