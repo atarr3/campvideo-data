@@ -43,7 +43,14 @@ The remaining Python package dependencies can be installed by installing the pro
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
 ```
 
-### Model Download
+### spaCy Model Download
+The ``spacy`` text modeling package requires downloading a model. After installing the Python packages, enter the following in the command line:
+
+```sh
+python -m spacy download en_core_web_md
+``` 
+
+### Other Models Download
 After installing the ``campvideo`` package, download the relevant models via the command
 
     download_models
