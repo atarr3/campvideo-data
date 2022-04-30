@@ -1,5 +1,5 @@
 # Feature Extraction
-To replicate the feature extraction step for creating all data in [``data\intermediate``](``data/intermediate``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [validation step](README.md#Installation). If these steps have already been performed, users may skip them.
+To replicate the feature extraction step for creating all data in [``data/intermediate``](``data/intermediate``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [validation step](README.md#Installation). If these steps have already been performed, users may skip them.
 
 ## Data
 Replication of the [Feature Extraction](#Feature-Extraction) step requires the collection of YouTube videos in MP4 format. Unfortunately, this dataset can be provided publicly. We provide a list of the YouTube Video IDs used in [``data/matches/matches.csv``](data/matches/matches.csv) under the `uid` variable. Users able to obtain these videos should place them in the [``data/videos``](data/videos) folder, with each video file titled ``<YouTubeID>.mp4``. ``<YouTubeID>`` is the unique YouTube video ID.
@@ -65,7 +65,7 @@ The intermediate data in [``data/intermediate``](``data/intermediate``) can be r
 
     python scripts/generate_data.py --overwrite
     
-The ``overwrite`` flag signals the script to replace existing data in [``data\intermediate``](``data/intermediate``). Without this flag, the script will skip over videos with existing data. If the user wishes to do partial replication of the feature extraction step **without** GCP, the command
+The ``overwrite`` flag signals the script to replace existing data in [``data/intermediate``](``data/intermediate``). Without this flag, the script will skip over videos with existing data. If the user wishes to do partial replication of the feature extraction step **without** GCP, the command
 
     python scripts/generate_data.py --overwrite --no-gcp
     
