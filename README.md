@@ -1,8 +1,20 @@
 # campvideo-data
 Replication data for ["Automated Coding of Political Campaign Advertisement Videos: An Empirical Validation Study"]() by Alexander Tarr, June Hwang, and Kosuke Imai.
 
+## Table of Contents
+1. [Overview](#Overview)
+2. [Repository Layout](#Repository-Layout)
+3. [Data](#Data)
+4. [Installation](#Installation)
+5. [Preprocessing the WMP Data](#Preprocessing-the-WMP-Data)
+6. [Figure and Table Replication](#Figure-and-Table-Replication)
+7. [Results Replication](#Results-Replication)
+8. [Additional Notes](#Additional-Notes)
+
 ## Overview
-Full replication of the results in the paper is a laborious process, involving significant setup and computation time on the part of the user. To simplify the procedure, we have split replication into two parts: [Feature Extraction](#Feature-Extraction) and [Validation](#Validation). For those seeking only to validate the results in the paper, it is **highly recommended** to ignore feature extraction and follow the steps for validation, which uses pre-computed features from the feature extraction step.
+Full replication of the results in the paper is a laborious process, involving significant setup and computation time on the part of the user. To simplify the procedure, we have split replication into two parts: [Feature Extraction](README-FE.md#Feature-Extraction) and [Validation](#Validation). For those seeking only to validate the results in the paper, it is **highly recommended** to ignore feature extraction and follow the steps for validation, which uses pre-computed features from the feature extraction step.
+
+We provide instructions for replicating the [Validation](#Validation) step in this document, while instructions for replicating feature extraction are found in [README-FE.md](README-FE.md).
 
 ## Repository Layout
 This repository is split into several folders: ``data``, ``figs``, ``results``, ``scripts`` and ``tables``.
@@ -20,185 +32,148 @@ This repository is split into several folders: ``data``, ``figs``, ``results``, 
 - ``tables``: Raw text files showing confusion matrices and coverage tables corresponding to tables in the paper.
 
 ## Data
-Replication relies on two datasets. [Feature Extraction](#Feature-Extraction) requires the collection of YouTube videos in MP4 format, while [Validation](#Validation) requires the human-coded labels provided by WMP. Unfortunately, neither of these datasets can be provided publicly.
+Replication in the [Feature Extraction](#Feature-Extraction) step requires the human-coded labels provided by WMP. Unfortunately, we cannot share this dataset publicly. The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential, 2012 Non-Presidential, and 2014 data. The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the [``data/wmp``](data/wmp) folder.
 
-- YouTube Videos: We provide a list of the YouTube Video IDs used in the study in <JUNE'S FILE: TBD>. Users able to obtain these videos should place them in the ``data\videos`` folder, with each video file titled ``<YouTubeID>.mp4``. ``<YouTubeID>`` is the unique YouTube video ID.
-- WMP Data: The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential, 2012 Non-Presidential, and 2014 data. The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the ``data\wmp`` folder.
+## Installation
+Recreating all figures, tables and results requires working installations
+- [Python](https://www.python.org/downloads/), version 3.9 or greater
+- [R](https://cran.r-project.org/src/base/R-4/), version 4.0 or greater
 
-## Validation
-To replicate the results in the paper, follow the instructions below in order as they appear. 
+All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
 
-### Installation
-Recreating all figures, tables and results in the [Validation](#Validation) step requires working installations of [Python](https://www.python.org/downloads/) and [R](https://cran.r-project.org/src/base/R-4/). All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
+### Prequisites
+#### CMake and C++ Compiler
+Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied.
+- C++ Compiler: Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the appropriate Windows SDK for your Windows platform. For example, a Windows 10 user would install
+  - MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
+  - Windows 10 SDK (Latest version)
+- CMake: Install CMake via the command
 
-#### Python Dependencies
-Most Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on the [TestPyPi package repository](https://test.pypi.org/project/campvideo/). This package can be installed within a Python environment via the command
-
-    pip install -i https://test.pypi.org/simple/ campvideo
-
-Additionally, the Python code depends on ``matplotlib, seaborn``, which can be installed via command line:
-
-    pip install <PACKAGE_NAME>
-    
-#### R Dependencies
-All R code uses the following packages: ``quanteda, readstata13, readtext, stringr, xtable``, which can be installed from within the R environment via
-
-    install.packages("<PACKAGE_NAME>")
-
-#### spaCy Model Download
-The ``spacy`` text modeling package requires downloading a model. After installing the Python packages, enter the following in the command line:
-
-    python -m spacy download en_core_web_md
-    
-### Preprocessing the WMP Data
-Before any results can be produced, the WMP data must be cleaned. After placing the Stata files into ``data\wmp``, clean the data via
-
-    Rscript scripts/Replication_Preprocess.R
-    
-This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, ``campvideo-data``.
-
-### Result Replication
-The following commands recreate the tables and figures in the paper. The generated figures are found in the ``figs`` folder, while the tables are stored in raw text files in the ``tables`` folder. Additionally, performance metrics discussed in the paper as well as our predicted labels are stored in the ``results`` folder.
-
-#### Coverage Tables
-This section gives instructions for replicating the coverage tables (Section 2.2, Appendix S1).
-- Table 1 in the main text is replicated via
-
-      Rscript scripts/table1.R
-
-- Table S1.1 in the appendix is replicated via
-
-      Rscript scripts/tableS1-1.R
-
-#### Text Validation
-This section gives instructions for replicating issue mention (Section 4.1, Appendix S11), opponent mention (Section 4.2, Appendix S12), and ad negativity classification (Section 4.5, Appendix S14.2, Appendix S14.3) results.
-- Table 2, Table 3, Table 6, and Table S14.2 are replicated via
-
-      python scripts/text_validation.py
-  
-  Note that this script uses pre-computed results in the ``results`` folder to construct the tables. To recreate the data in ``results``, type the command
-  
-      python scripts/text_validation.py --calculate
-      
-  The ``calculate`` flag forces the script to scan the auto-generated transcipts for issue and opponent mentions and to retrain the text models described in the paper using the WMP data as ground truth. The resulting predictions are then saved to the ``results`` folder.
-  
-- Figure 5 is replicated via
-
-      Rscript scripts/fig5.R
-      
-- Performance metrics for issue mentions and opponent mentions are found in ``results\issue_results.txt`` and ``results\oppment_results.txt``, which are replicated with
-
-      python scripts/text_validation.py
-
-#### Face Recognition Validation
-This section gives instructions for replicating face recognition results (Section 4.3, Appendix S13).
-- Table 4 and Figure S13.8 are replicated via
-
-      python scripts/facerec_validation.py
-      
-  Note that this script uses pre-computed results in the ``results`` folder to construct the tables and figures. To recreate the data in ``results``, type the command
-  
-      python scripts/facerec_validation.py --calculate
-      
-  The ``calculate`` flag forces the script to detect and recognize faces in the keyframes of each video and to recompute the distance threshold. The resulting predictions are then saved to the ``results`` folder.
-  
-- Performance metrics for face recognition are found in ``results\facerec_results.txt``, which are replicated with
-
-      python scripts/text_validation.py
-
-#### Music Mood Validation
-This section gives instructions for replicating music mood classificaiton results (Section 4.4, Appendix S14.1).
-
-- Table 5, and Table S14.5 are replicated via
-
-      python scripts/mood_validation.py
-      
-  Note that this script uses pre-computed results in the ``results`` folder to construct the tables. To recreate the data in ``results``, type the command
-  
-      python scripts/mood_validation.py --calculate
-      
-  The ``calculate`` flag forces the script to retrain the music mood models described in the paper using the WMP data as ground truth.. The resulting predictions are then saved to the ``results`` folder.
-      
-- Figure 8, Figure S14.9, and Figure S14.10 are replicated via
-
-      Rscript scripts/figs8_14-9_14-10.R
-      
-- Performance metrics for music mood classification are found in ``results\mood_results.txt``, which are replicated with
-
-      python scripts/mood_validation.py
-
-#### Video Summary Validation
-This section gives instructions for replicating results in the summary validation study (Appendix S7).
-
-- Figure S7.4 is replicated via
-
-      python scripts/summary_validation.py
-      
-  Note that this script uses pre-computed results in the ``results`` folder to construct the figure. To recreate the data in ``results``, type the command
-  
-      python scripts/summary_validation.py --calculate
-      
-  The ``calculate`` flag forces the script to compute all relevants metrics for each video summary. The results are then saved to the ``results`` folder.
-  
-#### Ad Negativity Classification with LSD
-This section gives instructions for replicating ad negativity classification results using LSD (Appendix S14.3).
-
-- Table S14.7 is replicated via
-
-      Rscript scripts/tableS14-7.R
-
-#### Kaplan *et al.* (2006) Replication
-This section gives instructions for replicating the issue convergence study using our predicted labels (Appendix S14.4).
-
-- Table S14.7 is replicated via
-      
-      Rscript scripts/tableS14-7.R
-
-## Feature Extraction
-To replicate the feature extraction step for creating all data in ``data\intermediate``, follow the instructions below in order as they appear.
-
-### Data
-As stated previously, this section can only be replicated if the user has access to the YouTube videos in the study. If a user manages to obtain access to all videos, they must be placed in the ``data\videos`` folder. The videos should be in MP4 format and titled ``<YouTubeID>.mp4``.
-
-### Installation
-Recreating the intermediate results in the [Feature Extraction](#Feature-Extraction) step requires a working installations of [Python](https://www.python.org/downloads/). All code in this repo was tested under Python version 3.9.7 on a Windows 10 machine.
+  ```sh
+  pip install cmake
+  ```
 
 #### CUDA and cuDNN
-We **strongly recommended** that users with access to a dedicated GPU for computing install [CUDA](https://developer.nvidia.com/cuda-downloads) and [cuDNN](https://developer.nvidia.com/cudnn). While optional, using a dedicated GPU for face recognition will greatly improve accuracy and computation time.
+We **strongly recommended** that users with access to a dedicated GPU for computing install 
+- [CUDA](https://developer.nvidia.com/cuda-downloads)
+- [cuDNN](https://developer.nvidia.com/cudnn). 
+ 
+Without GPU support, results in [``results``](results) will differ, and performance will be much slower.
 
-#### Google Cloud Platform (GCP)
-Image text recognition and speech transcription are performed using GCP. Enabling GCP on your machine requires creating a project and setting up a billing account [here](https://cloud.google.com/docs/get-started). Once the account is setup, be sure to enable the following APIs:
-- Google Cloud Vision API
-- Google Cloud Video Intelligence API
-
-**Note that using GCP costs money**. Setting up a GCP account and replicating this section will result in charges being made to your billing account.
-
-#### Python Dependencies
-All Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on [TestPyPi package repository](https://test.pypi.org/project/campvideo/). This package can be installed within a Python environment via the command
-
-    pip install -i https://test.pypi.org/simple/ campvideo
-
+### Python Dependencies
 #### dlib
-The Python package ``dlib`` must be compiled from source in order to use CUDA and cuDNN. See [this link](http://dlib.net/compile.html) for instructions on how to do this.
+Windows users must build and install the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
 
-#### Model Download
-After installing the ``campvideo`` package, download the relevant models via the command
+```sh
+python setup.py install --no DLIB_GIF_SUPPORT
+```
 
-    download_models
+macOS users may skip this step.
+
+#### Other packages
+The remaining Python package dependencies can be installed by installing the project-related [``campvideo``](https://test.pypi.org/project/campvideo/) package. Both Windows and macOS users should install this package via
+
+```sh
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
+```
+
+### R Dependencies
+All R code uses the following packages: ``dplyr, here, lme4, quanteda, quanteda.sentiment, readstata13, readtext, stargazer, xtable``, most of which can be installed from within the R environment via
+
+```r
+install.packages("<PACKAGE_NAME>")
+```
+
+``quanteda.sentiment`` is not available on CRAN and must be installed via
+
+```r
+devtools::install_github("quanteda/quanteda.sentiment")
+```
+
+### spaCy Model Download
+The ``spacy`` text modeling package requires downloading a model. After installing the Python packages, enter the following command:
+
+```sh
+python -m spacy download en_core_web_md
+```    
     
-### Feature Extraction
-The intermediate data in ``data\intermediate`` can be replicated via
+## Preprocessing the WMP Data
+Before any results can be produced, the WMP data must be cleaned. After placing the Stata files into [``data/wmp``](data/wmp), clean the data via
 
-    python scripts/generate_data.py --overwrite
-    
-The ``overwrite`` flag signals the script to replace existing data in ``data\intermediate``. Without this flag, the script will skip over videos with existing data. If the user wishes to do partial replication of the feature extraction step **without** GCP, the command
+```sh
+Rscript scripts/preprocess_CMAG.R
+```
 
-    python scripts/generate_data.py --overwrite --no-gcp
-    
-will compute audio features and video features only.
+This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, [``campvideo-data``](https://github.com/atarr3/campvideo-data). After running, a file called ``wmp_final.csv`` should be created in [``data/wmp``](data/wmp).
+
+## Figure and Table Replication
+All figure and table replication scripts are in the [``scripts``](scripts) folder. The files are named after the figures and tables they replicate. For example, [``figure5.R``](scripts/figure5.R) recreates Figure 5, and [``tableS14-6.py``](scripts/tableS14-6.py) recreates Appendix Table S14.6. Note that some scripts create multiple tables or figures.
+
+The full list of figures and tables and associated replication code is given below.
+
+| Result        | Language | Script                                                       |
+| :------------ | :------- | :----------------------------------------------------------- |
+| Figure 5      | R        | [``figure5.R``](scripts/figure5.R)                           |
+| Figure 8      | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| Figure S7.4   | Python   | [``figureS7-4.py``](scripts/figureS7-4.py)                   |
+| Figure S13.8  | Python   | [``figureS13-8.py``](scripts/figureS13-8.py)                 |
+| Figure S14.9  | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| Figure S14.10 | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| Table 1       | R        | [``table1.R``](scripts/table1.R)                             |
+| Table 2       | Python   | [``table2.py``](scripts/table2.py)                           |
+| Table 3       | Python   | [``table3.py``](scripts/table3.py)                           |
+| Table 4       | Python   | [``table4.py``](scripts/table4.py)                           |
+| Table 5       | Python   | [``table5.py``](scripts/table5.py)                           |
+| Table 6       | Python   | [``table6.py``](scripts/table6.py)                           |
+| Table S1.1    | R        | [``tableS1-1.R``](scripts/tableS1-1.R)                       |
+| Table S14.1   | Python   | [``tableS14-1.py``](scripts/tableS14-1.py)                   |
+| Table S14.3   | R        | [``tableS14-3.R``](scripts/tableS14-3.R)                     |
+| Table S14.6   | Python   | [``tableS14-6.py``](scripts/tableS14-6.py)                   |
+| Table S14.8   | R        | [``tableS14-8.R``](scripts/tableS14-8.R)                     |
+
+Python scripts can be executed via
+
+```
+python scripts/<SCRIPT>
+```
+
+and R scripts can be executed via
+
+```
+Rscript scripts/<SCRIPT>
+```
+
+where ``<SCRIPT>`` is given by the name in the "Script" column in the table above.
+
+## Results Replication
+The replication code for the figures and tables relies on pre-computed results in the [``results``](results) folder. The CSV files in this folder contain the predicted labels and some feature information. The following table describes the different results files, the associated classification tasks, the script for generating the results file, and the Figures and Tables which depend on those results.
+
+| Results File                                               | Classification Task          | Script                                                     |  Figure and Table Dependencies                              |
+| :--------------------------------------------------------- | :--------------------------- | :--------------------------------------------------------- | :---------------------------------------------------------- |
+| [``summary_results.csv``](results/summary_results.csv)     | Video Summarization          | [``summary_validation.py``](scripts/summary_validation.py) | Figure S7.4                                                 |
+| [``mentions_results.csv``](results/mentions_results.csv)   | Issue/Opponent Mentions      | [``text_validation.py``](scripts/text_validation.py)       | Figure 5, Table 2, Table 3                                  |
+| [``facerec_results.csv``](results/facerec_results.csv)     | Face Recognition             | [``facerec_validation.py``](scripts/facerec_validation.py) | Figure S13.8, Table 4                                       |
+| [``mood_results.csv``](results/mood_results.csv)           | Music Mood Classification    | [``mood_validation.py``](scripts/mood_validation.py)       | Figure 8, Figure S14.9, Figure S14.10, Table 5, Table S14.1 |
+| [``negativity_results.csv``](results/mentions_results.csv) | Ad Negativity Classification | [``text_validation.py``](scripts/text_validation.py)       | Table 6, Table S14.3, Table S14.6                           | 
+
+These scripts can be executed via
+
+```
+python scripts/<SCRIPT>
+```
+
+where ``<SCRIPT>`` is given by the name in the "Script" column in the table above.
+
+In addition to the CSV files, these scripts also produces raw text files containing various performance metrics reported in the main text. Like the figures and tables, these files rely on data in the CSV files. These files can be recreated without overwriting the CSV files via
+
+```
+python scripts/<SCRIPT> --no-calculate
+```
+
+where ``<SCRIPT>`` is given by the name in the "Script" column in the table above.
 
 ## Additional Notes
-- Feature extraction, model training, and prediction require significant processing time. Expect full replication of the results in the paper to take several days. Conversely, recreating all figures and tables using pre-computed results and features takes very little time.
-- Image text recognition and speech transcription with GCP require a stable internet connection. Service interruptions during execution of ``scripts/generate_data.py`` may lead to missing data.
-- Exact replication for label prediction is only guaranteed for the models we train. Face recognition, image text recognition, and speech transcription all rely on external models which we have no control over. Future updates to these models may lead to slightly different results.
+- Face recognition results will differ substantially if CUDA and cuDNN are not installed. This is due to the ``face_recognition`` package using differen face detection models in these scenarios.
+- Recreating the figures and tables using pre-computed results only takes a few minutes. Recreating the results CSV files is much more time-consuming. Expect this step to take several hours to run.
+- Exact replication for label prediction is only guaranteed for the models we train. Face recognition, image text recognition, and speech transcription all rely on external models which we have no control over. Future updates to these models may lead to slightly different results than those given in the paper.
 - 'File not found' errors are likely due to issues with working directory. All code assumes this repo, `campvideo-data`, is the working directory.
