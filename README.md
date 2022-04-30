@@ -32,16 +32,20 @@ To replicate the results in the paper, follow the instructions below in order as
 Recreating all figures, tables and results in the [Validation](#Validation) step requires working installations of [Python](https://www.python.org/downloads/) and [R](https://cran.r-project.org/src/base/R-4/). All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
 
 #### Prequisites
-Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied. Windows users can install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Using the installer, users should execute the following steps:
-1. Select "Individual Components" and check the boxes for the latest x86/x64 build tools, found under "Compilers, build tools, and runtimes", and Windows SDK for the appropriate Windows platform. Click "Install" after selecting.
-2. After installing, make sure the location of the compiler is added to the PATH environmental variable. The compiler is usually found in `C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\bin\Hostx64\x64`.
+Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied. Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the Windows SDK for the appropriate Windows platform.
 
-CMake can be installed via the command line
+CMake can be installed via the command
 
     pip install cmake
 
 #### Python Dependencies
-Most Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on the [TestPyPi package repository](https://test.pypi.org/project/campvideo/). This package can be installed within a Python environment via the command
+Windows users must build the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repo, navigate to the folder and enter
+
+    python setup.py install --no DLIB_GIF_SUPPORT
+    
+macOS users may skip this step.
+
+The remaining Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on the [TestPyPi package repository](https://test.pypi.org/project/campvideo/). Both Windows and macOS users should install this package via
 
     pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
     
