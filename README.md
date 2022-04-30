@@ -141,7 +141,8 @@ and R scripts can be executed via
 
 ```sh
 Rscript scripts <FILE>
-```,
+```
+,
 
 where ``<FILE>`` is given by the name in the "File" column in the table above.
 
