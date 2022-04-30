@@ -78,13 +78,13 @@ python -m spacy download en_core_web_md
 ```    
     
 ## Preprocessing the WMP Data
-Before any results can be produced, the WMP data must be cleaned. After placing the Stata files into ``data\wmp``, clean the data via
+Before any results can be produced, the WMP data must be cleaned. After placing the Stata files into [``data/wmp``](data/wmp), clean the data via
 
 ```sh
 Rscript scripts/preprocess_CMAG.R
 ```
 
-This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, ``campvideo-data``. After running, a file called ``wmp_final.csv`` should be created in [``data/wmp``](data/wmp).
+This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, [``campvideo-data``](.). After running, a file called ``wmp_final.csv`` should be created in [``data/wmp``](data/wmp).
 
 ## Result Replication
 The following commands recreate the tables and figures in the paper. The generated figures are found in the ``figs`` folder, while the tables are stored in raw text files in the ``tables`` folder. Additionally, performance metrics discussed in the paper as well as our predicted labels are stored in the ``results`` folder.
