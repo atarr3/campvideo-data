@@ -36,14 +36,14 @@ Installing the required Python packages requires both CMake and a C++ compiler. 
 
 CMake can be installed via the command
 
-```console
+```sh
 pip install cmake
 ```
 
 #### Python Dependencies
 Windows users must build the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
 
-```console
+```sh
 python setup.py install --no DLIB_GIF_SUPPORT
 ```
 
@@ -51,7 +51,7 @@ macOS users may skip this step.
 
 The remaining Python package dependencies can be installed by installing the project-related package, ``campvideo``, which is available on the [TestPyPi package repository](https://test.pypi.org/project/campvideo/). Both Windows and macOS users should install this package via
 
-```console
+```sh
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
 ```
 
@@ -71,14 +71,14 @@ devtools::install_github("quanteda/quanteda.sentiment")
 #### spaCy Model Download
 The ``spacy`` text modeling package requires downloading a model. After installing the Python packages, enter the following in the command line:
 
-```console
+```sh
 python -m spacy download en_core_web_md
 ```    
     
 ### Preprocessing the WMP Data
 Before any results can be produced, the WMP data must be cleaned. After placing the Stata files into ``data\wmp``, clean the data via
 
-```r
+```sh
 Rscript scripts/preprocess_CMAG.R
 ```
 
@@ -91,11 +91,15 @@ The following commands recreate the tables and figures in the paper. The generat
 This section gives instructions for replicating the coverage tables (Section 2.2, Appendix S1).
 - Table 1 in the main text is replicated via
 
-      Rscript scripts/table1.R
+```sh
+Rscript scripts/table1.R
+```
 
 - Table S1.1 in the appendix is replicated via
 
-      Rscript scripts/tableS1-1.R
+```sh
+Rscript scripts/tableS1-1.R
+```
 
 #### Text Validation
 This section gives instructions for replicating issue mention (Section 4.1, Appendix S11), opponent mention (Section 4.2, Appendix S12), and ad negativity classification (Section 4.5, Appendix S14.2, Appendix S14.3) results.
