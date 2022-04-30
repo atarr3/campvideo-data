@@ -47,7 +47,7 @@ Installing the required Python packages requires both CMake and a C++ compiler. 
 - C++ Compiler: Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the appropriate Windows SDK for your Windows platform. For example, a Windows 10 user would install
   - MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
   - Windows 10 SDK (Latest version)
-- CMake can be installed via the command
+- CMake: Install CMake via the command
 
   ```sh
   pip install cmake
