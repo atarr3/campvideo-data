@@ -2,7 +2,7 @@
 Replication data for ["Automated Coding of Political Campaign Advertisement Videos: An Empirical Validation Study"]() by Alexander Tarr, June Hwang, and Kosuke Imai.
 
 ## Overview
-Full replication of the results in the paper is a laborious process, involving significant setup and computation time on the part of the user. To simplify the procedure, we have split replication into two parts: Feature extraction and [Validation](#Validation). For those seeking only to validate the results in the paper, it is **highly recommended** to ignore feature extraction and follow the steps for validation, which uses pre-computed features from the feature extraction step.
+Full replication of the results in the paper is a laborious process, involving significant setup and computation time on the part of the user. To simplify the procedure, we have split replication into two parts: [Feature Extraction](scripts/README.md#Feature-Extraction) and [Validation](#Validation). For those seeking only to validate the results in the paper, it is **highly recommended** to ignore feature extraction and follow the steps for validation, which uses pre-computed features from the feature extraction step.
 
 We provide instructions for replicating the [Validation](#Validation) step in this document, while instructions for replicating feature extraction are found in ``scripts``.
 
