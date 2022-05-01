@@ -69,7 +69,12 @@ Windows users must build and install the ``dlib`` package from its [GitHub repos
 python setup.py install --no DLIB_GIF_SUPPORT
 ```
 
-macOS users may skip this step.
+macOS users may skip this step. Note that installing ``dlib`` can be difficult, especially for Windows users. If the above command fails, try building ``dlib`` without GPU support via
+
+```sh
+python setup.py install --no DLIB_GIF_SUPPORT --no DLIB_USE_CUDA
+```
+Installing ``dlib`` without GPU will still allow for exact replication of the figures and tables using pre-computed results, however the pre-computed results cannot be replicated.
 
 #### Other packages
 The remaining Python package dependencies can be installed by installing the project-related [``campvideo``](https://test.pypi.org/project/campvideo/) package. Both Windows and macOS users should install this package via
