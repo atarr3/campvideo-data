@@ -4,7 +4,7 @@ To replicate the feature extraction step for creating all data in [``data/interm
 ## Table of Contents
 1. [Data](#Data)
 2. [Installation](#Installation)
-3. [Feature Extraction](#Feature-Extraction)
+3. [Feature Extraction Replication](#Feature-Extraction-Replication)
 4. [Additional Notes](#Additional-Notes)
 
 ## Data
@@ -65,7 +65,7 @@ After installing the ``campvideo`` package, download the relevant models via the
 
     download_models
     
-## Feature Extraction
+## Feature Extraction Replication
 The intermediate data in [``data/intermediate``](``data/intermediate``) can be replicated via
 
 ```sh
