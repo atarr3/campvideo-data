@@ -4,7 +4,7 @@ To replicate the prediction step for creating the data in [``results``](``result
 ## Table of Contents
 1. [Data](#Data)
 2. [Installation](#Installation)
-3. [Feature Extraction](#Feature-Extraction)
+3. [Results Replication](#Results-Replication)
 4. [Additional Notes](#Additional-Notes)
 
 ## Data
@@ -69,7 +69,34 @@ The ``spacy`` text modeling package requires downloading a model. After installi
 
 ```sh
 python -m spacy download en_core_web_md
-```    
+```
+## Results Replication
+The replication code for the figures and tables relies on pre-computed results in the [``results``](results) folder. The CSV files in this folder contain the predicted labels and some feature information. The following table describes the different results files, the associated classification tasks, the script for generating the results file, and the Figures and Tables which depend on those results.
+
+| Results File                                               | Classification Task          | Script                                                     |  Figure and Table Dependencies                              |
+| :--------------------------------------------------------- | :--------------------------- | :--------------------------------------------------------- | :---------------------------------------------------------- |
+| [``summary_results.csv``](results/summary_results.csv)     | Video Summarization          | [``summary_validation.py``](scripts/summary_validation.py) | Figure S7.4                                                 |
+| [``mentions_results.csv``](results/mentions_results.csv)   | Issue/Opponent Mentions      | [``text_validation.py``](scripts/text_validation.py)       | Figure 5, Table 2, Table 3                                  |
+| [``facerec_results.csv``](results/facerec_results.csv)     | Face Recognition             | [``facerec_validation.py``](scripts/facerec_validation.py) | Figure S13.8, Table 4                                       |
+| [``mood_results.csv``](results/mood_results.csv)           | Music Mood Classification    | [``mood_validation.py``](scripts/mood_validation.py)       | Figure 8, Figure S14.9, Figure S14.10, Table 5, Table S14.1 |
+| [``negativity_results.csv``](results/mentions_results.csv) | Ad Negativity Classification | [``text_validation.py``](scripts/text_validation.py)       | Table 6, Table S14.3, Table S14.6                           | 
+
+These scripts can be executed via
+
+```
+python scripts/<SCRIPT>
+```
+
+where ``<SCRIPT>`` is given by the name in the "Script" column in the table above.
+
+In addition to the CSV files, these scripts also produces raw text files containing various performance metrics reported in the main text. Like the figures and tables, these files rely on data in the CSV files. These files can be recreated without overwriting the CSV files via
+
+```
+python scripts/<SCRIPT> --no-calculate
+```
+
+where ``<SCRIPT>`` is given by the name in the "Script" column in the table above.
+
 ## Additional Notes
 - Face recognition results will differ substantially if CUDA and cuDNN are not installed. This is due to the ``face_recognition`` package using differen face detection models in these scenarios. 
 - Recreating the results CSV files is much more time-consuming due to extensive model training and file I/O. Expect this step to take upwards of a day.
