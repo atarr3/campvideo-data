@@ -12,14 +12,14 @@ Replication data for ["Automated Coding of Political Campaign Advertisement Vide
 8. [Additional Notes](#Additional-Notes)
 
 ## Overview
-Full replication of the results in the paper is a laborious process, involving significant setup and computation time on the part of the user. To simplify the procedure, we have split replication into three parts, which should be executed in order for full replication: 
+Full replication of the results in the paper is a laborious process, involving significant setup and computation time on the part of the user. To simplify the procedure, we have split replication into three steps: 
 1. [Feature Extraction](README-FE.md#Feature-Extraction)
 2. [Prediction](README-PR.md#Prediction)
 3. [Validation](#Validation) 
 
-For those seeking only to validate the results in the paper, it is **highly recommended** to ignore the first two steps, feature extraction and prediction, and follow the steps for validation, which uses pre-computed results.
+Each step may also be executed separately using pre-compute results provided in this repository. For those seeking only to validate the results in the paper, it is **highly recommended** to ignore the first two steps, feature extraction and prediction, and follow the steps for validation.
 
-We provide instructions for replicating the [Validation](#Validation) step in this document, while instructions for replicating feature extraction and prediction are found in [README-FE.md](README-FE.md) and [README-FE.md](README-PR.md), respectively.
+We provide instructions for replicating the [Validation](#Validation) step in this document, while instructions for replicating feature extraction and prediction are found in [README-FE.md](README-FE.md) and [README-FE.md](README-PR.md), respectively. 
 
 ## Repository Structure
 This repository is split into several folders: ``data``, ``figs``, ``results``, ``scripts`` and ``tables``.
