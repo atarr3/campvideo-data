@@ -43,7 +43,7 @@ All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 
 ### Python Dependencies
 All Python code in the validation step uses the following packages: ``matplotlib, numpy, pandas, scikit-learn, seaborn``, all of which can be installed via
 
-```sh
+```
 pip install <PACKAGE_NAME>
 ````
 
