@@ -97,8 +97,8 @@ def main():
             except Exception:
                 pass
         
-        # transcript
         if gcp:
+            # transcript
             if not exists(join(outfold, 'transcript.txt')) or overwrite:
                 try:
                     phrases = sub.fav_name.split(',') + sub.opp_names.split(',')
