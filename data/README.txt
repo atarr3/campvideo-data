@@ -12,4 +12,6 @@ intermediate - Extracted feature data for each YouTube video in the study.
 
 Files
 -----
-issueconv.csv - Regression data for issue convergence replication study
+ issueconv.csv - Regression data for issue convergence replication study.
+issuenames.csv - Information on issues for issue mention detection.
+  metadata.csv - Election metadata.
