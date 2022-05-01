@@ -36,7 +36,7 @@ Replication in the [Validation](#Validation) step requires the human-coded label
 ## Installation
 Recreating all figures, tables and results requires working installations of
 - [Python](https://www.python.org/downloads/), version 3.9 or greater. We recommend using the [Anaconda distribution](https://www.anaconda.com/products/distribution) if unfamiliar with Python.
-- [R](https://cran.r-project.org/src/base/R-4/), version 4.0 or greater
+- [R](https://cran.r-project.org/src/base/R-4/), version 4.0 or greater.
 
 All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
 
