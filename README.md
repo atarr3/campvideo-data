@@ -12,7 +12,12 @@ Replication data for ["Automated Coding of Political Campaign Advertisement Vide
 8. [Additional Notes](#Additional-Notes)
 
 ## Overview
-Full replication of the results in the paper is a laborious process, involving significant setup and computation time on the part of the user. To simplify the procedure, we have split replication into three parts: [Feature Extraction](README-FE.md#Feature-Extraction), [Prediction](README-PR.md#Prediction), and [Validation](#Validation). For those seeking only to validate the results in the paper, it is **highly recommended** to ignore feature extraction and prediction and follow the steps for validation, which uses pre-computed results.
+Full replication of the results in the paper is a laborious process, involving significant setup and computation time on the part of the user. To simplify the procedure, we have split replication into three parts, which should be executed in order for full replication: 
+1. [Feature Extraction](README-FE.md#Feature-Extraction)
+2. [Prediction](README-PR.md#Prediction)
+3. [Validation](#Validation). 
+
+For those seeking only to validate the results in the paper, it is **highly recommended** to ignore the first two steps, feature extraction and prediction, and follow the steps for validation, which uses pre-computed results.
 
 We provide instructions for replicating the [Validation](#Validation) step in this document, while instructions for replicating feature extraction and prediction are found in [README-FE.md](README-FE.md) and [README-FE.md](README-PR.md), respectively.
 
@@ -35,55 +40,8 @@ Recreating all figures, tables and results requires working installations of
 
 All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
 
-### Prequisites
-#### FFmpeg
-FFmpeg is used for audio/video processing applications, such as video resizing and trimming. Users can download and install FFmpeg [here](https://ffmpeg.org/download.html) or through a package manager, such as Homebrew or APT. Once installed, confirm that FFmpeg is working by typing
-
-```sh
-ffpmeg
-```
-
-in terminal or command prompt.
-
-#### CMake and C++ Compiler
-Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied.
-- C++ Compiler: Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the appropriate Windows SDK for your Windows platform. For example, a Windows 10 user would install
-  - MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
-  - Windows 10 SDK (Latest version)
-- CMake: Install CMake via the command
-
-  ```sh
-  pip install cmake
-  ```
-
-#### CUDA and cuDNN
-We **strongly recommended** that users with access to a dedicated GPU for computing install 
-- [CUDA](https://docs.nvidia.com/cuda/index.html#installation-guides)
-- [cuDNN](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html). 
- 
-Without GPU support, results in [``results``](results) will differ, and performance will be much slower.
-
 ### Python Dependencies
-#### dlib
-Windows users must build and install the ``dlib`` package from its [GitHub repository](https://github.com/davisking/dlib). After cloning the repository, navigate to the folder and enter
 
-```sh
-python setup.py install --no DLIB_GIF_SUPPORT
-```
-
-macOS users may skip this step. Note that installing ``dlib`` can be difficult, especially for Windows users. If the above command fails, try building ``dlib`` without GPU support via
-
-```sh
-python setup.py install --no DLIB_GIF_SUPPORT --no DLIB_USE_CUDA
-```
-Installing ``dlib`` without GPU support will still allow for exact replication of the figures and tables using pre-computed results, however the pre-computed results cannot be replicated.
-
-#### Other packages
-The remaining Python package dependencies can be installed by installing the project-related [``campvideo``](https://test.pypi.org/project/campvideo/) package. Both Windows and macOS users should install this package via
-
-```sh
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
-```
 
 ### R Dependencies
 All R code uses the following packages: ``dplyr, here, lme4, quanteda, quanteda.sentiment, readstata13, readtext, stargazer, xtable``, most of which can be installed from within the R environment via
