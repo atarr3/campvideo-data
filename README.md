@@ -32,7 +32,8 @@ This repository is split into several folders: ``data``, ``figs``, ``results``, 
 - ``tables``: Raw text files showing confusion matrices and coverage tables corresponding to tables in the paper.
 
 ## Data
-Replication in the [Feature Extraction](README-FE.md#Feature-Extraction) step requires the human-coded labels provided by WMP. Unfortunately, we cannot share this dataset publicly. The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential, 2012 Non-Presidential, and 2014 data. The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the [``data/wmp``](data/wmp) folder.
+Full replication of the [Validation](#Validation) step requires the human-coded labels provided by WMP and the YouTube videos for the ads. Unfortunately, we cannot share either of this data publicly.
+- The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential, 2012 Non-Presidential, and 2014 data. The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the [``data/wmp``](data/wmp) folder.
 
 # Validation
 ## Installation
