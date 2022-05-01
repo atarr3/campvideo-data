@@ -1,9 +1,9 @@
 % latex table generated in R 4.2.0 by xtable 1.8-4 package
-% Sat Apr 30 23:51:10 2022
+% Sun May  1 16:53:03 2022
 \begin{table}[ht]
 \centering
 \caption{Number and Percentage of Matched Videos Recovered} 
-\begin{tabular}{lllllrrrrrr}
+\begin{tabular}{lllllrrlrrl}
   \hline
 Year & Office & WMP Total & Matches Found & Percentage Found & R\_Total & R\_Found & R\_Percentage & D\_Total & D\_Found & D\_Percentage \\ 
   \hline
@@ -14,7 +14,7 @@ Year & Office & WMP Total & Matches Found & Percentage Found & R\_Total & R\_Fou
   2014 & House & 865 & 489 & 56.5 & 412 & 243 & 59.0 & 448 & 246 & 54.9 \\ 
   2014 & Senate & 658 & 460 & 69.9 & 323 & 223 & 69.0 & 303 & 227 & 74.9 \\ 
   2014 & Governor & 700 & 383 & 54.7 & 361 & 189 & 52.4 & 298 & 187 & 62.8 \\ 
-   & Total & 4237 & 2468 & 58.2 & 2105 & 1154 & 50.0 & 2010 & 1289 & 60.0 \\ 
+   & Total & 4237 & 2468 & 58.2 & 2105 & 1154 & 54.8 & 2010 & 1289 & 64.1 \\ 
    \hline
 \end{tabular}
 \end{table}

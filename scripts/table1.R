@@ -137,13 +137,28 @@ canvid.yt.d <- rbind(
 canvid.yt.d <- as.data.frame(canvid.yt.d)
 
 # coverage table by party
-vidtabpty <- as.data.frame(
-  cbind(cbind(canvid.cmag.r$vid, canvid.yt.r$acqvid, round(canvid.yt.r$acqvid / canvid.cmag.r$vid * 100, 1)),
-        cbind(canvid.cmag.d$vid, canvid.yt.d$acqvid, round(canvid.yt.d$acqvid / canvid.cmag.d$vid * 100, 1))))
-colnames(vidtabpty) <- c('R_Total', 'R_Found', 'R_Percentage', 'D_Total', 'D_Found', 'D_Percentage')
-vidtabpty <- rbind(vidtabpty, colSums(vidtabpty))
-vidtabpty$R_Percentage[8] <- round(vidtabpty$R_Found[8] / vidtabpty$R_Total[8], 1) * 100
-vidtabpty$D_Percentage[8] <- round(vidtabpty$D_Found[8] / vidtabpty$D_Total[8], 1) * 100
+vidtabpty <- data.frame(
+                   R_Total=canvid.cmag.r$vid, 
+                   R_Found=canvid.yt.r$acqvid, 
+                   R_Percentage=format(round(canvid.yt.r$acqvid / 
+                                             canvid.cmag.r$vid * 100, 1), nsmall=1),
+                   D_Total=canvid.cmag.d$vid,
+                   D_Found=canvid.yt.d$acqvid,
+                   D_Percentage=format(round(canvid.yt.d$acqvid / 
+                                             canvid.cmag.d$vid * 100, 1), nsmall=1)
+                   )
+
+totals <- data.frame(
+                   R_Total=sum(canvid.cmag.r$vid), 
+                   R_Found=sum(canvid.yt.r$acqvid), 
+                   R_Percentage=format(round(sum(canvid.yt.r$acqvid) / 
+                                             sum(canvid.cmag.r$vid) * 100, 1), nsmall=1),
+                   D_Total=sum(canvid.cmag.d$vid),
+                   D_Found=sum(canvid.yt.d$acqvid),
+                   D_Percentage=format(round(sum(canvid.yt.d$acqvid) / 
+                                             sum(canvid.cmag.d$vid) * 100, 1), nsmall=1)
+                 )
+vidtabpty <- rbind(vidtabpty, totals)
 
 # print output to table1.txt
 print(xtable(cbind(vidtab, vidtabpty),
