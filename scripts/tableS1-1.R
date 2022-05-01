@@ -79,14 +79,27 @@ canvid.yt <- as.data.frame(canvid.yt)
 ## appendix table 1 configuration
 yt.year <- c(rep(2012, 4), rep(2014, 3))
 yt.race <- c('President', 'House', 'Senate', 'Governor', 'House', 'Senate', 'Governor')
-yt.tab <- as.data.frame(cbind(yt.year, yt.race,
-                                canvid.cmag$can,
-                                canvid.yt[, 1],
-                                round(canvid.yt[, 1] / canvid.cmag$can * 100, 1),
-                                canvid.yt[, -1]))
-colnames(yt.tab) <- c('Year', 'Office', 'All Candidates', 'Found Channels', 'Percentage', '15-sec.', '30-sec.', '60-sec.', 'All Videos')
-yt.tab <- rbind(yt.tab, c('', 'Total', colSums(apply(yt.tab[, -c(1:2)], 2, as.numeric))))
-yt.tab$Percentage[8] <- round(as.numeric(yt.tab$`Found Channels`[8]) / as.numeric(yt.tab$`All Candidates`[8]), 3) * 100
+
+yt.tab <- data.frame("Year"=as.character(yt.year), "Office"=yt.race,
+                     "All Candidates"=canvid.cmag$can,
+                     "Found Channels"=canvid.yt[, 1],
+                     "Percentage"=format(round(canvid.yt[, 1] / canvid.cmag$can * 100, 1), nsmall=1),
+                     "15-Sec"=canvid.yt[, 2],
+                     "30-Sec"=canvid.yt[, 3],
+                     "60-Sec"=canvid.yt[, 4],
+                     "All Videos"=canvid.yt[, 5],
+                     check.names=F)
+
+totals <- data.frame("Year"="", "Office"="Total",
+                     "All Candidates"=sum(canvid.cmag$can),
+                     "Found Channels"=sum(canvid.yt[, 1]),
+                     "Percentage"=format(round(sum(canvid.yt[, 1]) / sum(canvid.cmag$can) * 100, 1), nsmall=1),
+                     "15-Sec"=sum(canvid.yt[, 2]),
+                     "30-Sec"=sum(canvid.yt[, 3]),
+                     "60-Sec"=sum(canvid.yt[, 4]),
+                     "All Videos"=sum(canvid.yt[, 5]),
+                     check.names=F)
+yt.tab <- rbind(yt.tab, totals)
 
 # print output to tableS1-1.txt
 print(xtable(yt.tab, 
