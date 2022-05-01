@@ -37,7 +37,7 @@ Replication in the [Feature Extraction](README-FE.md#Feature-Extraction) step re
 # Validation
 ## Installation
 Recreating all figures, tables and results requires working installations
-- [Python](https://www.python.org/downloads/), version 3.9 or greater
+- [Python](https://www.python.org/downloads/), version 3.9 or greater. We recommend using the [Anaconda distribution](https://www.anaconda.com/products/distribution) if unfamiliar with Python.
 - [R](https://cran.r-project.org/src/base/R-4/), version 4.0 or greater
 
 All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
