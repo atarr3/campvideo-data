@@ -15,7 +15,7 @@ Replication data for ["Automated Coding of Political Campaign Advertisement Vide
 Full replication of the results in the paper is a laborious process, involving significant setup and computation time on the part of the user. To simplify the procedure, we have split replication into three parts, which should be executed in order for full replication: 
 1. [Feature Extraction](README-FE.md#Feature-Extraction)
 2. [Prediction](README-PR.md#Prediction)
-3. [Validation](#Validation). 
+3. [Validation](#Validation) 
 
 For those seeking only to validate the results in the paper, it is **highly recommended** to ignore the first two steps, feature extraction and prediction, and follow the steps for validation, which uses pre-computed results.
 
@@ -136,7 +136,5 @@ python scripts/<SCRIPT> --no-calculate
 where ``<SCRIPT>`` is given by the name in the "Script" column in the table above.
 
 ## Additional Notes
-- Face recognition results will differ substantially if CUDA and cuDNN are not installed. This is due to the ``face_recognition`` package using differen face detection models in these scenarios.
-- Recreating the figures and tables using pre-computed results only takes a few minutes. Recreating the results CSV files is much more time-consuming due to extensive model training and file I/O. Expect this step to take upwards of a day.
-- Exact replication for label prediction is only guaranteed for the models we train. Face recognition, image text recognition, and speech transcription all rely on external models which we have no control over. Future updates to these models may lead to slightly different results than those given in the paper.
+- Recreating the figures and tables using pre-computed results only takes a few minutes.
 - 'File not found' errors are likely due to issues with working directory. All code assumes this repo, `campvideo-data`, is the working directory.
