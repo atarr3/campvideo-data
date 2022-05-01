@@ -1,5 +1,5 @@
 # Feature Extraction
-To replicate the feature extraction step for creating all data in [``data/intermediate``](``data/intermediate``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [Prediction](README-PR.md#Installation). If these steps have already been performed, users may skip them.
+To replicate the feature extraction step for creating all data in [``data/intermediate``](``data/intermediate``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [Prediction](README-PR.md#Installation) step. If these steps have already been performed, users may skip them.
 
 ## Table of Contents
 1. [Data](#Data)
