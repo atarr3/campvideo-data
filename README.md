@@ -131,10 +131,10 @@ The full list of figures and tables and associated replication code is given bel
 | [Table 4](tables/table4.txt)           | Python   | [``table4.py``](scripts/table4.py)                           |
 | [Table 5](tables/table5.txt)           | Python   | [``table5.py``](scripts/table5.py)                           |
 | [Table 6](tables/table6.txt)           | Python   | [``table6.py``](scripts/table6.py)                           |
-| [Table S1.1](tables/tableS1-1.txt')    | R        | [``tableS1-1.R``](scripts/tableS1-1.R)                       |
-| [Table S14.1](tables/tableS14-1.txt')  | Python   | [``tableS14-1.py``](scripts/tableS14-1.py)                   |
-| [Table S14.3](tables/tableS14-3.txt')  | R        | [``tableS14-3.R``](scripts/tableS14-3.R)                     |
-| [Table S14.6](tables/tableS14-6.txt')  | Python   | [``tableS14-6.py``](scripts/tableS14-6.py)                   |
+| [Table S1.1](tables/tableS1-1.txt)     | R        | [``tableS1-1.R``](scripts/tableS1-1.R)                       |
+| [Table S14.1](tables/tableS14-1.txt)   | Python   | [``tableS14-1.py``](scripts/tableS14-1.py)                   |
+| [Table S14.3](tables/tableS14-3.txt)   | R        | [``tableS14-3.R``](scripts/tableS14-3.R)                     |
+| [Table S14.6](tables/tableS14-6.txt)   | Python   | [``tableS14-6.py``](scripts/tableS14-6.py)                   |
 | [Table S14.8](tables/tableS14-8.txt)   | R        | [``tableS14-8.R``](scripts/tableS14-8.R)                     |
 
 Python scripts can be executed via
