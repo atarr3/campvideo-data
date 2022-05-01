@@ -175,6 +175,6 @@ where ``<SCRIPT>`` is given by the name in the "Script" column in the table abov
 
 ## Additional Notes
 - Face recognition results will differ substantially if CUDA and cuDNN are not installed. This is due to the ``face_recognition`` package using differen face detection models in these scenarios.
-- Recreating the figures and tables using pre-computed results only takes a few minutes. Recreating the results CSV files is much more time-consuming. Expect this step to take several hours to run.
+- Recreating the figures and tables using pre-computed results only takes a few minutes. Recreating the results CSV files is much more time-consuming due to extensive model training and file I/O. Expect this step to take upwards of a day.
 - Exact replication for label prediction is only guaranteed for the models we train. Face recognition, image text recognition, and speech transcription all rely on external models which we have no control over. Future updates to these models may lead to slightly different results than those given in the paper.
 - 'File not found' errors are likely due to issues with working directory. All code assumes this repo, `campvideo-data`, is the working directory.
