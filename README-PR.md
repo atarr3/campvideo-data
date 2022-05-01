@@ -98,6 +98,6 @@ python scripts/<SCRIPT> --no-calculate
 where ``<SCRIPT>`` is given by the name in the "Script" column in the table above.
 
 ## Additional Notes
+- Recreating the results CSV files is time-consuming due to extensive model training and file I/O. Expect this step to take upwards of a day.
 - Face recognition results will differ substantially if CUDA and cuDNN are not installed. This is due to the ``face_recognition`` package using differen face detection models in these scenarios. 
-- Recreating the results CSV files is much more time-consuming due to extensive model training and file I/O. Expect this step to take upwards of a day.
 - Exact replication for label prediction is only guaranteed for the models we train. Face recognition, image text recognition, and speech transcription all rely on external models which we have no control over. Future updates to these models may lead to slightly different results than those given in the paper.
