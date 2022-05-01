@@ -1,5 +1,5 @@
 # Prediction
-To replicate the prediction step for creating the data in [``results``](``results``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [validation step](README-FE#Installation.md). If these steps have already been performed, users may skip them.
+To replicate the prediction step for creating the data in [``results``](``results``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [Feature Extraction](README-FE.md#Installation) step. If these steps have already been performed, users may skip them.
 
 ## Table of Contents
 1. [Data](#Data)
