@@ -119,7 +119,7 @@ The full list of figures and tables and associated replication code is given bel
 
 | Result        | Language | Script                                                       |
 | :------------ | :------- | :----------------------------------------------------------- |
-| Figure 5      | R        | [``figure5.R``](scripts/figure5.R)                           |
+| [Figure 5](figs/figure5.pdf)      | R        | [``figure5.R``](scripts/figure5.R)                           |
 | Figure 8      | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
 | Figure S7.4   | Python   | [``figureS7-4.py``](scripts/figureS7-4.py)                   |
 | Figure S13.8  | Python   | [``figureS13-8.py``](scripts/figureS13-8.py)                 |
