@@ -75,25 +75,25 @@ All figure and table replication scripts are in the [``scripts``](scripts) folde
 
 The full list of figures and tables and associated replication code is given below.
 
-| Result                                 | Language | Script                                                       |
-| :------------------------------------- | :------- | :----------------------------------------------------------- |
-| [Figure 5](figs/figure5.pdf)           | R        | [``figure5.R``](scripts/figure5.R)                           |
-| [Figure 8](figs/figure8.pdf)           | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
-| [Figure S7.4](figs/figureS7-4.pdf)     | Python   | [``figureS7-4.py``](scripts/figureS7-4.py)                   |
-| [Figure S13.8](figs/figureS13-8.pdf)   | Python   | [``figureS13-8.py``](scripts/figureS13-8.py)                 |
-| [Figure S14.9](figs/figureS14-9.pdf)   | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
-| [Figure S14.10](figs/figureS14-10.pdf) | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
-| [Table 1](tables/table1.txt)           | R        | [``table1.R``](scripts/table1.R)                             |
-| [Table 2](tables/table2.txt)           | Python   | [``table2.py``](scripts/table2.py)                           |
-| [Table 3](tables/table3.txt)           | Python   | [``table3.py``](scripts/table3.py)                           |
-| [Table 4](tables/table4.txt)           | Python   | [``table4.py``](scripts/table4.py)                           |
-| [Table 5](tables/table5.txt)           | Python   | [``table5.py``](scripts/table5.py)                           |
-| [Table 6](tables/table6.txt)           | Python   | [``table6.py``](scripts/table6.py)                           |
-| [Table S1.1](tables/tableS1-1.txt)     | R        | [``tableS1-1.R``](scripts/tableS1-1.R)                       |
-| [Table S14.1](tables/tableS14-1.txt)   | Python   | [``tableS14-1.py``](scripts/tableS14-1.py)                   |
-| [Table S14.3](tables/tableS14-3.txt)   | R        | [``tableS14-3.R``](scripts/tableS14-3.R)                     |
-| [Table S14.6](tables/tableS14-6.txt)   | Python   | [``tableS14-6.py``](scripts/tableS14-6.py)                   |
-| [Table S14.8](tables/tableS14-8.txt)   | R        | [``tableS14-8.R``](scripts/tableS14-8.R)                     |
+| Result                                 | Description                                                | Language | Script                                                       |
+| :------------------------------------- | :--------------------------------------------------------- | :------- | :----------------------------------------------------------- |
+| [Figure 5](figs/figure5.pdf)           | MTurk results for issue mentions                           | R        | [``figure5.R``](scripts/figure5.R)                           |
+| [Figure 8](figs/figure8.pdf)           | MTurk results for ominous/tense mood classification        | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| [Figure S7.4](figs/figureS7-4.pdf)     | Video summarization validation study results               | Python   | [``figureS7-4.py``](scripts/figureS7-4.py)                   |
+| [Figure S13.8](figs/figureS13-8.pdf)   | ROC plots for face recognition                             | Python   | [``figureS13-8.py``](scripts/figureS13-8.py)                 |
+| [Figure S14.9](figs/figureS14-9.pdf)   | MTurk results for uplifting mood classification            | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| [Figure S14.10](figs/figureS14-10.pdf) | MTurk results for sad/sorrowful mood classification        | R        | [``figure8_S14-9_S14-10.R``](scripts/figure8_S14-9_S14-10.R) |
+| [Table 1](tables/table1.txt)           | Matched video coverage table                               | R        | [``table1.R``](scripts/table1.R)                             |
+| [Table 2](tables/table2.txt)           | Confusion matrices for issue mentions                      | Python   | [``table2.py``](scripts/table2.py)                           |
+| [Table 3](tables/table3.txt)           | Confusion matrices for opponent mentions                   | Python   | [``table3.py``](scripts/table3.py)                           |
+| [Table 4](tables/table4.txt)           | Confusion matrices for face recognition                    | Python   | [``table4.py``](scripts/table4.py)                           |
+| [Table 5](tables/table5.txt)           | Confusion matrices for mood classiification                | Python   | [``table5.py``](scripts/table5.py)                           |
+| [Table 6](tables/table6.txt)           | Confusion matrices for ad negativity classification (NSVM) | Python   | [``table6.py``](scripts/table6.py)                           |
+| [Table S1.1](tables/tableS1-1.txt)     | YouTube channel coverage table                             | R        | [``tableS1-1.R``](scripts/tableS1-1.R)                       |
+| [Table S14.1](tables/tableS14-1.txt)   | Confusion matrix for mood MTurk results                    | Python   | [``tableS14-1.py``](scripts/tableS14-1.py)                   |
+| [Table S14.3](tables/tableS14-3.txt)   | Confusion matrix for LSD results                           | R        | [``tableS14-3.R``](scripts/tableS14-3.R)                     |
+| [Table S14.6](tables/tableS14-6.txt)   | Confusion matrices for ad negativity classification (All)  | Python   | [``tableS14-6.py``](scripts/tableS14-6.py)                   |
+| [Table S14.8](tables/tableS14-8.txt)   | Regression coefficients for issue convergence study        | R        | [``tableS14-8.R``](scripts/tableS14-8.R)                     |
 
 Python scripts can be executed via
 
