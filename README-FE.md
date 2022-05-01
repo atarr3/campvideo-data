@@ -1,5 +1,5 @@
 # Feature Extraction
-To replicate the feature extraction step for creating all data in [``data/intermediate``](``data/intermediate``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [validation step](README.md#Installation). If these steps have already been performed, users may skip them.
+To replicate the feature extraction step for creating all data in [``data/intermediate``](``data/intermediate``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [validation step](README.md). If these steps have already been performed, users may skip them.
 
 ## Data
 Replication of the [Feature Extraction](#Feature-Extraction) step requires the collection of YouTube videos in MP4 format. Unfortunately, this dataset can be provided publicly. We provide a list of the YouTube Video IDs used in [``data/matches/matches.csv``](data/matches/matches.csv) under the `uid` variable. Users able to obtain these videos should place them in the [``data/videos``](data/videos) folder, with each video file titled ``<YouTubeID>.mp4``. ``<YouTubeID>`` is the unique YouTube video ID.
@@ -45,17 +45,8 @@ The remaining Python package dependencies can be installed by installing the pro
 ```sh
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
 ```
-    
-## Preprocessing the WMP Data
-Before any results can be produced, the WMP data must be cleaned. After placing the Stata files into [``data/wmp``](data/wmp), clean the data via
 
-```sh
-Rscript scripts/preprocess_CMAG.R
-```
-
-This file may also be sourced from within an IDE, such as RStudio. Be sure to set the working directory to repo folder, [``campvideo-data``](https://github.com/atarr3/campvideo-data). After running, a file called ``wmp_final.csv`` should be created in [``data/wmp``](data/wmp).
-
-### Other Models Download
+### Models Download
 After installing the ``campvideo`` package, download the relevant models via the command
 
     download_models
@@ -63,12 +54,18 @@ After installing the ``campvideo`` package, download the relevant models via the
 ## Feature Extraction
 The intermediate data in [``data/intermediate``](``data/intermediate``) can be replicated via
 
-    python scripts/generate_data.py --overwrite
-    
+```sh
+python scripts/generate_data.py --overwrite
+```
+
 The ``overwrite`` flag signals the script to replace existing data in [``data/intermediate``](``data/intermediate``). Without this flag, the script will skip over videos with existing data. If the user wishes to do partial replication of the feature extraction step **without** GCP, the command
 
-    python scripts/generate_data.py --overwrite --no-gcp
-    
-will compute audio features and video features only.
+```sh
+python scripts/generate_data.py --overwrite --no-gcp
+```
 
-## Important Notes
+will compute audio features and video summaries only.
+
+## Additional Notes
+- Extracting features requires considerable computation. Expect this step to take several days to process every video.
+- The GCP results rely on a stable internet connection. Service interruptions while executing this code may result in some files not being generated or overwritten.
