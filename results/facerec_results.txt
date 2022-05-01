@@ -5,12 +5,12 @@ Corrected: 0.5202
 
 Mistake Analysis
 ----------------
-f_picture disagreements: 146
+f_picture disagreements: 148
 o_picture disagreements: 68
 
 f_picture mistakes (WMP): 18 (12%)
-f_picture mistakes (def): 96 (66%)
-f_picture mistakes (oth): 32 (22%)
+f_picture mistakes (def): 97 (66%)
+f_picture mistakes (oth): 33 (22%)
 
 o_picture mistakes (WMP): 21 (31%)
 o_picture mistakes (oth): 47 (69%)
@@ -19,8 +19,8 @@ Favored Candidate (Corrected)
 -----------------------------
          Auto       
            No    Yes
-WMP No  6.39%  0.78%
-    Yes 3.52% 89.31%
+WMP No  6.39%  0.65%
+    Yes 3.52% 89.44%
 
 Opposing Candidate (Corrected)
 ------------------------------
