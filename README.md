@@ -41,7 +41,11 @@ Recreating all figures, tables and results requires working installations of
 All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
 
 ### Python Dependencies
+All Python code in the validation step uses the following packages: ``matplotlib, numpy, pandas, scikit-learn, seaborn``, all of which can be installed via
 
+```sh
+pip install <PACKAGE_NAME>
+````
 
 ### R Dependencies
 All R code uses the following packages: ``dplyr, here, lme4, quanteda, quanteda.sentiment, readstata13, readtext, stargazer, xtable``, most of which can be installed from within the R environment via
@@ -55,13 +59,6 @@ install.packages("<PACKAGE_NAME>")
 ```r
 devtools::install_github("quanteda/quanteda.sentiment")
 ```
-
-### spaCy Model Download
-The ``spacy`` text modeling package requires downloading a model. After installing the Python packages, enter the following command:
-
-```sh
-python -m spacy download en_core_web_md
-```    
     
 ## Preprocessing the WMP Data
 Before any results can be produced, the WMP data must be cleaned. After placing the Stata files into [``data/wmp``](data/wmp), clean the data via
