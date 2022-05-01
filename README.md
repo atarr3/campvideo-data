@@ -41,7 +41,7 @@ All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 
 
 ### Prequisites
 #### FFmpeg
-FFmpeg is used for audio/video processing applications, such as video resizing and trimming. Users can download and install FFmpeg [here](https://ffmpeg.org/download.html) or through a package manager, such as Homebrew or APT. Once installed, confirm that FFmpeg is workking by typing
+FFmpeg is used for audio/video processing applications, such as video resizing and trimming. Users can download and install FFmpeg [here](https://ffmpeg.org/download.html) or through a package manager, such as Homebrew or APT. Once installed, confirm that FFmpeg is working by typing
 
 ```sh
 ffpmeg
