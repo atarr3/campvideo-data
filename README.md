@@ -56,8 +56,8 @@ Installing the required Python packages requires both CMake and a C++ compiler. 
 
 #### CUDA and cuDNN
 We **strongly recommended** that users with access to a dedicated GPU for computing install 
-- [CUDA](https://developer.nvidia.com/cuda-downloads)
-- [cuDNN](https://developer.nvidia.com/cudnn). 
+- [CUDA](https://docs.nvidia.com/cuda/index.html#installation-guides)
+- [cuDNN](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html). 
  
 Without GPU support, results in [``results``](results) will differ, and performance will be much slower.
 
