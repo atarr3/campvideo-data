@@ -1139,6 +1139,7 @@ def main():
     with open(join(ROOT, 'results', 'oppment_results.txt'), 'w') as fh:
         print("Opponent Mention Results", file=fh)
         print("------------------------", file=fh)
+        print("Total # of videos: {}".format(oment_wmp.shape[0]), file=fh)
         print("# of disagreements: {} ({:.0%})".format(nmis_om, nmis_om / n_om), file=fh)
         print("Increase in positive samples w/ "
               "images: {} ({:.0%})".format(pos_inc, pos_inc/n_om) ,file=fh)
