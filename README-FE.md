@@ -1,5 +1,5 @@
 # Feature Extraction
-To replicate the feature extraction step for creating all data in [``data/intermediate``](``data/intermediate``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [validation step](README.md). If these steps have already been performed, users may skip them.
+To replicate the feature extraction step for creating all data in [``data/intermediate``](``data/intermediate``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [Prediction](README-PR.md#Installation). If these steps have already been performed, users may skip them.
 
 ## Table of Contents
 1. [Data](#Data)
@@ -17,6 +17,14 @@ Recreating all figures, tables and results requires working installations of
 All code in this repo was tested under Python version 3.9.7 on a Windows 10 machine. 
 
 ### Prequisites
+#### FFmpeg
+FFmpeg is used for audio/video processing applications, such as video resizing and trimming. Users can download and install FFmpeg [here](https://ffmpeg.org/download.html) or through a package manager, such as Homebrew or APT. Once installed, confirm that FFmpeg is working by typing
+
+```sh
+ffpmeg
+```
+
+in terminal or command prompt.
 #### CMake and C++ Compiler
 Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied.
 - C++ Compiler: Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the appropriate Windows SDK for your Windows platform. For example, a Windows 10 user would install
