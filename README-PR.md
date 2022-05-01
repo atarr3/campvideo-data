@@ -20,7 +20,7 @@ All code in this repo was tested under Python version 3.9.7 on a Windows 10 mach
 
 ### Prequisites
 #### FFmpeg
-FFmpeg is used for audio/video processing applications, such as video resizing and trimming. Users can download and install FFmpeg [here](https://ffmpeg.org/download.html) or through a package manager, such as Homebrew or APT. Once installed, confirm that FFmpeg is working by typing
+FFmpeg is used for audio/video processing applications, such as video resizing and trimming. Users can download and install FFmpeg [here](https://ffmpeg.org/download.html) or through a package manager, such as Homebrew or APT. Make sure that FFmpeg is added to the ``PATH`` environmental variable. Confirm that FFmpeg is working by typing
 
 ```sh
 ffpmeg
