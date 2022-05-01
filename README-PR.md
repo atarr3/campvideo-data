@@ -55,7 +55,7 @@ macOS users may skip this step. Note that installing ``dlib`` can be difficult, 
 ```sh
 python setup.py install --no DLIB_GIF_SUPPORT --no DLIB_USE_CUDA
 ```
-Installing ``dlib`` without GPU support will still allow for exact replication of the figures and tables using pre-computed results, however the pre-computed results cannot be replicated.
+Installing ``dlib`` without GPU support will still allow for exact replication of the figures and tables using pre-computed results, however the pre-computed results in [``results``](results) cannot be replicated.
 
 #### Other packages
 The remaining Python package dependencies can be installed by installing the project-related [``campvideo``](https://test.pypi.org/project/campvideo/) package. Both Windows and macOS users should install this package via
