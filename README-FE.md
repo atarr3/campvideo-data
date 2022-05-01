@@ -12,7 +12,7 @@ Replication of the [Feature Extraction](#Feature-Extraction) step requires the c
 
 ## Installation
 Recreating all figures, tables and results requires working installations of
-- [Python](https://www.python.org/downloads/), version 3.9 or greater
+- [Python](https://www.python.org/downloads/), version 3.9 or greater. We recommend using the [Anaconda distribution](https://www.anaconda.com/products/distribution) if unfamiliar with Python.
 
 All code in this repo was tested under Python version 3.9.7 on a Windows 10 machine. 
 
