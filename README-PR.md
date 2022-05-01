@@ -13,6 +13,10 @@ Full replication of the [Prediction](#Prediction) step requires the human-coded 
 - We provide a list of the YouTube Video IDs used in [``data/matches/matches.csv``](data/matches/matches.csv) under the `uid` variable. Users able to obtain these videos should place them in the [``data/videos``](data/videos) folder, with each video file titled ``<YouTubeID>.mp4``. ``<YouTubeID>`` is the unique YouTube video ID.
 
 ## Installation
+Recreating all figures, tables and results requires working installations of
+- [Python](https://www.python.org/downloads/), version 3.9 or greater. We recommend using the [Anaconda distribution](https://www.anaconda.com/products/distribution) if unfamiliar with Python.
+
+All code in this repo was tested under Python version 3.9.7 on a Windows 10 machine. 
 
 ### Prequisites
 #### FFmpeg
