@@ -40,6 +40,15 @@ Recreating all figures, tables and results requires working installations
 All code in this repo was tested under Python version 3.9.7 and R version 4.0.5 on a Windows 10 machine. 
 
 ### Prequisites
+#### FFmpeg
+FFmpeg is used for audio/video processing applications, such as video resizing and trimming. Users can download and install FFmpeg [here](https://ffmpeg.org/download.html) or through a package manager, such as Homebrew or APT. Once installed, confirm that FFmpeg is workking by typing
+
+```sh
+ffpmeg
+```
+
+in terminal or command prompt.
+
 #### CMake and C++ Compiler
 Installing the required Python packages requires both CMake and a C++ compiler. For macOS users, these requirements are normally already satisfied.
 - C++ Compiler: Windows users should install a C++ compiler from [Microsoft Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/). Be sure to install the latest x86/x64 C++ build tools and the appropriate Windows SDK for your Windows platform. For example, a Windows 10 user would install
