@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from matplotlib import rc
+# from matplotlib import rc
 from os.path import abspath, dirname, join
 from sklearn.metrics import auc, roc_curve
 
@@ -62,8 +62,7 @@ def main():
     
     # ROC curves
     plt.rcParams['font.sans-serif'] = 'Verdana'
-    rc('text', usetex=True)
-    rc('text.latex', preamble=r'\usepackage{amsmath}')
+    #rc('text', usetex=True)
 
     # original
     fpr_orig_f, tpr_orig_f, _ = roc_curve(f_wmp, fmins, pos_label=0)

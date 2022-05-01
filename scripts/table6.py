@@ -3,7 +3,6 @@ import pandas as pd
 
 from itertools import product
 from os.path import abspath, dirname, join
-from pkg_resources import resource_filename
 from sklearn.metrics import confusion_matrix
 
 # root folder for replication repo
@@ -13,7 +12,7 @@ ROOT = dirname(dirname(abspath(__file__)))
 WMP_DIR = join(ROOT, 'data', 'wmp')
 
 # issue vocabulary list
-VOCAB_PATH = resource_filename('campvideo','data/issuenames.csv')
+VOCAB_PATH = join(ROOT, 'data', 'issuenames.csv')
 VOCAB = pd.read_csv(VOCAB_PATH)
 
 # function for reading in WMP / CMAG data
@@ -38,7 +37,8 @@ def main():
  
     # read in our predictions
     neg_pred = pd.read_csv(join(ROOT, 'results', 'negativity_results.csv'),
-                          index_col=['creative', 'feature', 'model', 'train'])
+                           index_col=['creative', 'feature', 'model', 'train']
+                          ).drop(columns='uid')
     
     ## results ##
     

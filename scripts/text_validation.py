@@ -8,7 +8,6 @@ import spacy
 from argparse import ArgumentParser
 from campvideo import Keyframes, Text
 from os.path import abspath, dirname, join
-from pkg_resources import resource_filename
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
@@ -50,7 +49,7 @@ ID_DIR = join(ROOT, 'data', 'ids')
 META_PATH = join(ROOT, 'data', 'metadata.csv')
 
 # issue vocabulary list
-VOCAB_PATH = resource_filename('campvideo','data/issuenames.csv')
+VOCAB_PATH = join(ROOT, 'data', 'issuenames.csv')
 VOCAB = pd.read_csv(VOCAB_PATH)
 
 # seed
@@ -956,9 +955,10 @@ def main():
     
     ## results ##
     
+    print("Summarizing results... ", end='', flush=True)
     # issues
-    iss_text = iss_pred.xs('text', level='feature').drop(columns='o_mention')
-    iss_both = iss_pred.xs('both', level='feature').drop(columns='o_mention')
+    iss_text = iss_pred.xs('text', level='feature').drop(columns=['uid', 'o_mention'])
+    iss_both = iss_pred.xs('both', level='feature').drop(columns=['uid', 'o_mention'])
     
     # opponent mentions
     oment_text = iss_pred.xs('text', level='feature').o_mention
@@ -1156,5 +1156,6 @@ def main():
         print(file=fh)
         print("Overall accuracy accounting for WMP mistakes: {} ({:.0%})".format(nmis_wmp, nmis_wmp/nmis_om), file=fh)
 
+    print("Done!")
 if __name__ == '__main__':
     main()

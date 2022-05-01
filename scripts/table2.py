@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 
 from os.path import abspath, dirname, join
-from pkg_resources import resource_filename
 from sklearn.metrics import confusion_matrix
 
 # root folder for replication repo
@@ -12,7 +11,7 @@ ROOT = dirname(dirname(abspath(__file__)))
 WMP_DIR = join(ROOT, 'data', 'wmp')
 
 # issue vocabulary list
-VOCAB_PATH = resource_filename('campvideo','data/issuenames.csv')
+VOCAB_PATH = join(ROOT, 'data', 'issuenames.csv')
 VOCAB = pd.read_csv(VOCAB_PATH)
 
 # function for reading in WMP / CMAG data
@@ -49,8 +48,8 @@ def main():
     ## results ##
     
     # issues
-    iss_text = iss_pred.xs('text', level='feature').drop(columns='o_mention')
-    iss_both = iss_pred.xs('both', level='feature').drop(columns='o_mention')
+    iss_text = iss_pred.xs('text', level='feature').drop(columns=['uid', 'o_mention'])
+    iss_both = iss_pred.xs('both', level='feature').drop(columns=['uid', 'o_mention'])
     
     # confusion matrices
     pd.options.display.float_format = '{:,.2%}'.format

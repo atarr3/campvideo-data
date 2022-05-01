@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from matplotlib import rc
+# from matplotlib import rc
 
 from os.path import abspath, dirname, join
 
@@ -11,12 +11,11 @@ ROOT = dirname(dirname(abspath(__file__)))
 
 def main():
     # read in data
-    res = pd.read_csv(join(ROOT, 'results', 'summary_validation.csv'),
+    res = pd.read_csv(join(ROOT, 'results', 'summary_results.csv'),
                       index_col='uid')
     # plot results
     plt.rcParams['font.sans-serif'] = 'Verdana'
-    rc('text', usetex=True)
-    rc('text.latex', preamble=r'\usepackage{amsmath}')
+    #rc('text', usetex=True)
     constrained_layout = True # use tight layout if False
     
     fig, axs = plt.subplots(1, 3, figsize=(6.5, 4.333), sharey=False, 
@@ -40,7 +39,7 @@ def main():
             axs[i].set_yticks(ticks)
             axs[i].set_aspect(1 / axs[i].get_data_ratio())
         
-        # smoothed histogram of represenativeness, normalized by number of frames 
+        # smoothed histogram of representativeness, normalized by number of frames 
         elif i == 1:
             # histogram plot
             sns.kdeplot(res.r_auto / res.n_full, fill=True, linewidth=1, 
@@ -49,7 +48,7 @@ def main():
                         ax=axs[i])
             
             # text labels
-            axs[i].text(0.9, 10, 'Automated', fontsize=8)
+            axs[i].text(0.885, 10, 'Automated', fontsize=8)
             axs[i].text(0.74, 5.8, 'Manual', fontsize=8)
             
             # axis formatting

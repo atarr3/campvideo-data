@@ -1,6 +1,6 @@
 library(dplyr)
 
-# set up root location
+# working directory check
 here::i_am(file.path("scripts", "figure5.R"))
 
 # issue names

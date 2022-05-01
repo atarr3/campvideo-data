@@ -177,6 +177,8 @@ def main():
         o_pred = (omins < thr_o).astype(int)
         f_pred = (fmins < thr_o).astype(int)
     
+    print("Summarizing results... ", end='', flush=True)
+    
     # wmp values
     o_wmp = senate.o_picture
     f_wmp = np.logical_or(senate.vid.fillna(0), senate.f_picture).astype(float)
@@ -294,5 +296,6 @@ def main():
                                                                    a_opp),
               file=fh)           
 
+    print("Done!")
 if __name__ == '__main__':
     main()

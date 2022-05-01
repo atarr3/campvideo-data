@@ -2,7 +2,7 @@ library("readtext")
 library("quanteda")
 library("quanteda.sentiment")
 
-# working directory
+# working directory check
 here::i_am(file.path("scripts", "tableS14-3.R"))
 
 # create corpus

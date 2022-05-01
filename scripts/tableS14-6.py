@@ -38,7 +38,8 @@ def main():
     
     # read in our predictions
     neg_pred = pd.read_csv(join(ROOT, 'results', 'negativity_results.csv'),
-                          index_col=['creative', 'feature', 'model', 'train'])
+                           index_col=['creative', 'feature', 'model', 'train']
+                          ).drop(columns='uid')
     
     ## results ##
     

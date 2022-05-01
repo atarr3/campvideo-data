@@ -9,4 +9,4 @@ Music Mood Results
 
 Music Mood MTurk Results
 ------------------------
-Majority of MTurk coders agree with WMP in 86% of all cases
+Majority of MTurk coders agree with WMP in 85% of all cases

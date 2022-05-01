@@ -1,4 +1,4 @@
-# set up root location
+# working directory check
 here::i_am(file.path("scripts", "figure8_S14-9_S14-10.R"))
 
 # read in WMP data

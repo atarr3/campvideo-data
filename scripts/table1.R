@@ -1,6 +1,6 @@
 library(xtable)
 
-# set up file location
+# working directory check
 here::i_am(file.path("scripts", "table1.R"))
 
 # video/candidate counts for all videos
