@@ -33,6 +33,8 @@ This repository is split into several folders: ``data``, ``figs``, ``results``, 
 Replication in the [Validation](#Validation) step requires the human-coded labels provided by WMP, which cannot be shared publicly. This data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential, 2012 Non-Presidential, and 2014 data. The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the [``data/wmp``](data/wmp) folder.
 
 # Validation
+To replicate the validation step for creating all [figures](figs) and [tables](tables), follow the instructions below in order as they appear.
+
 ## Installation
 Recreating all figures, tables and results requires working installations of
 - [Python](https://www.python.org/downloads/), version 3.9 or greater. We recommend using the [Anaconda distribution](https://www.anaconda.com/products/distribution) if unfamiliar with Python.
