@@ -139,7 +139,7 @@ def main():
         
         # update MTurk file with predictions
         mood_mturk = pd.read_csv(join(MT_DIR, 'mood_mturk.csv'), 
-                                 index_col='creative')
+                                 index_col=['creative', 'uid'])
         mood_mturk['music1_pred'] = mood_pred.loc[mood_mturk.index].music1
         mood_mturk['music2_pred'] = mood_pred.loc[mood_mturk.index].music2
         mood_mturk['music3_pred'] = mood_pred.loc[mood_mturk.index].music3

@@ -348,7 +348,7 @@ def main():
             index=pd.MultiIndex.from_product([iss_wmp.index, ['text', 'both']],
                                              names=['creative', 'feature'])
             )
-        oment_pred = pd.Series(dtype=int, name='o_mention', 
+        oment_pred = pd.Series(0, dtype=int, name='o_mention', 
             index=pd.MultiIndex.from_product([iss_wmp.index, ['text', 'both']],
                                              names=['creative', 'feature']))
         for i, creative in enumerate(iss_wmp.index):
@@ -418,15 +418,16 @@ def main():
         # save results
         iss_pred['o_mention'] = oment_pred
         uids = [MATCHES_CMAG[ele] for ele in iss_pred.index.get_level_values('creative')]
-        iss_pred.insert(0, 'uid', uids)
+        iss_pred.reset_index(inplace=True)
+        iss_pred.insert(1, 'uid', uids) # after creative
         iss_pred.to_csv(join(ROOT, 'results', 'mentions_results.csv'),
-                        index=True)
+                        index=False)
         
         # update MTurk results
         iss_mturk = pd.read_csv(join(MTURK_DIR, 'issue_mturk.csv'), 
-                                index_col=['creative', 'issue'])
+                                index_col=['creative', 'uid', 'issue'])
         iss_mturk.pred = iss_pred.xs('both', level='feature'
-                                ).drop(columns=['uid', 'o_mention']
+                                ).drop(columns=['o_mention']
                                 ).stack(
                                 ).loc[iss_mturk.index]
         iss_mturk.to_csv(join(MTURK_DIR, 'issue_mturk.csv'))
@@ -438,6 +439,9 @@ def main():
         
         print("Classifying ad negativity...")
         
+        # get uids
+        uids = [MATCHES_CMAG[ele] for ele in tone_wmp.index]
+        
         # read in features
         tpaths = [join(INT_DIR, uid, 'transcript.txt') for uid in uids]
         mfeats = np.array([np.load(open(join(INT_DIR, uid, 'audiofeat.npy'), 'rb'))
@@ -445,7 +449,7 @@ def main():
         d = mfeats.shape[1]
         
         # construct dataframe
-        feats = pd.DataFrame(mfeats, index=tone.index).assign(tpath=tpaths)
+        feats = pd.DataFrame(mfeats, index=tone_wmp.index).assign(tpath=tpaths)
         
         # train/test splits
         x_train,x_test,y_train,y_test = train_test_split(feats,
@@ -939,7 +943,8 @@ def main():
         
         # insert column for YouTube IDS
         uids = [MATCHES_CMAG[ele] for ele in neg_pred.index.get_level_values('creative')]
-        neg_pred.insert(0, 'uid', uids)
+        neg_pred = neg_pred.reset_index()
+        neg_pred.insert(1, 'uid', uids) # after `creative`
         
         # save results
         neg_pred.to_csv(join(ROOT, 'results', 'negativity_results.csv'))
