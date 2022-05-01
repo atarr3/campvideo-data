@@ -1,5 +1,5 @@
 # Prediction
-To replicate the prediction step for creating the data in [``results``](``results``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [validation step](README.md). If these steps have already been performed, users may skip them.
+To replicate the prediction step for creating the data in [``results``](``results``), follow the instructions below in order as they appear. Note that some instructions are duplicates from the [validation step](README-FE#Installation.md). If these steps have already been performed, users may skip them.
 
 ## Table of Contents
 1. [Data](#Data)
@@ -70,3 +70,7 @@ The ``spacy`` text modeling package requires downloading a model. After installi
 ```sh
 python -m spacy download en_core_web_md
 ```    
+## Additional Notes
+- Face recognition results will differ substantially if CUDA and cuDNN are not installed. This is due to the ``face_recognition`` package using differen face detection models in these scenarios. 
+- Recreating the results CSV files is much more time-consuming due to extensive model training and file I/O. Expect this step to take upwards of a day.
+- Exact replication for label prediction is only guaranteed for the models we train. Face recognition, image text recognition, and speech transcription all rely on external models which we have no control over. Future updates to these models may lead to slightly different results than those given in the paper.
