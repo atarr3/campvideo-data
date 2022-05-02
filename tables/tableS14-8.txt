@@ -39,3 +39,53 @@ Constant               123.657**     120.178**
 Observations              292           290       
 ==================================================
 Note:                  *p<0.1; **p<0.05; ***p<0.01
+
+ 
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lD{.}{.}{-3} D{.}{.}{-3} } 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & \multicolumn{2}{c}{Issue Convergence} \\ 
+ & \multicolumn{1}{c}{WMP Coding} & \multicolumn{1}{c}{Automated Coding} \\ 
+\hline \\[-1.8ex] 
+ Competitiveness & 5.125 & 2.700 \\ 
+  & (5.425) & (5.785) \\ 
+  & & \\ 
+ Total Spending/VEP & -0.447 & -0.255 \\ 
+  & (0.464) & (0.465) \\ 
+  & & \\ 
+ Diff. in Spending/VEP & -0.182 & 0.034 \\ 
+  & (0.820) & (0.801) \\ 
+  & & \\ 
+ \% Negative Ads & 0.199^{*} & 0.222^{**} \\ 
+  & (0.111) & (0.109) \\ 
+  & & \\ 
+ VAP (logged) & -8.650^{**} & -8.224^{**} \\ 
+  & (3.419) & (3.332) \\ 
+  & & \\ 
+ Year 2012 & 10.009^{**} & 6.884 \\ 
+  & (4.482) & (4.348) \\ 
+  & & \\ 
+ Consensual & 12.704^{**} & 32.157^{***} \\ 
+  & (6.440) & (7.974) \\ 
+  & & \\ 
+ Owned & 11.323^{**} & 10.663^{**} \\ 
+  & (4.547) & (4.780) \\ 
+  & & \\ 
+ Salience & 0.662^{**} & 0.474^{*} \\ 
+  & (0.260) & (0.283) \\ 
+  & & \\ 
+ Constant & 123.657^{**} & 120.178^{**} \\ 
+  & (49.728) & (49.186) \\ 
+  & & \\ 
+\hline \\[-1.8ex] 
+Observations & \multicolumn{1}{c}{292} & \multicolumn{1}{c}{290} \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table} 

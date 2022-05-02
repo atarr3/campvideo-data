@@ -82,5 +82,5 @@ for (t in 1:3){
   }
   
   # clear figure
-  dev.off()
+  invisible(dev.off())
 }

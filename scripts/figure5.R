@@ -1,4 +1,4 @@
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 
 # working directory check
 here::i_am(file.path("scripts", "figure5.R"))
@@ -97,4 +97,4 @@ for (i in 0:1) {
 }
 
 # clear figure
-dev.off()
+invisible(dev.off())

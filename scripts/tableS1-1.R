@@ -1,3 +1,4 @@
+options(xtable.comment = FALSE)
 library(xtable)
 
 # working directory check

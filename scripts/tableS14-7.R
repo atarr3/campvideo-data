@@ -1,6 +1,6 @@
 library("readtext")
-library("quanteda")
-library("quanteda.sentiment")
+suppressPackageStartupMessages(library("quanteda"))
+library("quanteda.sentiment", warn.conflicts = FALSE)
 
 # working directory check
 here::i_am(file.path("scripts", "tableS14-7.R"))
@@ -60,20 +60,16 @@ AUTO <- tone.pred$tone
 cm.ours <- format(round(table(WMP, AUTO) / length(LSD) * 100, 2), nsmall=2)
 
 # save
-cat("LSD Results (Full)\n", file=here::here("tables", "tableS14-7.txt"))
-cat("------------------\n", file=here::here("tables", "tableS14-7.txt"), append=T)
+cat("LSD Results (Full)\n", file=here::here("tables", "tableS14-7.txt")) # overwrites existing file
 sink(file=here::here("tables", "tableS14-7.txt"), append=T)
+cat("------------------\n")
 print(cm.full)
-sink(file=NULL)
-cat("\n", file=here::here("tables", "tableS14-7.txt"), append=T)
-cat("LSD Results (Test)\n", file=here::here("tables", "tableS14-7.txt"), append=T)
-cat("------------------\n", file=here::here("tables", "tableS14-7.txt"), append=T)
-sink(file=here::here("tables", "tableS14-7.txt"), append=T)
+cat("\n")
+cat("LSD Results (Test)\n")
+cat("------------------\n")
 print(cm.test)
-sink(file=NULL)
-cat("\n", file=here::here("tables", "tableS14-7.txt"), append=T)
-cat("LSD Results (Ours)\n", file=here::here("tables", "tableS14-7.txt"), append=T)
-cat("------------------\n", file=here::here("tables", "tableS14-7.txt"), append=T)
-sink(file=here::here("tables", "tableS14-7.txt"), append=T)
+cat("\n")
+cat("LSD Results (Ours)\n")
+cat("------------------\n")
 print(cm.ours)
 sink(file=NULL)

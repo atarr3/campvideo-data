@@ -27,10 +27,9 @@ def main():
     # read in WMP data
     wmp = read_wmp()
     
-    # get cleaned tonecmag variable
-    tone = wmp.dropna(subset=['tonecmag'])
-    # drop 'contrast' observations
-    tone.drop(tone.loc[tone.tonecmag == 'CONTRAST'].index, inplace=True)
+    # drop na and remove 'CONTRAST' observations
+    tone = wmp.dropna(subset=['tonecmag']).loc[wmp.tonecmag != 'CONTRAST']
+    
     # recast tonecmag to 1/0 for sentiment
     tone_wmp = ((tone.tonecmag == 'POS') | 
                 (tone.tonecmag == 'POSITIVE')).astype(int)
