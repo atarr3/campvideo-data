@@ -90,9 +90,9 @@ The full list of figures and tables and associated replication code is given bel
 | [Table 5](tables/table5.txt)           | Confusion matrices for mood classiification                | Python   | [``table5.py``](scripts/table5.py)                           |
 | [Table 6](tables/table6.txt)           | Confusion matrices for ad negativity classification (NSVM) | Python   | [``table6.py``](scripts/table6.py)                           |
 | [Table S1.1](tables/tableS1-1.txt)     | YouTube channel coverage table                             | R        | [``tableS1-1.R``](scripts/tableS1-1.R)                       |
-| [Table S14.1](tables/tableS14-1.txt)   | Confusion matrix for mood MTurk results                    | Python   | [``tableS14-1.py``](scripts/tableS14-1.py)                   |
-| [Table S14.3](tables/tableS14-3.txt)   | Confusion matrix for LSD results                           | R        | [``tableS14-3.R``](scripts/tableS14-3.R)                     |
+| [Table S14.5](tables/tableS14-5.txt)   | Confusion matrix for mood MTurk results                    | Python   | [``tableS14-5.py``](scripts/tableS14-5.py)                   |
 | [Table S14.6](tables/tableS14-6.txt)   | Confusion matrices for ad negativity classification (All)  | Python   | [``tableS14-6.py``](scripts/tableS14-6.py)                   |
+| [Table S14.3](tables/tableS14-7.txt)   | Confusion matrix for LSD results                           | R        | [``tableS14-7.R``](scripts/tableS14-7.R)                     |
 | [Table S14.8](tables/tableS14-8.txt)   | Regression coefficients for issue convergence study        | R        | [``tableS14-8.R``](scripts/tableS14-8.R)                     |
 
 Python scripts can be executed via
