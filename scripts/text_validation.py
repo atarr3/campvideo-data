@@ -430,8 +430,7 @@ def main():
             iss_pred = iss_pred.reset_index()
             iss_pred.insert(1, 'uid', uids_iss) # after creative
             iss_pred.set_index(['creative', 'uid', 'feature'], inplace=True)
-            iss_pred.to_csv(join(ROOT, 'results', 'mentions_results.csv'),
-                            index=False)
+            iss_pred.to_csv(join(ROOT, 'results', 'mentions_results.csv'))
             
             # update MTurk results
             iss_mturk = pd.read_csv(join(MTURK_DIR, 'issue_mturk.csv'), 
