@@ -83,7 +83,7 @@ The replication code for the figures and tables relies on pre-computed results i
 | [``mentions_results.csv``](results/mentions_results.csv)   | Issue/Opponent Mentions      | [``text_validation.py``](scripts/text_validation.py)       | Figure 5, Table 2, Table 3                                  |
 | [``facerec_results.csv``](results/facerec_results.csv)     | Face Recognition             | [``facerec_validation.py``](scripts/facerec_validation.py) | Figure S13.8, Table 4                                       |
 | [``mood_results.csv``](results/mood_results.csv)           | Music Mood Classification    | [``mood_validation.py``](scripts/mood_validation.py)       | Figure 8, Figure S14.9, Figure S14.10, Table 5, Table S14.1 |
-| [``negativity_results.csv``](results/mentions_results.csv) | Ad Negativity Classification | [``text_validation.py``](scripts/text_validation.py)       | Table 6, Table S14.3, Table S14.6                           | 
+| [``negativity_results.csv``](results/mentions_results.csv) | Ad Negativity Classification | [``text_validation.py``](scripts/text_validation.py)       | Table 6, Table S14.5, Table S14.6                           | 
 
 These scripts can be executed via
 
