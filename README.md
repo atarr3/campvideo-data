@@ -113,6 +113,6 @@ Rscript scripts/<SCRIPT>
 where ``<SCRIPT>`` is given by the name in the "Script" column in the table above.
 
 ## Additional Notes
-- Recreating the figures and tables using pre-computed results only takes a few minutes.
+- Preprocessing the data can take up to 10-15 minutes. Recreating the figures and tables using pre-computed results only takes a few minutes.
 - Some confusion matrices in [``tables``](tables) will differ slightly from what is displayed in the paper. This is due to significant figure truncation, which does not guarantee the sum of the confusion matrices add up to 100% after rounding. The values in the paper have been adjusted to add up to 100%.
 - 'File not found' errors are likely due to issues with working directory. All code assumes this repo, [``campvideo-data``](https://github.com/atarr3/campvideo-data), is the working directory.
