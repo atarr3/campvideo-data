@@ -297,14 +297,21 @@ def parse_arguments():
                         'specifying to not train text models and predict '
                         'labels. If specified, the script will '
                         'check the `results` folder for a file called '
-                        '`facerec_results.csv`.')
+                        '`facerec_results.csv`')
+    parser.add_argument('-nim', '--no-issue-mention', dest='im_flag', 
+                        action='store_false', default=True, help='Flag for '
+                        'specifying to not perform issue mentions')
+    parser.add_argument('-nn', '--no-negativity', dest='an_flag', 
+                        action='store_false', default=True, help='Flag for '
+                        'specifying to not perform ad negativity '
+                        'classification')
     
     return parser.parse_args()
 
 def main():
     # read in CL arguments
     args = parse_arguments()
-    calculate = args.calculate
+    calculate, im_flag, an_flag = args.calculate, args.im_flag, args.an_flag
     
     # metadata
     meta = pd.read_csv(META_PATH, index_col='creative')
@@ -342,621 +349,637 @@ def main():
         
     # process videos
     if calculate:
-        print("Checking issue and opponent mentions...")
-        n = len(iss_wmp.index)
-        iss_pred = pd.DataFrame(0, dtype=int, columns=iss_wmp.columns,
-            index=pd.MultiIndex.from_product([iss_wmp.index, ['text', 'both']],
-                                             names=['creative', 'feature'])
-            )
-        oment_pred = pd.Series(0, dtype=int, name='o_mention', 
-            index=pd.MultiIndex.from_product([iss_wmp.index, ['text', 'both']],
-                                             names=['creative', 'feature']))
-        for i, creative in enumerate(iss_wmp.index):
-            end = '\r' if i < n-1 else '\n'
-            print('\tProcessing video %d of %d...' %(i+1, n), end=end, flush=True)
-            
-            # metadata 
-            metadata = meta.loc[creative]
-            uid = metadata.uid
-            opp_names = metadata.opp_names.split(',')
-            
-            # read transcript and construct Text object
-            tpath = join(INT_DIR, uid, 'transcript.txt')
-            # try:
-            #     with open(tpath, 'r', encoding='utf8') as fh:
-            #         transcript = fh.read().lower()
-            # except UnicodeDecodeError:
-            with open(tpath, 'r', encoding='ISO-8859-1') as fh:
-                transcript = fh.read().lower()
+        if im_flag:
+            print("Checking issue and opponent mentions...")
+            n = len(iss_wmp.index)
+            iss_pred = pd.DataFrame(0, dtype=int, columns=iss_wmp.columns,
+                index=pd.MultiIndex.from_product([iss_wmp.index, ['text', 'both']],
+                                                 names=['creative', 'feature'])
+                )
+            oment_pred = pd.Series(0, dtype=int, name='o_mention', 
+                index=pd.MultiIndex.from_product([iss_wmp.index, ['text', 'both']],
+                                                 names=['creative', 'feature']))
+            for i, creative in enumerate(iss_wmp.index):
+                end = '\r' if i < n-1 else '\n'
+                print('\tProcessing video %d of %d...' %(i+1, n), end=end, flush=True)
                 
-            trans_text = Text(transcript)
-            
-            # read image text and construct Text object
-            ipath = join(INT_DIR, uid, 'imtext.txt')
-            # try:
-            #     with open(ipath, 'r', encoding='utf8') as fh:
-            #         imtext = fh.read().lower().strip('\n').replace('\n', ' '
-            #                          ).strip('\t').replace('\t', ' '
-            #                          ).replace('.', ' ') # deals with .com
-            # except UnicodeDecodeError:
-            with open(ipath, 'r', encoding='ISO-8859-1') as fh:
-                imtext = fh.read().lower().strip('\n').replace('\n', ' '
-                                 ).strip('\t').replace('\t', ' '
-                                 ).replace('.', ' ') # deals with .com
+                # metadata 
+                metadata = meta.loc[creative]
+                uid = metadata.uid
+                opp_names = metadata.opp_names.split(',')
                 
-            im_text = Text(imtext)
-            
-            # read in keyframes and construct Keyframes object
-            with open(join(INT_DIR, uid, 'keyframes.txt'), 'r') as fh:
-                kf_ind = [int(item) for item in fh.read().split(',')]
+                # read transcript and construct Text object
+                tpath = join(INT_DIR, uid, 'transcript.txt')
+                # try:
+                #     with open(tpath, 'r', encoding='utf8') as fh:
+                #         transcript = fh.read().lower()
+                # except UnicodeDecodeError:
+                with open(tpath, 'r', encoding='ISO-8859-1') as fh:
+                    transcript = fh.read().lower()
+                    
+                trans_text = Text(transcript)
                 
-            kf = Keyframes.fromvid(join(VID_DIR, uid + '.mp4'), kf_ind, max_dim=1280)
+                # read image text and construct Text object
+                ipath = join(INT_DIR, uid, 'imtext.txt')
+                # try:
+                #     with open(ipath, 'r', encoding='utf8') as fh:
+                #         imtext = fh.read().lower().strip('\n').replace('\n', ' '
+                #                          ).strip('\t').replace('\t', ' '
+                #                          ).replace('.', ' ') # deals with .com
+                # except UnicodeDecodeError:
+                with open(ipath, 'r', encoding='ISO-8859-1') as fh:
+                    imtext = fh.read().lower().strip('\n').replace('\n', ' '
+                                     ).strip('\t').replace('\t', ' '
+                                     ).replace('.', ' ') # deals with .com
+                    
+                im_text = Text(imtext)
+                
+                # read in keyframes and construct Keyframes object
+                with open(join(INT_DIR, uid, 'keyframes.txt'), 'r') as fh:
+                    kf_ind = [int(item) for item in fh.read().split(',')]
+                    
+                kf = Keyframes.fromvid(join(VID_DIR, uid + '.mp4'), kf_ind, max_dim=1280)
+                
+                # Obama face recognition
+                obama_im = kf.facerec(obama_enc, dist_thr=0.5215)
+                
+                # issue mention
+                iss_trans = trans_text.issue_mention(include_names=True, include_phrases=True)
+                iss_im = im_text.issue_mention(include_names=True, include_phrases=True)
+                
+                # face recognition for obama variable (`prsment`)
+                iss_im['prsment'] |= obama_im
+                # ignore visual data for congress (`congmt`)  and wall street (`mention16`)
+                iss_im['congmt'] = 0
+                iss_im['mention16'] = 0
+                
+                # opponent mention
+                opp_trans = int(any(trans_text.opp_mention(name) for name in opp_names)) 
+                opp_im = int(any(im_text.opp_mention(name) for name in opp_names))
+                
+                # store in data frame
+                iss_pred.loc[(creative, 'text')] = iss_trans
+                oment_pred.loc[(creative, 'text')] = opp_trans
+                iss_pred.loc[(creative, 'both')] = iss_trans | iss_im
+                oment_pred.loc[(creative, 'both')] = opp_trans | opp_im
             
-            # Obama face recognition
-            obama_im = kf.facerec(obama_enc, dist_thr=0.5215)
+            # attach o_omention and uids to dataframe
+            iss_pred['o_mention'] = oment_pred
+            uids_iss = [MATCHES_CMAG[ele] for ele in iss_pred.index.get_level_values('creative')]
             
-            # issue mention
-            iss_trans = trans_text.issue_mention(include_names=True, include_phrases=True)
-            iss_im = im_text.issue_mention(include_names=True, include_phrases=True)
+            iss_pred = iss_pred.reset_index()
+            iss_pred.insert(1, 'uid', uids_iss) # after creative
+            iss_pred.set_index(['creative', 'uid', 'feature'], inplace=True)
+            iss_pred.to_csv(join(ROOT, 'results', 'mentions_results.csv'),
+                            index=False)
             
-            # face recognition for obama variable (`prsment`)
-            iss_im['prsment'] |= obama_im
-            # ignore visual data for congress (`congmt`)  and wall street (`mention16`)
-            iss_im['congmt'] = 0
-            iss_im['mention16'] = 0
-            
-            # opponent mention
-            opp_trans = int(any(trans_text.opp_mention(name) for name in opp_names)) 
-            opp_im = int(any(im_text.opp_mention(name) for name in opp_names))
-            
-            # store in data frame
-            iss_pred.loc[(creative, 'text')] = iss_trans
-            oment_pred.loc[(creative, 'text')] = opp_trans
-            iss_pred.loc[(creative, 'both')] = iss_trans | iss_im
-            oment_pred.loc[(creative, 'both')] = opp_trans | opp_im
-        
-        # save results
-        iss_pred['o_mention'] = oment_pred
-        uids = [MATCHES_CMAG[ele] for ele in iss_pred.index.get_level_values('creative')]
-        iss_pred.reset_index(inplace=True)
-        iss_pred.insert(1, 'uid', uids) # after creative
-        iss_pred.to_csv(join(ROOT, 'results', 'mentions_results.csv'),
-                        index=False)
-        
-        # update MTurk results
-        iss_mturk = pd.read_csv(join(MTURK_DIR, 'issue_mturk.csv'), 
-                                index_col=['creative', 'uid', 'issue'])
-        iss_mturk.pred = iss_pred.xs('both', level='feature'
-                                ).drop(columns=['o_mention']
-                                ).stack(
-                                ).loc[iss_mturk.index]
-        iss_mturk.to_csv(join(MTURK_DIR, 'issue_mturk.csv'))
-        print("Done!")
+            # update MTurk results
+            iss_mturk = pd.read_csv(join(MTURK_DIR, 'issue_mturk.csv'), 
+                                    index_col=['creative', 'uid', 'issue'])
+            iss_mturk.pred = iss_pred.xs('both', level='feature'
+                                    ).drop(columns=['o_mention']
+                                    ).stack(
+                                    ).loc[iss_mturk.index]
+            iss_mturk.to_csv(join(MTURK_DIR, 'issue_mturk.csv'))
+            print("Done!")
         
         ###################
         ## ad negativity ##
         ###################
         
-        print("Classifying ad negativity...")
+        if an_flag:
         
-        # get uids
-        uids = [MATCHES_CMAG[ele] for ele in tone_wmp.index]
-        
-        # read in features
-        tpaths = [join(INT_DIR, uid, 'transcript.txt') for uid in uids]
-        mfeats = np.array([np.load(open(join(INT_DIR, uid, 'audiofeat.npy'), 'rb'))
-                           for uid in uids], dtype=float)
-        d = mfeats.shape[1]
-        
-        # construct dataframe
-        feats = pd.DataFrame(mfeats, index=tone_wmp.index).assign(tpath=tpaths)
-        
-        # train/test splits
-        x_train,x_test,y_train,y_test = train_test_split(feats,
-                                                         tone_wmp,
-                                                         test_size=0.2,
-                                                         random_state=SEED)
-        
-        # results data frame
-        neg_pred = pd.DataFrame(0, columns=['train', 'tone'],
-            index=pd.MultiIndex.from_product([tone_wmp.index, ['text', 'music', 'both'],
-                                              ['lsvm', 'nsvm', 'knn', 'rf', 'nb']],
-                                             names=['creative', 'feature', 'model'])
-            )
-        neg_pred.loc[x_train.index, "train"] = 1
-        neg_pred = neg_pred.reset_index(
-                          ).set_index(['creative', 'feature', 'model', 'train'])
-        
-        ################
-        ## Linear SVM ##
-        ################
-        
-        print("\tFitting linear SVM classifiers... ", end='', flush=True)
-
-        ## text only ##
-
-        # pipeline
-        pipe = Pipeline([
-                    ('feat', ColumnTransformer(
-                                [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                        input='filename'), -1)],
-                                remainder='drop')),
-                    ('dim_red', SelectPercentile(mutual_info_classif)),
-                    ('clf', LinearSVC(loss='hinge', class_weight='balanced'))
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                   'dim_red__percentile' : [50, 75, 90, 100],
-                   'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
-                   'clf__class_weight': ['balanced', None]
-                 }]
-
-        # grid search
-        lsvm_t = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        lsvm_t.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'text', 'lsvm'), 'tone'] = lsvm_t.predict(feats)
-
-        ## music only ##
-
-        # pipeline    
-        pipe = Pipeline([
-                    ('feat', ColumnTransformer(
-                                [("ss", StandardScaler(), slice(-1))],
-                                remainder='drop')),
-                    ('clf', LinearSVC(loss='hinge', class_weight='balanced'))
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                   'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
-                   'clf__class_weight': ['balanced', None]
-                 }]
-
-        # grid search
-        lsvm_m = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        lsvm_m.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'music', 'lsvm'), 'tone'] = lsvm_m.predict(feats)
-
-
-        ## text + music ##
+            print("Classifying ad negativity...")
             
-        # pipeline    
-        pipe = Pipeline([
-                    ('feat1', ColumnTransformer(
-                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                            input='filename'), -1)],
-                                    remainder='passthrough')),
-                    # music features run from -d:
-                    ('feat2', ColumnTransformer(
-                                [("dim_red", SelectPercentile(mutual_info_classif), 
-                                  slice(-d))], remainder='passthrough')),
-                    # SVM inputs should be standardized
-                    ('denser', FunctionTransformer(lambda x: x.toarray(), 
-                                                   accept_sparse=True)),
-                    ('scaler', StandardScaler()),
-                    ('clf', LinearSVC(loss='hinge', class_weight='balanced'))
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                   'feat2__dim_red__percentile' : [50, 75, 90, 100],
-                   'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
-                   'clf__class_weight': ['balanced', None]
-                 }]
-
-        # grid search
-        lsvm_tm = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        lsvm_tm.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'both', 'lsvm'), 'tone'] = lsvm_tm.predict(feats)
+            # get uids
+            uids = [MATCHES_CMAG[ele] for ele in tone_wmp.index]
             
-        print("Done!")
-        
-        ###################
-        ## Nonlinear SVM ##
-        ###################
-        
-        print("\tFitting non-linear SVM classifiers... ", end='', flush=True)
-        
-        ## text only ##
-
-        # pipeline
-        pipe = Pipeline([
-                    ('feat', ColumnTransformer(
-                                [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                        input='filename'), -1)],
-                                remainder='drop')),
-                    ('dim_red', SelectPercentile(mutual_info_classif)),
-                    ('clf', SVC(kernel='rbf', class_weight='balanced'))
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                   'dim_red__percentile' : [50, 75, 90, 100],
-                   'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
-                   'clf__gamma': np.logspace(-6, -2, 5),
-                   'clf__class_weight': ['balanced', None]
-                 }]
-
-        # grid search
-        svm_t = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        svm_t.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'text', 'nsvm'), 'tone'] = svm_t.predict(feats)
-
-        ## music only ##
-
-        # pipeline    
-        pipe = Pipeline([
-                    ('feat', ColumnTransformer(
-                                [("ss", StandardScaler(), slice(-1))],
-                                remainder='drop')),
-                    ('clf', SVC(kernel='rbf', class_weight='balanced'))
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                   'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
-                   'clf__gamma': np.logspace(-6, -2, 5),
-                   'clf__class_weight': ['balanced', None]
-                 }]
-
-        # grid search
-        svm_m = GridSearchCV(pipe,params,scoring='accuracy',cv=5,verbose=1)
-        svm_m.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'music', 'nsvm'), 'tone'] = svm_m.predict(feats)
-
-        ## text + music ##
+            # read in features
+            tpaths = [join(INT_DIR, uid, 'transcript.txt') for uid in uids]
+            mfeats = np.array([np.load(open(join(INT_DIR, uid, 'audiofeat.npy'), 'rb'))
+                               for uid in uids], dtype=float)
+            d = mfeats.shape[1]
             
-        # pipeline    
-        pipe = Pipeline([
-                    ('feat1', ColumnTransformer(
-                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                            input='filename'), -1)],
-                                    remainder='passthrough')),
-                    # music features run from -d:
-                    ('feat2', ColumnTransformer(
-                                [("dim_red", SelectPercentile(mutual_info_classif), 
-                                  slice(-d))], remainder='passthrough')),
-                    # SVM inputs should be standardized
-                    ('denser', FunctionTransformer(lambda x: x.toarray(), 
-                                                   accept_sparse=True)),
-                    ('scaler', StandardScaler()),
-                    ('clf', SVC(kernel='rbf', class_weight='balanced'))
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                   'feat2__dim_red__percentile' : [50, 75, 90, 100],
-                   'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
-                   'clf__gamma': np.logspace(-6, -2, 5),
-                   'clf__class_weight': ['balanced', None]
-                 }]
-
-        # grid search
-        svm_tm = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        svm_tm.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'both', 'nsvm'), 'tone'] = svm_tm.predict(feats)
-          
-        print("Done!")    
-        
-        #########
-        ## KNN ##
-        #########
-        
-        print("\tTraining KNN classifiers... ", end='', flush=True)
+            # construct dataframe
+            feats = pd.DataFrame(mfeats, index=tone_wmp.index).assign(tpath=tpaths)
             
-        ## text only ##
-
-        # pipeline
-        pipe = Pipeline([
-                    ('feat', ColumnTransformer(
-                                [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                        input='filename'), -1)],
-                                remainder='drop')),
-                    ('dim_red', SelectPercentile(mutual_info_classif)),
-                    ('clf', KNeighborsClassifier())
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                  'dim_red__percentile' : [50, 75, 90, 100],
-                  'clf__n_neighbors': [5, 7, 11, 15, 21]
-                 }]
-
-        # grid search
-        knn_t = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        knn_t.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'text', 'knn'), 'tone'] = knn_t.predict(feats)
-
-        ## music only ##
-
-        # pipeline    
-        pipe = Pipeline([
-                    ('feat', ColumnTransformer(
-                                [("ss", StandardScaler(), slice(-1))],
-                                remainder='drop')),
-                    ('clf', KNeighborsClassifier())
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                  'clf__n_neighbors': [5, 7, 11, 15, 21]
-                 }]
-
-        # grid search
-        knn_m = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        knn_m.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'music', 'knn'), 'tone'] = knn_m.predict(feats)
-
-        ## text + music ##
+            # train/test splits
+            x_train,x_test,y_train,y_test = train_test_split(feats,
+                                                             tone_wmp,
+                                                             test_size=0.2,
+                                                             random_state=SEED)
             
-        # pipeline    
-        pipe = Pipeline([
-                    ('feat1', ColumnTransformer(
-                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                            input='filename'), -1)],
-                                    remainder='passthrough')),
-                    # music features run from -d:
-                    ('feat2', ColumnTransformer(
-                                [("dim_red", SelectPercentile(mutual_info_classif), 
-                                  slice(-d))], remainder='passthrough')),
-                    # KNN inputs should be standardized
-                    ('denser', FunctionTransformer(lambda x: x.toarray(), 
-                                                   accept_sparse=True)),
-                    ('scaler', StandardScaler()),
-                    ('clf', KNeighborsClassifier())
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                  'feat2__dim_red__percentile' : [50, 75, 90, 100],
-                  'clf__n_neighbors': [5, 7, 11, 15, 21]
-                 }]
-        
-        # grid search
-        knn_tm = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        knn_tm.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'both', 'knn'), 'tone'] = knn_tm.predict(feats)
+            # results data frame
+            neg_pred = pd.DataFrame(0, columns=['train', 'tone'],
+                index=pd.MultiIndex.from_product([tone_wmp.index, ['text', 'music', 'both'],
+                                                  ['lsvm', 'nsvm', 'knn', 'rf', 'nb']],
+                                                 names=['creative', 'feature', 'model'])
+                )
+            neg_pred.loc[x_train.index, "train"] = 1
             
-        print("Done!")
-        
-        ###################
-        ## Random Forest ##
-        ###################
-        
-        print("\tTraining random forest classifiers... ", end='', flush=True)
+            ################
+            ## Linear SVM ##
+            ################
             
-        ## text only ##
-
-        # pipeline
-        pipe = Pipeline([
-                    ('feat', ColumnTransformer(
-                                [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                        input='filename'), -1)],
-                                remainder='drop')),
-                    ('dim_red', SelectPercentile(mutual_info_classif)),
-                    ('clf', RandomForestClassifier(class_weight='balanced'))
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                  'dim_red__percentile' : [50, 75, 90, 100],
-                  'clf__n_estimators': [100, 250, 500],
-                  'clf__min_samples_leaf': [1, 2, 4],
-                  'clf__min_samples_split': [2, 5, 10],
-                  'clf__class_weight' : ['balanced', None]
-                 }]
-
-        # grid search
-        rf_t = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        rf_t.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'text', 'rf'), 'tone'] = rf_t.predict(feats)
-
-        ## music only ##
-
-        # pipeline    
-        pipe = Pipeline([
-                    ('feat', ColumnTransformer(
-                                [('ss', 'passthrough', slice(-1))], 
-                                remainder='drop')),
-                    ('clf', RandomForestClassifier(class_weight='balanced'))
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                  'clf__n_estimators': [100, 250, 500],
-                  'clf__min_samples_leaf': [1, 2, 4],
-                  'clf__min_samples_split': [2, 5, 10],
-                  'clf__class_weight' : ['balanced', None]
-                 }]
-
-        # grid search
-        rf_m = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        rf_m.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'music', 'rf'), 'tone'] = rf_m.predict(feats)
-
-        ## text + music ##
-            
-        # pipeline    
-        pipe = Pipeline([
-                    ('feat1', ColumnTransformer(
-                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                            input='filename'), -1)],
-                                    remainder='passthrough')),
-                    # music features run from -d:
-                    ('feat2', ColumnTransformer(
-                                [("dim_red", SelectPercentile(mutual_info_classif), 
-                                  slice(-d))], remainder='passthrough')),
-                    ('clf', RandomForestClassifier(class_weight='balanced'))
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                  'feat2__dim_red__percentile' : [50, 75, 90, 100],
-                  'clf__n_estimators': [100, 250, 500],
-                  'clf__min_samples_leaf': [1, 2, 4],
-                  'clf__min_samples_split': [2, 5, 10],
-                  'clf__class_weight' : ['balanced', None]
-                 }]
-
-        # grid search
-        rf_tm = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        rf_tm.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'both', 'rf'), 'tone'] = rf_tm.predict(feats)
-            
-        print("Done!")
-        
-        #################    
-        ## Naive Bayes ##
-        #################
-        
-        print("\tFitting naive Bayes classifiers... ", end='', flush=True)
-            
-        ## text only ##
-
-        # pipeline
-        pipe = Pipeline([
-                    ('feat', ColumnTransformer(
-                                [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                        input='filename'), -1)],
-                                remainder='drop')),
-                    ('dim_red', SelectPercentile(mutual_info_classif)),
-                    ('clf', MultinomialNB())
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                  'feat__cv' : [CountVectorizer(analyzer=tokenize, min_df=2,
-                                                input='filename')],
-                  'dim_red__percentile': [50, 75, 90, 100],
-                  'clf': [BernoulliNB(), MultinomialNB()],
-                  'clf__alpha': [0.01, 0.1, 1, 2] 
-                 },
-                 {
-                  'feat__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                input='filename')],
-                  'dim_red__percentile': [50, 75, 90, 100],
-                  'clf': [MultinomialNB()],
-                  'clf__alpha': [0.01, 0.1, 1, 2] 
-                 },
-                 {
-                  'feat__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                input='filename')],
-                  'dim_red__percentile': [50, 75, 90, 100],
-                  'clf': [GaussianNB()]
-                 }]
-
-        # grid search
-        nb_t = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        nb_t.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'text', 'nb'), 'tone'] = nb_t.predict(feats)
-
-        # music only
-            
-        # pipeline    
-        pipe = Pipeline([
-                    ('feat', ColumnTransformer(
-                                [('ss', 'passthrough', slice(-1))], 
-                                remainder='drop')),
-                    ('clf', GaussianNB())
-                        ])
-
-        # fit classifier (no parameters to tune)
-        nb_m = pipe
-        nb_m.fit(x_train, y_train)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'music', 'nb'), 'tone'] = nb_m.predict(feats)
-        
-        ## text + music ##
-            
-        # pipeline    
-        pipe = Pipeline([
-                    ('feat1', ColumnTransformer(
-                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                            input='filename'), -1)],
-                                    remainder='passthrough')),
-                    # music features run from -d:
-                    ('feat2', ColumnTransformer(
-                                [("dim_red", SelectPercentile(mutual_info_classif), 
-                                  slice(-d))], remainder='passthrough')),
-                    # make output array dense
-                    ('denser', FunctionTransformer(lambda x: x.toarray(), 
-                                                   accept_sparse=True)),
-                    ('clf', HeterogenousNB())
-                        ])
-
-        # parameter grid for grid search
-        params = [{
-                  'feat1__cv' : [CountVectorizer(analyzer=tokenize, min_df=2,
-                                                input='filename')],
-                  'feat2__dim_red__percentile': [50, 75, 90, 100],
-                  'clf__discrete_clf': ['bernoulli', 'multinomial'],
-                  'clf__alpha': [0.01, 0.1, 1, 2] 
-                 },
-                 {
-                  'feat1__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                input='filename')],
-                  'feat2__dim_red__percentile': [50, 75, 90, 100],
-                  'clf__discrete_clf': ['multinomial'],
-                  'clf__alpha': [0.01, 0.1, 1, 2] 
-                 },
-                 {
-                  'feat1__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                input='filename')],
-                  'feat2__dim_red__percentile': [50, 75, 90, 100],
-                  'clf': [GaussianNB()]
-                 }]
-
-        # grid search
-        nb_tm = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
-        nb_tm.fit(x_train, y_train, clf__split_ind=-d)
-
-        # predictions
-        neg_pred.loc[(feats.index, 'both', 'nb'), 'tone'] = nb_tm.predict(feats)
-        
-        # insert column for YouTube IDS
-        uids = [MATCHES_CMAG[ele] for ele in neg_pred.index.get_level_values('creative')]
-        neg_pred = neg_pred.reset_index()
-        neg_pred.insert(1, 'uid', uids) # after `creative`
-        
-        # save results
-        neg_pred.to_csv(join(ROOT, 'results', 'negativity_results.csv'))
-        
-        print("Done!")
+            print("\tFitting linear SVM classifiers... ")
     
-    # read in data
-    else:
-        iss_pred = pd.read_csv(join(ROOT, 'results', 'mentions_results.csv'),
-                              index_col=['creative', 'feature'])
-        neg_pred = pd.read_csv(join(ROOT, 'results', 'negativity_results.csv'),
-                              index_col=['creative', 'feature', 'model', 'train'])
+            ## text only ##
+    
+            # pipeline
+            pipe = Pipeline([
+                        ('feat', ColumnTransformer(
+                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                            input='filename'), -1)],
+                                    remainder='drop')),
+                        ('dim_red', SelectPercentile(mutual_info_classif)),
+                        ('clf', LinearSVC(loss='hinge', class_weight='balanced'))
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                       'dim_red__percentile' : [50, 75, 90, 100],
+                       'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
+                       'clf__class_weight': ['balanced', None]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            lsvm_t = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            lsvm_t.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'text', 'lsvm'), 'tone'] = lsvm_t.predict(feats)
+    
+            ## music only ##
+    
+            # pipeline    
+            pipe = Pipeline([
+                        ('feat', ColumnTransformer(
+                                    [("ss", StandardScaler(), slice(-1))],
+                                    remainder='drop')),
+                        ('clf', LinearSVC(loss='hinge', class_weight='balanced'))
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                       'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
+                       'clf__class_weight': ['balanced', None]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            lsvm_m = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            lsvm_m.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'music', 'lsvm'), 'tone'] = lsvm_m.predict(feats)
+    
+    
+            ## text + music ##
+                
+            # pipeline    
+            pipe = Pipeline([
+                        ('feat1', ColumnTransformer(
+                                        [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                                input='filename'), -1)],
+                                        remainder='passthrough')),
+                        # music features run from -d:
+                        ('feat2', ColumnTransformer(
+                                    [("dim_red", SelectPercentile(mutual_info_classif), 
+                                      slice(-d))], remainder='passthrough')),
+                        # SVM inputs should be standardized
+                        ('denser', FunctionTransformer(lambda x: x.toarray(), 
+                                                       accept_sparse=True)),
+                        ('scaler', StandardScaler()),
+                        ('clf', LinearSVC(loss='hinge', class_weight='balanced'))
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                       'feat2__dim_red__percentile' : [50, 75, 90, 100],
+                       'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
+                       'clf__class_weight': ['balanced', None]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            lsvm_tm = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            lsvm_tm.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'both', 'lsvm'), 'tone'] = lsvm_tm.predict(feats)
+                
+            print("Done!")
+            
+            ###################
+            ## Nonlinear SVM ##
+            ###################
+            
+            print("\tFitting non-linear SVM classifiers... ", end='', flush=True)
+            
+            ## text only ##
+    
+            # pipeline
+            pipe = Pipeline([
+                        ('feat', ColumnTransformer(
+                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                            input='filename'), -1)],
+                                    remainder='drop')),
+                        ('dim_red', SelectPercentile(mutual_info_classif)),
+                        ('clf', SVC(kernel='rbf', class_weight='balanced'))
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                       'dim_red__percentile' : [50, 75, 90, 100],
+                       'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
+                       'clf__gamma': np.logspace(-6, -2, 5),
+                       'clf__class_weight': ['balanced', None]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            svm_t = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            svm_t.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'text', 'nsvm'), 'tone'] = svm_t.predict(feats)
+    
+            ## music only ##
+    
+            # pipeline    
+            pipe = Pipeline([
+                        ('feat', ColumnTransformer(
+                                    [("ss", StandardScaler(), slice(-1))],
+                                    remainder='drop')),
+                        ('clf', SVC(kernel='rbf', class_weight='balanced'))
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                       'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
+                       'clf__gamma': np.logspace(-6, -2, 5),
+                       'clf__class_weight': ['balanced', None]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            svm_m = GridSearchCV(pipe,params,scoring='accuracy',cv=5, verbose=1)
+            svm_m.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'music', 'nsvm'), 'tone'] = svm_m.predict(feats)
+    
+            ## text + music ##
+                
+            # pipeline    
+            pipe = Pipeline([
+                        ('feat1', ColumnTransformer(
+                                        [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                                input='filename'), -1)],
+                                        remainder='passthrough')),
+                        # music features run from -d:
+                        ('feat2', ColumnTransformer(
+                                    [("dim_red", SelectPercentile(mutual_info_classif), 
+                                      slice(-d))], remainder='passthrough')),
+                        # SVM inputs should be standardized
+                        ('denser', FunctionTransformer(lambda x: x.toarray(), 
+                                                       accept_sparse=True)),
+                        ('scaler', StandardScaler()),
+                        ('clf', SVC(kernel='rbf', class_weight='balanced'))
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                       'feat2__dim_red__percentile' : [50, 75, 90, 100],
+                       'clf__C': [0.001, 0.01, 0.1, 1, 5, 10],
+                       'clf__gamma': np.logspace(-6, -2, 5),
+                       'clf__class_weight': ['balanced', None]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            svm_tm = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            svm_tm.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'both', 'nsvm'), 'tone'] = svm_tm.predict(feats)
+              
+            print("Done!")    
+            
+            #########
+            ## KNN ##
+            #########
+            
+            print("\tTraining KNN classifiers... ", end='', flush=True)
+                
+            ## text only ##
+    
+            # pipeline
+            pipe = Pipeline([
+                        ('feat', ColumnTransformer(
+                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                            input='filename'), -1)],
+                                    remainder='drop')),
+                        ('dim_red', SelectPercentile(mutual_info_classif)),
+                        ('clf', KNeighborsClassifier())
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                      'dim_red__percentile' : [50, 75, 90, 100],
+                      'clf__n_neighbors': [5, 7, 11, 15, 21]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            knn_t = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            knn_t.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'text', 'knn'), 'tone'] = knn_t.predict(feats)
+    
+            ## music only ##
+    
+            # pipeline    
+            pipe = Pipeline([
+                        ('feat', ColumnTransformer(
+                                    [("ss", StandardScaler(), slice(-1))],
+                                    remainder='drop')),
+                        ('clf', KNeighborsClassifier())
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                      'clf__n_neighbors': [5, 7, 11, 15, 21]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            knn_m = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            knn_m.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'music', 'knn'), 'tone'] = knn_m.predict(feats)
+    
+            ## text + music ##
+                
+            # pipeline    
+            pipe = Pipeline([
+                        ('feat1', ColumnTransformer(
+                                        [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                                input='filename'), -1)],
+                                        remainder='passthrough')),
+                        # music features run from -d:
+                        ('feat2', ColumnTransformer(
+                                    [("dim_red", SelectPercentile(mutual_info_classif), 
+                                      slice(-d))], remainder='passthrough')),
+                        # KNN inputs should be standardized
+                        ('denser', FunctionTransformer(lambda x: x.toarray(), 
+                                                       accept_sparse=True)),
+                        ('scaler', StandardScaler()),
+                        ('clf', KNeighborsClassifier())
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                      'feat2__dim_red__percentile' : [50, 75, 90, 100],
+                      'clf__n_neighbors': [5, 7, 11, 15, 21]
+                     }]
+            
+            # grid search
+            print("\t\t", end="", flush=True)
+            knn_tm = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            knn_tm.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'both', 'knn'), 'tone'] = knn_tm.predict(feats)
+                
+            print("Done!")
+            
+            ###################
+            ## Random Forest ##
+            ###################
+            
+            print("\tTraining random forest classifiers... ", end='', flush=True)
+                
+            ## text only ##
+    
+            # pipeline
+            pipe = Pipeline([
+                        ('feat', ColumnTransformer(
+                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                            input='filename'), -1)],
+                                    remainder='drop')),
+                        ('dim_red', SelectPercentile(mutual_info_classif)),
+                        ('clf', RandomForestClassifier(class_weight='balanced'))
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                      'dim_red__percentile' : [50, 75, 90, 100],
+                      'clf__n_estimators': [100, 250, 500],
+                      'clf__min_samples_leaf': [1, 2, 4],
+                      'clf__min_samples_split': [2, 5, 10],
+                      'clf__class_weight' : ['balanced', None]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            rf_t = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            rf_t.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'text', 'rf'), 'tone'] = rf_t.predict(feats)
+    
+            ## music only ##
+    
+            # pipeline    
+            pipe = Pipeline([
+                        ('feat', ColumnTransformer(
+                                    [('ss', 'passthrough', slice(-1))], 
+                                    remainder='drop')),
+                        ('clf', RandomForestClassifier(class_weight='balanced'))
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                      'clf__n_estimators': [100, 250, 500],
+                      'clf__min_samples_leaf': [1, 2, 4],
+                      'clf__min_samples_split': [2, 5, 10],
+                      'clf__class_weight' : ['balanced', None]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            rf_m = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            rf_m.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'music', 'rf'), 'tone'] = rf_m.predict(feats)
+    
+            ## text + music ##
+                
+            # pipeline    
+            pipe = Pipeline([
+                        ('feat1', ColumnTransformer(
+                                        [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                                input='filename'), -1)],
+                                        remainder='passthrough')),
+                        # music features run from -d:
+                        ('feat2', ColumnTransformer(
+                                    [("dim_red", SelectPercentile(mutual_info_classif), 
+                                      slice(-d))], remainder='passthrough')),
+                        ('clf', RandomForestClassifier(class_weight='balanced'))
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                      'feat2__dim_red__percentile' : [50, 75, 90, 100],
+                      'clf__n_estimators': [100, 250, 500],
+                      'clf__min_samples_leaf': [1, 2, 4],
+                      'clf__min_samples_split': [2, 5, 10],
+                      'clf__class_weight' : ['balanced', None]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            rf_tm = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            rf_tm.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'both', 'rf'), 'tone'] = rf_tm.predict(feats)
+                
+            print("Done!")
+            
+            #################    
+            ## Naive Bayes ##
+            #################
+            
+            print("\tFitting naive Bayes classifiers... ", end='', flush=True)
+                
+            ## text only ##
+    
+            # pipeline
+            pipe = Pipeline([
+                        ('feat', ColumnTransformer(
+                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                            input='filename'), -1)],
+                                    remainder='drop')),
+                        ('dim_red', SelectPercentile(mutual_info_classif)),
+                        ('clf', MultinomialNB())
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                      'feat__cv' : [CountVectorizer(analyzer=tokenize, min_df=2,
+                                                    input='filename')],
+                      'dim_red__percentile': [50, 75, 90, 100],
+                      'clf': [BernoulliNB(), MultinomialNB()],
+                      'clf__alpha': [0.01, 0.1, 1, 2] 
+                     },
+                     {
+                      'feat__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                    input='filename')],
+                      'dim_red__percentile': [50, 75, 90, 100],
+                      'clf': [MultinomialNB()],
+                      'clf__alpha': [0.01, 0.1, 1, 2] 
+                     },
+                     {
+                      'feat__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                    input='filename')],
+                      'dim_red__percentile': [50, 75, 90, 100],
+                      'clf': [GaussianNB()]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            nb_t = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            nb_t.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'text', 'nb'), 'tone'] = nb_t.predict(feats)
+    
+            # music only
+                
+            # pipeline    
+            pipe = Pipeline([
+                        ('feat', ColumnTransformer(
+                                    [('ss', 'passthrough', slice(-1))], 
+                                    remainder='drop')),
+                        ('clf', GaussianNB())
+                            ])
+    
+            # fit classifier (no parameters to tune)
+            print("\t\t", end="", flush=True)
+            nb_m = pipe
+            nb_m.fit(x_train, y_train)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'music', 'nb'), 'tone'] = nb_m.predict(feats)
+            
+            ## text + music ##
+                
+            # pipeline    
+            pipe = Pipeline([
+                        ('feat1', ColumnTransformer(
+                                        [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                                input='filename'), -1)],
+                                        remainder='passthrough')),
+                        # music features run from -d:
+                        ('feat2', ColumnTransformer(
+                                    [("dim_red", SelectPercentile(mutual_info_classif), 
+                                      slice(-d))], remainder='passthrough')),
+                        # make output array dense
+                        ('denser', FunctionTransformer(lambda x: x.toarray(), 
+                                                       accept_sparse=True)),
+                        ('clf', HeterogenousNB())
+                            ])
+    
+            # parameter grid for grid search
+            params = [{
+                      'feat1__cv' : [CountVectorizer(analyzer=tokenize, min_df=2,
+                                                    input='filename')],
+                      'feat2__dim_red__percentile': [50, 75, 90, 100],
+                      'clf__discrete_clf': ['bernoulli', 'multinomial'],
+                      'clf__alpha': [0.01, 0.1, 1, 2] 
+                     },
+                     {
+                      'feat1__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                    input='filename')],
+                      'feat2__dim_red__percentile': [50, 75, 90, 100],
+                      'clf__discrete_clf': ['multinomial'],
+                      'clf__alpha': [0.01, 0.1, 1, 2] 
+                     },
+                     {
+                      'feat1__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
+                                                    input='filename')],
+                      'feat2__dim_red__percentile': [50, 75, 90, 100],
+                      'clf': [GaussianNB()]
+                     }]
+    
+            # grid search
+            print("\t\t", end="", flush=True)
+            nb_tm = GridSearchCV(pipe, params, scoring='accuracy', cv=5, verbose=1)
+            nb_tm.fit(x_train, y_train, clf__split_ind=-d)
+    
+            # predictions
+            neg_pred.loc[(feats.index, 'both', 'nb'), 'tone'] = nb_tm.predict(feats)
+            
+            # insert column for YouTube IDs
+            uids_neg = [MATCHES_CMAG[ele] for ele in neg_pred.index.get_level_values('creative')]
+            neg_pred = neg_pred.reset_index()
+            neg_pred.insert(1, 'uid', uids_neg) # after creative
+            
+            # save results
+            neg_pred.to_csv(join(ROOT, 'results', 'negativity_results.csv'), 
+                            index=False)
+            
+            print("Done!")
+    
+    # read in data, even if it already exists
+    iss_pred = pd.read_csv(join(ROOT, 'results', 'mentions_results.csv'),
+                          index_col=['creative', 'feature'])
     
     ## results ##
     
