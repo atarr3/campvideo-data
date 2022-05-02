@@ -92,7 +92,7 @@ The full list of figures and tables and associated replication code is given bel
 | [Table S1.1](tables/tableS1-1.txt)     | YouTube channel coverage table                             | R        | [``tableS1-1.R``](scripts/tableS1-1.R)                       |
 | [Table S14.5](tables/tableS14-5.txt)   | Confusion matrix for mood MTurk results                    | Python   | [``tableS14-5.py``](scripts/tableS14-5.py)                   |
 | [Table S14.6](tables/tableS14-6.txt)   | Confusion matrices for ad negativity classification (All)  | Python   | [``tableS14-6.py``](scripts/tableS14-6.py)                   |
-| [Table S14.3](tables/tableS14-7.txt)   | Confusion matrix for LSD results                           | R        | [``tableS14-7.R``](scripts/tableS14-7.R)                     |
+| [Table S14.7](tables/tableS14-7.txt)   | Confusion matrix for LSD results                           | R        | [``tableS14-7.R``](scripts/tableS14-7.R)                     |
 | [Table S14.8](tables/tableS14-8.txt)   | Regression coefficients for issue convergence study        | R        | [``tableS14-8.R``](scripts/tableS14-8.R)                     |
 
 Python scripts can be executed via
@@ -111,5 +111,5 @@ where ``<SCRIPT>`` is given by the name in the "Script" column in the table abov
 
 ## Additional Notes
 - Recreating the figures and tables using pre-computed results only takes a few minutes.
-- Some confusion matrices will differ slightly from what is displayed in the paper. This is due to significant figure truncation, which does not guarantee the sum of the confusion matrices add up to 100% after rounding. The values in the paper have been adjusted to add up to 100%.
+- Some confusion matrices [``tables``](tables) will differ slightly from what is displayed in the paper. This is due to significant figure truncation, which does not guarantee the sum of the confusion matrices add up to 100% after rounding. The values in the paper have been adjusted to add up to 100%.
 - 'File not found' errors are likely due to issues with working directory. All code assumes this repo, `campvideo-data`, is the working directory.
