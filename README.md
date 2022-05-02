@@ -16,7 +16,10 @@ Full replication of the results in the paper is a laborious process, involving s
 2. [Prediction](README-PR.md#Prediction)
 3. [Validation](#Validation) 
 
-Each step may also be executed separately using pre-computed results provided in this repository. For those seeking only to validate the results in the paper, it is **highly recommended** to ignore the first two steps, feature extraction and prediction, and follow the steps for validation.
+Each step may also be executed separately using pre-computed results provided in this repository. For those seeking only to validate the results in the paper, it is **highly recommended** to skip the first two steps, 
+feature extraction and prediction, and focus on the steps for validation. The reason is that the former requires the acquision of YouTube videos, which cannot be publicly shared, and the use of Google Cloud Platform (GCP), 
+which costs money, as well as a laborious process of installing various software packages. As both YouTube and GCP change constantly, the exact replication of these two steps may not be possible.  We provide 
+the intermediate results from both feature extraction and prediction steps so that users can replicate the validation results easily.
 
 We provide instructions for replicating the [Validation](#Validation) step in this document, while instructions for replicating feature extraction and prediction are found in [README-FE.md](README-FE.md) and [README-PR.md](README-PR.md), respectively. 
 
