@@ -350,7 +350,7 @@ def main():
     # process videos
     if calculate:
         if im_flag:
-            print("Checking issue and opponent mentions...")
+            print("Detecting issue and opponent mentions...")
             n = len(iss_wmp.index)
             iss_pred = pd.DataFrame(0, dtype=int, columns=iss_wmp.columns,
                 index=pd.MultiIndex.from_product([iss_wmp.index, ['text', 'both']],
@@ -568,14 +568,12 @@ def main():
     
             # predictions
             neg_pred.loc[(feats.index, 'both', 'lsvm'), 'tone'] = lsvm_tm.predict(feats)
-                
-            print("Done!")
             
             ###################
             ## Nonlinear SVM ##
             ###################
             
-            print("\tFitting non-linear SVM classifiers... ", end='', flush=True)
+            print("\tFitting non-linear SVM classifiers... ")
             
             ## text only ##
     
@@ -663,15 +661,13 @@ def main():
             svm_tm.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'both', 'nsvm'), 'tone'] = svm_tm.predict(feats)
-              
-            print("Done!")    
+            neg_pred.loc[(feats.index, 'both', 'nsvm'), 'tone'] = svm_tm.predict(feats) 
             
             #########
             ## KNN ##
             #########
             
-            print("\tTraining KNN classifiers... ", end='', flush=True)
+            print("\tTraining KNN classifiers... ")
                 
             ## text only ##
     
@@ -754,14 +750,12 @@ def main():
     
             # predictions
             neg_pred.loc[(feats.index, 'both', 'knn'), 'tone'] = knn_tm.predict(feats)
-                
-            print("Done!")
             
             ###################
             ## Random Forest ##
             ###################
             
-            print("\tTraining random forest classifiers... ", end='', flush=True)
+            print("\tTraining random forest classifiers... ")
                 
             ## text only ##
     
@@ -849,14 +843,12 @@ def main():
     
             # predictions
             neg_pred.loc[(feats.index, 'both', 'rf'), 'tone'] = rf_tm.predict(feats)
-                
-            print("Done!")
             
             #################    
             ## Naive Bayes ##
             #################
             
-            print("\tFitting naive Bayes classifiers... ", end='', flush=True)
+            print("\tFitting naive Bayes classifiers... ")
                 
             ## text only ##
     
@@ -965,6 +957,7 @@ def main():
     
             # predictions
             neg_pred.loc[(feats.index, 'both', 'nb'), 'tone'] = nb_tm.predict(feats)
+            print("\tDone!")
             
             # insert column for YouTube IDs
             uids_neg = [MATCHES_CMAG[ele] for ele in neg_pred.index.get_level_values('creative')]
@@ -974,8 +967,6 @@ def main():
             # save results
             neg_pred.to_csv(join(ROOT, 'results', 'negativity_results.csv'), 
                             index=False)
-            
-            print("Done!")
     
     # read in data, even if it already exists
     iss_pred = pd.read_csv(join(ROOT, 'results', 'mentions_results.csv'),
