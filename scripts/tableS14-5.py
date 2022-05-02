@@ -58,7 +58,7 @@ def main():
             )
     
     # MTurk confusion matrices
-    with open(join(ROOT, 'tables', 'tableS14-1.txt'), 'w') as fh:
+    with open(join(ROOT, 'tables', 'tableS14-5.txt'), 'w') as fh:
         print("Music Mood Results (Ominous/Tense)", file=fh)
         print("----------------------------------", file=fh)
         print(cm1, file=fh)

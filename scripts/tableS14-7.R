@@ -3,7 +3,7 @@ library("quanteda")
 library("quanteda.sentiment")
 
 # working directory check
-here::i_am(file.path("scripts", "tableS14-3.R"))
+here::i_am(file.path("scripts", "tableS14-7.R"))
 
 # create corpus
 transcripts <- corpus(readtext(here::here("data" ,"intermediate", "*", 
@@ -60,20 +60,20 @@ AUTO <- tone.pred$tone
 cm.ours <- format(round(table(WMP, AUTO) / length(LSD) * 100, 2), nsmall=2)
 
 # save
-cat("LSD Results (Full)\n", file=here::here("tables", "tableS14-3.txt"))
-cat("------------------\n", file=here::here("tables", "tableS14-3.txt"), append=T)
-sink(file=here::here("tables", "tableS14-3.txt"), append=T)
+cat("LSD Results (Full)\n", file=here::here("tables", "tableS14-7.txt"))
+cat("------------------\n", file=here::here("tables", "tableS14-7.txt"), append=T)
+sink(file=here::here("tables", "tableS14-7.txt"), append=T)
 print(cm.full)
 sink(file=NULL)
-cat("\n", file=here::here("tables", "tableS14-3.txt"), append=T)
-cat("LSD Results (Test)\n", file=here::here("tables", "tableS14-3.txt"), append=T)
-cat("------------------\n", file=here::here("tables", "tableS14-3.txt"), append=T)
-sink(file=here::here("tables", "tableS14-3.txt"), append=T)
+cat("\n", file=here::here("tables", "tableS14-7.txt"), append=T)
+cat("LSD Results (Test)\n", file=here::here("tables", "tableS14-7.txt"), append=T)
+cat("------------------\n", file=here::here("tables", "tableS14-7.txt"), append=T)
+sink(file=here::here("tables", "tableS14-7.txt"), append=T)
 print(cm.test)
 sink(file=NULL)
-cat("\n", file=here::here("tables", "tableS14-3.txt"), append=T)
-cat("LSD Results (Ours)\n", file=here::here("tables", "tableS14-3.txt"), append=T)
-cat("------------------\n", file=here::here("tables", "tableS14-3.txt"), append=T)
-sink(file=here::here("tables", "tableS14-3.txt"), append=T)
+cat("\n", file=here::here("tables", "tableS14-7.txt"), append=T)
+cat("LSD Results (Ours)\n", file=here::here("tables", "tableS14-7.txt"), append=T)
+cat("------------------\n", file=here::here("tables", "tableS14-7.txt"), append=T)
+sink(file=here::here("tables", "tableS14-7.txt"), append=T)
 print(cm.ours)
 sink(file=NULL)
