@@ -38,7 +38,7 @@ def read_wmp():
 
 def parse_arguments():
     parser = ArgumentParser()
-    parser.add_argument('-c', '--no-calculate', dest='calculate', 
+    parser.add_argument('-nc', '--no-calculate', dest='calculate', 
                         action='store_false', default=True, help='Flag for '
                         'specifying to not fit models and predict labels. If '
                         'specified, the script will look for results in '
