@@ -16,7 +16,7 @@ Full replication of the results in the paper is a laborious process, involving s
 2. [Prediction](README-PR.md#Prediction)
 3. [Validation](#Validation) 
 
-Each step may also be executed separately using pre-compute results provided in this repository. For those seeking only to validate the results in the paper, it is **highly recommended** to ignore the first two steps, feature extraction and prediction, and follow the steps for validation.
+Each step may also be executed separately using pre-computed results provided in this repository. For those seeking only to validate the results in the paper, it is **highly recommended** to ignore the first two steps, feature extraction and prediction, and follow the steps for validation.
 
 We provide instructions for replicating the [Validation](#Validation) step in this document, while instructions for replicating feature extraction and prediction are found in [README-FE.md](README-FE.md) and [README-FE.md](README-PR.md), respectively. 
 
