@@ -5,8 +5,8 @@ Text Only
 
           Auto       
             No    Yes
-WMP No  31.99%  8.77%
-    Yes  6.87% 52.37%
+WMP No  32.46%  8.29%
+    Yes  7.35% 51.90%
 
 
 Music Only
@@ -23,6 +23,6 @@ Text + Music
 
           Auto       
             No    Yes
-WMP No  31.28%  9.48%
-    Yes  5.92% 53.32%
+WMP No  30.57% 10.19%
+    Yes  4.98% 54.27%
 
