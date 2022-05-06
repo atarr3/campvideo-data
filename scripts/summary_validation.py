@@ -13,8 +13,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 # root folder for replication repo
 ROOT = dirname(dirname(abspath(__file__)))
 
-# output directory for saving/loading keyframe results
-AUTO_DIR = join(ROOT, 'data', 'intermediate')
+# feature data directory
+FEAT_DIR = join(ROOT, 'data', 'features')
 
 # manually created summaries
 TRUE_DIR = join(ROOT, 'data', 'validation', 'summary')
@@ -37,22 +37,25 @@ def main():
     # create list of video paths for sample
     fnames = os.listdir(TRUE_DIR)
     fpaths = [join(ROOT, 'data', 'videos', fname + '.mp4') for fname in fnames]
+    n = len(fpaths)
         
     print("Reading in video summaries...", end='', flush=True)
-    auto_inds = []
-    n = len(fpaths)
-    for (fname, fpath) in zip(fnames, fpaths):
-        with open(join(AUTO_DIR, fname, 'keyframes.txt'), 'r') as fh:
-            auto_inds.append([int(e) for e in fh.read().split(',')])
+    # read in data
+    true = pd.read_csv(join(TRUE_DIR, 'keyframes.csv'), index_col=['uid'], 
+                       usecols=['uid', 'keyframes'])
+    
+    auto = pd.read_csv(join(FEAT_DIR, 'features.csv'), index_col=['uid'],
+                       usecols=['uid', 'keyframes']).loc[true.index]
+    
+    # get keyframes
+    true_inds = [[int(kf) for kf in keyframes.split(',')] 
+                 for keyframes in true.keyframes]
+    auto_inds = [[int(kf) for kf in keyframes.split(',')] 
+                 for keyframes in auto.keyframes]
     print("Done!")
         
     # compute objective function values for summaries if specified
     print("Computing summary statistics...")
-    # read in keyframe indices for manually created summaries
-    true_inds = []
-    for fname in fnames:
-        with open(join(TRUE_DIR, fname, 'keyframes.txt'), 'r') as fh:
-            true_inds.append([int(e) for e in fh.read().split(',')])
     
     # compute objective function component values
     r_auto, r_true, r_full = np.zeros(n), np.zeros(n), np.zeros(n)

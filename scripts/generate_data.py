@@ -167,7 +167,7 @@ def main():
             ["- Video `{}.mp4` failed during {} step with error: `{}`".format(*error) 
              for error in failed]
             )
-        print(message, file=fh)
+        if len(message) > 0: print(message, file=fh)
 
 if __name__ == '__main__':
     main()      
