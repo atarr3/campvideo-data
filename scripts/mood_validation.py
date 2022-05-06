@@ -21,6 +21,9 @@ WMP_DIR = join(ROOT, 'data', 'wmp')
 # MTurk results
 MT_DIR = join(ROOT, 'data', 'mturk')
 
+# feature data directory
+FEAT_DIR = join(ROOT, 'data', 'features')
+
 # lookup table mapping YouTube IDs to CMAG IDs
 with open(join(ROOT, 'data', 'matches', 'matches.json'), 'r') as fh:
     MATCHES = json.load(fh)
@@ -52,7 +55,7 @@ def main():
     calculate = args.calculate
         
     # feature dimension
-    fdim = 452
+    d = 452
     
     # get WMP data
     wmp = read_wmp()
@@ -69,14 +72,10 @@ def main():
     # features
     if calculate:
         print('Reading in features... ', end='', flush=True)
-        feat = pd.DataFrame(index=mood_wmp.index, columns=np.arange(fdim), dtype=float)
-        for creative in feat.index:
-            # YT ID
-            uid = MATCHES_CMAG[creative]
-            # read in feature
-            feat_path = join(ROOT, 'data', 'intermediate', uid, 'audiofeat.npy')
-            with open(feat_path, 'rb') as fh:
-                feat.loc[creative] = np.load(fh)
+        # read in features, subset to wmp sample
+        colnames = ['v' + str(ele) for ele in range(d)]
+        feat = pd.read_csv(join(FEAT_DIR, 'features.csv'), index_col=['creative'], 
+                           usecols=['creative'] + colnames).loc[mood_wmp.index]
         print("Done!")
             
         # training and testing features
@@ -177,7 +176,7 @@ def main():
     agree = (agree1.sum() + agree2.sum() + agree3.sum()) / (3 * agree1.shape[0])
     
     # statistics
-    with open(join(ROOT, 'results', 'mood_results.txt'), 'w') as fh:
+    with open(join(ROOT, 'statistics', 'mood_results.txt'), 'w') as fh:
         print("Music Mood Results", file=fh)
         print("------------------", file=fh)
         print("# of ads containing music: {} ({:.0%})".format(n_music, n_music/wmp.shape[0]), file=fh)

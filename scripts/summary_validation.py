@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import os
 import pandas as pd
 
 
@@ -34,11 +33,6 @@ def objective(kf_ind, w, d):
 
 # script for summarizing a collection of videos and computing statistics
 def main():
-    # create list of video paths for sample
-    fnames = os.listdir(TRUE_DIR)
-    fpaths = [join(ROOT, 'data', 'videos', fname + '.mp4') for fname in fnames]
-    n = len(fpaths)
-        
     print("Reading in video summaries...", end='', flush=True)
     # read in data
     true = pd.read_csv(join(TRUE_DIR, 'keyframes.csv'), index_col=['uid'], 
@@ -54,18 +48,19 @@ def main():
                  for keyframes in auto.keyframes]
     print("Done!")
         
-    # compute objective function values for summaries if specified
     print("Computing summary statistics...")
+    fnames = true.index
+    n = len(fnames)
     
     # compute objective function component values
     r_auto, r_true, r_full = np.zeros(n), np.zeros(n), np.zeros(n)
     u_auto, u_true, u_full = np.zeros(n), np.zeros(n), np.zeros(n)
     n_auto, n_true, n_full = np.arange(n), np.arange(n), np.arange(n)
-    for i, (fname, fpath, kf_auto, kf_true) in enumerate(zip(fnames, fpaths, auto_inds, true_inds)):
+    for i, (fname, kf_auto, kf_true) in enumerate(zip(fnames, auto_inds, true_inds)):
         end = '\r' if i < n-1 else '\n'
         print("\tProcessing video %d of %d..." % (i+1, n), end=end, flush=True)
         # get video features
-        vid = Video(fpath)
+        vid = Video(join(ROOT, 'data', 'videos', fname + '.mp4'))
         labhist, hog = vid.videofeats()
         
         # subset down to non-monochromatic frames
