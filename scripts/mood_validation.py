@@ -176,7 +176,7 @@ def main():
     agree = (agree1.sum() + agree2.sum() + agree3.sum()) / (3 * agree1.shape[0])
     
     # statistics
-    with open(join(ROOT, 'statistics', 'mood_results.txt'), 'w') as fh:
+    with open(join(ROOT, 'performance', 'mood_results.txt'), 'w') as fh:
         print("Music Mood Results", file=fh)
         print("------------------", file=fh)
         print("# of ads containing music: {} ({:.0%})".format(n_music, n_music/wmp.shape[0]), file=fh)

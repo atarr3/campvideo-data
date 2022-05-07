@@ -15,8 +15,8 @@ ROOT = dirname(dirname(abspath(__file__)))
 # video directory
 VID_DIR = join(ROOT, 'data', 'videos')
 
-# intermediate data
-INT_DIR = join(ROOT, 'data', 'intermediate')
+# feature data directory
+FEAT_DIR = join(ROOT, 'data', 'features')
 
 # wmp/cmag data
 WMP_DIR = join(ROOT, 'data', 'wmp')
@@ -74,10 +74,12 @@ def main():
     
     # detect opponent and favored appearances
     if calculate:
+        # read in feature data
+        feat = pd.read_csv(join(FEAT_DIR, 'features.csv'), index_col=['creative'],
+                           usecols=['creative', 'keyframes'])      
         n = len(senate.index)
         fmins = np.ones(n)
         omins = np.ones(n)
-        uids = [''] * n
         for i, creative in enumerate(senate.index):
             end = '\r' if i < n-1 else '\n'
             print('Processing video %d of %d...' %(i+1, n), end=end, flush=True)
@@ -85,17 +87,12 @@ def main():
             # metadata 
             metadata = meta.loc[creative]
             uid = metadata.uid
-            uids[i] = uid
             fav_path = metadata.fav_path
             opp_paths = metadata.opp_paths
             
             # construct keyframes object
             vpath = join(VID_DIR, uid + '.mp4')
-            spath = join(INT_DIR, uid, 'keyframes.txt')
-            
-            with open(spath, 'r') as fh:
-                kf_ind = [int(e) for e in fh.read().split(',')]
-                
+            kf_ind = [int(e) for e in feat.loc[creative].keyframes.split(',')]
             kf = Keyframes.fromvid(vpath, kf_ind=kf_ind, max_dim=1280)
             
             # load in encodings
@@ -145,7 +142,7 @@ def main():
         f_pred = (fmins < thr_o).astype(int)
                     
         # save results
-        facerec = pd.DataFrame({'uid': uids, 
+        facerec = pd.DataFrame({'uid': metadata.loc[senate.index].uid, 
                                 'f_picture': f_pred, 'f_dist': fmins, 
                                 'o_picture': o_pred, 'o_dist': omins}, 
                                index=senate.index)
@@ -249,7 +246,7 @@ def main():
     a_fav = accuracy_score(f_wmp_corr, f_pred_corr)
         
     # facerec statistics
-    with open(join(ROOT, 'results', 'facerec_results.txt'), 'w') as fh:
+    with open(join(ROOT, 'performance', 'facerec_results.txt'), 'w') as fh:
         print("Thresholds", file=fh)
         print("----------", file=fh)
         print(" Original: {:.4}".format(thr_o), file=fh)

@@ -146,6 +146,10 @@ def tokenize(text, ner=True, keep_names=False, keep_pron=False):
     else:
         return tokens
     
+# dummy tokenizer
+def dummy(tokens):
+    return tokens
+    
 # class implementing naive Bayes for heterogenous data
 class HeterogenousNB(BaseEstimator, ClassifierMixin):
     def __init__(self, discrete_clf='bernoulli', alpha=1.0, 
@@ -435,8 +439,6 @@ def main():
         if an_flag:
         
             print("Classifying ad negativity...")
-            # get uids
-            uids = [MATCHES_CMAG[ele] for ele in tone_wmp.index]
             
             # subset to train/test sample for ad negativity
             feat_neg = feat.loc[tone_wmp.index]
@@ -453,10 +455,10 @@ def main():
             mfeat = feat_neg.loc[:, mfeat_names]
             
             # construct dataframe
-            feats = pd.DataFrame(mfeats, index=tone_wmp.index).assign(tpath=tpaths)
+            neg_feats = pd.DataFrame(mfeat, index=tone_wmp.index).assign(tfeat=tfeat)
             
             # train/test splits
-            x_train,x_test,y_train,y_test = train_test_split(feats,
+            x_train,x_test,y_train,y_test = train_test_split(neg_feats,
                                                              tone_wmp,
                                                              test_size=0.2,
                                                              random_state=SEED)
@@ -480,8 +482,8 @@ def main():
             # pipeline
             pipe = Pipeline([
                         ('feat', ColumnTransformer(
-                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                            input='filename'), -1)],
+                                    [("cv", TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                            input='content'), -1)],
                                     remainder='drop')),
                         ('dim_red', SelectPercentile(mutual_info_classif)),
                         ('clf', LinearSVC(loss='hinge', class_weight='balanced'))
@@ -500,7 +502,7 @@ def main():
             lsvm_t.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'text', 'lsvm'), 'tone'] = lsvm_t.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'text', 'lsvm'), 'tone'] = lsvm_t.predict(neg_feats)
     
             ## music only ##
     
@@ -524,7 +526,7 @@ def main():
             lsvm_m.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'music', 'lsvm'), 'tone'] = lsvm_m.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'music', 'lsvm'), 'tone'] = lsvm_m.predict(neg_feats)
     
     
             ## text + music ##
@@ -532,8 +534,8 @@ def main():
             # pipeline    
             pipe = Pipeline([
                         ('feat1', ColumnTransformer(
-                                        [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                                input='filename'), -1)],
+                                        [("cv", TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                                input='content'), -1)],
                                         remainder='passthrough')),
                         # music features run from -d:
                         ('feat2', ColumnTransformer(
@@ -559,7 +561,7 @@ def main():
             lsvm_tm.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'both', 'lsvm'), 'tone'] = lsvm_tm.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'both', 'lsvm'), 'tone'] = lsvm_tm.predict(neg_feats)
             
             ###################
             ## Nonlinear SVM ##
@@ -572,8 +574,8 @@ def main():
             # pipeline
             pipe = Pipeline([
                         ('feat', ColumnTransformer(
-                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                            input='filename'), -1)],
+                                    [("cv", TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                            input='content'), -1)],
                                     remainder='drop')),
                         ('dim_red', SelectPercentile(mutual_info_classif)),
                         ('clf', SVC(kernel='rbf', class_weight='balanced'))
@@ -593,7 +595,7 @@ def main():
             svm_t.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'text', 'nsvm'), 'tone'] = svm_t.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'text', 'nsvm'), 'tone'] = svm_t.predict(neg_feats)
     
             ## music only ##
     
@@ -618,15 +620,15 @@ def main():
             svm_m.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'music', 'nsvm'), 'tone'] = svm_m.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'music', 'nsvm'), 'tone'] = svm_m.predict(neg_feats)
     
             ## text + music ##
                 
             # pipeline    
             pipe = Pipeline([
                         ('feat1', ColumnTransformer(
-                                        [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                                input='filename'), -1)],
+                                        [("cv", TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                                input='content'), -1)],
                                         remainder='passthrough')),
                         # music features run from -d:
                         ('feat2', ColumnTransformer(
@@ -653,7 +655,7 @@ def main():
             svm_tm.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'both', 'nsvm'), 'tone'] = svm_tm.predict(feats) 
+            neg_pred.loc[(neg_feats.index, 'both', 'nsvm'), 'tone'] = svm_tm.predict(neg_feats) 
             
             #########
             ## KNN ##
@@ -666,8 +668,8 @@ def main():
             # pipeline
             pipe = Pipeline([
                         ('feat', ColumnTransformer(
-                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                            input='filename'), -1)],
+                                    [("cv", TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                            input='content'), -1)],
                                     remainder='drop')),
                         ('dim_red', SelectPercentile(mutual_info_classif)),
                         ('clf', KNeighborsClassifier())
@@ -685,7 +687,7 @@ def main():
             knn_t.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'text', 'knn'), 'tone'] = knn_t.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'text', 'knn'), 'tone'] = knn_t.predict(neg_feats)
     
             ## music only ##
     
@@ -708,15 +710,15 @@ def main():
             knn_m.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'music', 'knn'), 'tone'] = knn_m.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'music', 'knn'), 'tone'] = knn_m.predict(neg_feats)
     
             ## text + music ##
                 
             # pipeline    
             pipe = Pipeline([
                         ('feat1', ColumnTransformer(
-                                        [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                                input='filename'), -1)],
+                                        [("cv", TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                                input='content'), -1)],
                                         remainder='passthrough')),
                         # music features run from -d:
                         ('feat2', ColumnTransformer(
@@ -741,7 +743,7 @@ def main():
             knn_tm.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'both', 'knn'), 'tone'] = knn_tm.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'both', 'knn'), 'tone'] = knn_tm.predict(neg_feats)
             
             ###################
             ## Random Forest ##
@@ -754,8 +756,8 @@ def main():
             # pipeline
             pipe = Pipeline([
                         ('feat', ColumnTransformer(
-                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                            input='filename'), -1)],
+                                    [("cv", TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                            input='content'), -1)],
                                     remainder='drop')),
                         ('dim_red', SelectPercentile(mutual_info_classif)),
                         ('clf', RandomForestClassifier(class_weight='balanced'))
@@ -776,7 +778,7 @@ def main():
             rf_t.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'text', 'rf'), 'tone'] = rf_t.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'text', 'rf'), 'tone'] = rf_t.predict(neg_feats)
     
             ## music only ##
     
@@ -802,15 +804,15 @@ def main():
             rf_m.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'music', 'rf'), 'tone'] = rf_m.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'music', 'rf'), 'tone'] = rf_m.predict(neg_feats)
     
             ## text + music ##
                 
             # pipeline    
             pipe = Pipeline([
                         ('feat1', ColumnTransformer(
-                                        [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                                input='filename'), -1)],
+                                        [("cv", TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                                input='content'), -1)],
                                         remainder='passthrough')),
                         # music features run from -d:
                         ('feat2', ColumnTransformer(
@@ -834,7 +836,7 @@ def main():
             rf_tm.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'both', 'rf'), 'tone'] = rf_tm.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'both', 'rf'), 'tone'] = rf_tm.predict(neg_feats)
             
             #################    
             ## Naive Bayes ##
@@ -847,8 +849,8 @@ def main():
             # pipeline
             pipe = Pipeline([
                         ('feat', ColumnTransformer(
-                                    [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                            input='filename'), -1)],
+                                    [("cv", TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                            input='content'), -1)],
                                     remainder='drop')),
                         ('dim_red', SelectPercentile(mutual_info_classif)),
                         ('clf', MultinomialNB())
@@ -856,22 +858,22 @@ def main():
     
             # parameter grid for grid search
             params = [{
-                      'feat__cv' : [CountVectorizer(analyzer=tokenize, min_df=2,
-                                                    input='filename')],
+                      'feat__cv' : [CountVectorizer(analyzer=dummy, min_df=2,
+                                                    input='content')],
                       'dim_red__percentile': [50, 75, 90, 100],
                       'clf': [BernoulliNB(), MultinomialNB()],
                       'clf__alpha': [0.01, 0.1, 1, 2] 
                      },
                      {
-                      'feat__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                    input='filename')],
+                      'feat__cv' : [TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                    input='content')],
                       'dim_red__percentile': [50, 75, 90, 100],
                       'clf': [MultinomialNB()],
                       'clf__alpha': [0.01, 0.1, 1, 2] 
                      },
                      {
-                      'feat__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                    input='filename')],
+                      'feat__cv' : [TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                    input='content')],
                       'dim_red__percentile': [50, 75, 90, 100],
                       'clf': [GaussianNB()]
                      }]
@@ -882,7 +884,7 @@ def main():
             nb_t.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'text', 'nb'), 'tone'] = nb_t.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'text', 'nb'), 'tone'] = nb_t.predict(neg_feats)
     
             # music only
                 
@@ -900,15 +902,15 @@ def main():
             nb_m.fit(x_train, y_train)
     
             # predictions
-            neg_pred.loc[(feats.index, 'music', 'nb'), 'tone'] = nb_m.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'music', 'nb'), 'tone'] = nb_m.predict(neg_feats)
             
             ## text + music ##
                 
             # pipeline    
             pipe = Pipeline([
                         ('feat1', ColumnTransformer(
-                                        [("cv", TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                                input='filename'), -1)],
+                                        [("cv", TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                                input='content'), -1)],
                                         remainder='passthrough')),
                         # music features run from -d:
                         ('feat2', ColumnTransformer(
@@ -922,22 +924,22 @@ def main():
     
             # parameter grid for grid search
             params = [{
-                      'feat1__cv' : [CountVectorizer(analyzer=tokenize, min_df=2,
-                                                    input='filename')],
+                      'feat1__cv' : [CountVectorizer(analyzer=dummy, min_df=2,
+                                                    input='content')],
                       'feat2__dim_red__percentile': [50, 75, 90, 100],
                       'clf__discrete_clf': ['bernoulli', 'multinomial'],
                       'clf__alpha': [0.01, 0.1, 1, 2] 
                      },
                      {
-                      'feat1__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                    input='filename')],
+                      'feat1__cv' : [TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                    input='content')],
                       'feat2__dim_red__percentile': [50, 75, 90, 100],
                       'clf__discrete_clf': ['multinomial'],
                       'clf__alpha': [0.01, 0.1, 1, 2] 
                      },
                      {
-                      'feat1__cv' : [TfidfVectorizer(analyzer=tokenize, min_df=2,
-                                                    input='filename')],
+                      'feat1__cv' : [TfidfVectorizer(analyzer=dummy, min_df=2,
+                                                    input='content')],
                       'feat2__dim_red__percentile': [50, 75, 90, 100],
                       'clf': [GaussianNB()]
                      }]
@@ -948,7 +950,7 @@ def main():
             nb_tm.fit(x_train, y_train, clf__split_ind=-d)
     
             # predictions
-            neg_pred.loc[(feats.index, 'both', 'nb'), 'tone'] = nb_tm.predict(feats)
+            neg_pred.loc[(neg_feats.index, 'both', 'nb'), 'tone'] = nb_tm.predict(neg_feats)
             print("\tDone!")
             
             # insert column for YouTube IDs
@@ -1072,7 +1074,7 @@ def main():
     nfn_mturk = nerr_mturk - nfp_mturk
     
     # output
-    with open(join(ROOT, 'results', 'issue_results.txt'), 'w') as fh:
+    with open(join(ROOT, 'performance', 'issue_results.txt'), 'w') as fh:
         print("Issue Mention Results", file=fh)
         print("---------------------", file=fh)
         print(file=fh)
