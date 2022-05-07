@@ -142,7 +142,7 @@ def main():
         f_pred = (fmins < thr_o).astype(int)
                     
         # save results
-        facerec = pd.DataFrame({'uid': metadata.loc[senate.index].uid, 
+        facerec = pd.DataFrame({'uid': meta.loc[senate.index].uid, 
                                 'f_picture': f_pred, 'f_dist': fmins, 
                                 'o_picture': o_pred, 'o_dist': omins}, 
                                index=senate.index)

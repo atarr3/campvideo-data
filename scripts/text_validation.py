@@ -355,6 +355,8 @@ def main():
     if calculate:
         # read in features
         feat = pd.read_csv(join(FEAT_DIR, 'features.csv'), index_col=['creative'])
+        # replace na with empty strings
+        feat = feat.fillna("")
         
         if im_flag:
             print("Detecting issue and opponent mentions...")
