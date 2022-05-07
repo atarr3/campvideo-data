@@ -962,7 +962,7 @@ def main():
             neg_pred.to_csv(join(ROOT, 'results', 'negativity_results.csv'), 
                             index=False)
     
-    # read in data, even if it already exists
+    # read in data
     iss_pred = pd.read_csv(join(ROOT, 'results', 'mentions_results.csv'),
                           index_col=['creative', 'feature'])
     
@@ -1144,7 +1144,7 @@ def main():
     tp_delta = (cm_oment_both_un.loc[('WMP', 'Yes'), ('Auto', 'Yes')] - 
                 cm_oment_text_un.loc[('WMP', 'Yes'), ('Auto', 'Yes')])
     
-    with open(join(ROOT, 'results', 'oppment_results.txt'), 'w') as fh:
+    with open(join(ROOT, 'performance', 'oppment_results.txt'), 'w') as fh:
         print("Opponent Mention Results", file=fh)
         print("------------------------", file=fh)
         print("Total # of videos: {}".format(oment_wmp.shape[0]), file=fh)
