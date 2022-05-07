@@ -30,8 +30,8 @@ ROOT = dirname(dirname(abspath(__file__)))
 # video directory
 VID_DIR = join(ROOT, 'data', 'videos')
 
-# intermediate data
-INT_DIR = join(ROOT, 'data', 'intermediate')
+# feature data directory
+FEAT_DIR = join(ROOT, 'data', 'features')
 
 # wmp/cmag data
 WMP_DIR = join(ROOT, 'data', 'wmp')
@@ -342,13 +342,16 @@ def main():
     # remove tonecmag observations with nan values
     tone = wmp.dropna(subset=['tonecmag'])
     # drop 'contrast' observations
-    tone.drop(tone.loc[tone.tonecmag == 'CONTRAST'].index, inplace=True)
+    tone = tone.loc[tone.tonecmag != 'CONTRAST']
     # recast tonecmag to 1/0 for sentiment
     tone_wmp = ((tone.tonecmag == 'POS') | 
                 (tone.tonecmag == 'POSITIVE')).astype(int)
         
     # process videos
     if calculate:
+        # read in features
+        feat = pd.read_csv(join(FEAT_DIR, 'features.csv'), index_col=['creative'])
+        
         if im_flag:
             print("Detecting issue and opponent mentions...")
             n = len(iss_wmp.index)
@@ -359,6 +362,7 @@ def main():
             oment_pred = pd.Series(0, dtype=int, name='o_mention', 
                 index=pd.MultiIndex.from_product([iss_wmp.index, ['text', 'both']],
                                                  names=['creative', 'feature']))
+            
             for i, creative in enumerate(iss_wmp.index):
                 end = '\r' if i < n-1 else '\n'
                 print('\tProcessing video %d of %d...' %(i+1, n), end=end, flush=True)
@@ -368,35 +372,17 @@ def main():
                 uid = metadata.uid
                 opp_names = metadata.opp_names.split(',')
                 
+                # subset to current video data
+                sub = feat.loc[creative]
+                
                 # read transcript and construct Text object
-                tpath = join(INT_DIR, uid, 'transcript.txt')
-                # try:
-                #     with open(tpath, 'r', encoding='utf8') as fh:
-                #         transcript = fh.read().lower()
-                # except UnicodeDecodeError:
-                with open(tpath, 'r', encoding='ISO-8859-1') as fh:
-                    transcript = fh.read().lower()
-                    
-                trans_text = Text(transcript)
+                trans_text = Text(sub.transcript.lower())
                 
                 # read image text and construct Text object
-                ipath = join(INT_DIR, uid, 'imtext.txt')
-                # try:
-                #     with open(ipath, 'r', encoding='utf8') as fh:
-                #         imtext = fh.read().lower().strip('\n').replace('\n', ' '
-                #                          ).strip('\t').replace('\t', ' '
-                #                          ).replace('.', ' ') # deals with .com
-                # except UnicodeDecodeError:
-                with open(ipath, 'r', encoding='ISO-8859-1') as fh:
-                    imtext = fh.read().lower().strip('\n').replace('\n', ' '
-                                     ).strip('\t').replace('\t', ' '
-                                     ).replace('.', ' ') # deals with .com
-                    
-                im_text = Text(imtext)
+                im_text = Text(sub.imtext.replace('.', ' '))
                 
                 # read in keyframes and construct Keyframes object
-                with open(join(INT_DIR, uid, 'keyframes.txt'), 'r') as fh:
-                    kf_ind = [int(item) for item in fh.read().split(',')]
+                kf_ind = [int(e) for e in sub.keyframes.split(',')]
                     
                 kf = Keyframes.fromvid(join(VID_DIR, uid + '.mp4'), kf_ind, max_dim=1280)
                 
@@ -449,15 +435,22 @@ def main():
         if an_flag:
         
             print("Classifying ad negativity...")
-            
             # get uids
             uids = [MATCHES_CMAG[ele] for ele in tone_wmp.index]
             
-            # read in features
-            tpaths = [join(INT_DIR, uid, 'transcript.txt') for uid in uids]
-            mfeats = np.array([np.load(open(join(INT_DIR, uid, 'audiofeat.npy'), 'rb'))
-                               for uid in uids], dtype=float)
-            d = mfeats.shape[1]
+            # subset to train/test sample for ad negativity
+            feat_neg = feat.loc[tone_wmp.index]
+            
+            # music feature columns
+            d = 452
+            mfeat_names = ['v' + str(e) for e in range(d)]
+            
+            # create text feature, tokenize so we don't repeat during training
+            tfeat = [tokenize(transcript) if not pd.isna(transcript) else [] 
+                     for transcript in feat_neg.transcript]
+            
+            # get audio features
+            mfeat = feat_neg.loc[:, mfeat_names]
             
             # construct dataframe
             feats = pd.DataFrame(mfeats, index=tone_wmp.index).assign(tpath=tpaths)
