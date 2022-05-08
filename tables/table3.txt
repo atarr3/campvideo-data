@@ -9,5 +9,5 @@ Opponent Mention (Text + Image)
 -------------------------------
           Auto       
             No    Yes
-WMP No  51.45%  2.74%
-    Yes  0.94% 44.88%
+WMP No  51.49%  2.69%
+    Yes  0.90% 44.92%

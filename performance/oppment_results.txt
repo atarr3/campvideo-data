@@ -3,8 +3,8 @@ Opponent Mention Results
 Total # of videos: 2449
 # of disagreements: 90 (4%)
 Increase in positive samples w/ images: 83 (3%)
-Increase in false positive samples w/ images: 9 (11%)
-Increase in true positive samples w/ images: 74 (89%)
+Increase in false positive samples w/ images: 8 (10%)
+Increase in true positive samples w/ images: 75 (90%)
 
 Opponent Mention Validation Study
 ---------------------------------

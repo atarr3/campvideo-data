@@ -1,7 +1,7 @@
 Thresholds
 ----------
- Original: 0.5106
-Corrected: 0.5202
+ Original: 0.5135
+Corrected: 0.5154
 
 Mistake Analysis
 ----------------
@@ -19,17 +19,17 @@ Favored Candidate (Corrected)
 -----------------------------
          Auto       
            No    Yes
-WMP No  6.39%  0.65%
-    Yes 3.52% 89.44%
+WMP No  5.74%  1.30%
+    Yes 4.82% 88.14%
 
 Opposing Candidate (Corrected)
 ------------------------------
           Auto       
             No    Yes
-WMP No  62.71%  1.04%
+WMP No  62.58%  1.17%
     Yes  5.22% 31.03%
 
 Classification Metrics
 ----------------------
- Favored Pre, Rec, Acc: 0.99, 0.96, 0.96
-Opposing Pre, Rec, Acc: 0.97, 0.86, 0.94
+ Favored Pre, Rec, Acc: 0.99, 0.95, 0.94
+Opposing Pre, Rec, Acc: 0.96, 0.86, 0.94

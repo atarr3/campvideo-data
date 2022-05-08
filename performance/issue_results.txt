@@ -3,13 +3,13 @@ Issue Mention Results
 
 Video-Issue Pairs: 204844
 
-Increase in positive samples w/ images: 655 (0.32%)
-Increase in false positive samples w/ images: 398 (61%)
-Increase in true positive samples w/ images: 257 (39%)
+Increase in positive samples w/ images: 663 (0.32%)
+Increase in false positive samples w/ images: 408 (62%)
+Increase in true positive samples w/ images: 255 (38%)
 
 FPR (Text): 0.72%
 FNR (Text): 24%
-FPR (Both): 0.92%
+FPR (Both): 0.93%
 FNR (Both): 21%
 
 Issue Mention Validation Study
@@ -25,7 +25,7 @@ Issue Mention Validation Study
 Issue Mention MTurk Study
 ------------------------------
 # of samples: 500
-# of samples in agreement: 200
-# of samples in disagreement: 300
-# of false positives: 183
+# of samples in agreement: 204
+# of samples in disagreement: 296
+# of false positives: 179
 # of false negatives: 117

@@ -9,5 +9,5 @@ Issue Mention (Text + Image)
 ----------------------------
           Auto      
             No   Yes
-WMP No  95.56% 0.89%
+WMP No  95.56% 0.90%
     Yes  0.74% 2.81%
