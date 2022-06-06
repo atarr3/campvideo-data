@@ -13,7 +13,7 @@ from sklearn.svm import SVC
 ROOT = '..'
 
 # video directory
-VID_DIR = join(ROOT, 'data', 'videos')
+VID_DIR = join(ROOT, 'data', 'youtube')
 
 # wmp/cmag data
 WMP_DIR = join(ROOT, 'data', 'wmp')
@@ -22,10 +22,10 @@ WMP_DIR = join(ROOT, 'data', 'wmp')
 MT_DIR = join(ROOT, 'data', 'mturk')
 
 # feature data directory
-FEAT_DIR = join(ROOT, 'data', 'features')
+AUX_DIR = join(ROOT, 'data', 'auxiliary')
 
 # lookup table mapping YouTube IDs to CMAG IDs
-with open(join(ROOT, 'data', 'matches', 'matches.json'), 'r') as fh:
+with open(join(AUX_DIR, 'matches.json'), 'r') as fh:
     MATCHES = json.load(fh)
     
 # lookup table mapping CMAG IDs to YouTube IDs
@@ -74,7 +74,7 @@ def main():
         print('Reading in features... ', end='', flush=True)
         # read in features, subset to wmp sample
         colnames = ['v' + str(ele) for ele in range(d)]
-        feat = pd.read_csv(join(FEAT_DIR, 'features.csv'), index_col=['creative'], 
+        feat = pd.read_csv(join(AUX_DIR, 'features_full.csv'), index_col=['creative'], 
                            usecols=['creative'] + colnames).loc[mood_wmp.index]
         print("Done!")
             
@@ -134,7 +134,7 @@ def main():
                                  index=feat.index)
         mood_pred.loc[feat_te.index, 'train'] = 0
         
-        mood_pred.sort_index().to_csv(join(ROOT, 'results', 'mood_results.csv'))
+        mood_pred.sort_index().to_csv(join(ROOT, 'data', 'mood_results.csv'))
         
         # update MTurk file with predictions
         mood_mturk = pd.read_csv(join(MT_DIR, 'mood_mturk.csv'), 
@@ -148,7 +148,7 @@ def main():
         mood_mturk.to_csv(join(MT_DIR, 'mood_mturk.csv'))
         
     else:
-        mood_pred = pd.read_csv(join(ROOT, 'results', 'mood_results.csv'),
+        mood_pred = pd.read_csv(join(ROOT, 'data', 'mood_results.csv'),
                                 index_col='creative')
     
     # results
@@ -176,7 +176,7 @@ def main():
     agree = (agree1.sum() + agree2.sum() + agree3.sum()) / (3 * agree1.shape[0])
     
     # statistics
-    with open(join(ROOT, 'performance', 'mood_results.txt'), 'w') as fh:
+    with open(join(ROOT, 'results', 'performance', 'mood_results.txt'), 'w') as fh:
         print("Music Mood Results", file=fh)
         print("------------------", file=fh)
         print("# of ads containing music: {} ({:.0%})".format(n_music, n_music/wmp.shape[0]), file=fh)

@@ -25,7 +25,7 @@ Issue Mention Validation Study
 Issue Mention MTurk Study
 ------------------------------
 # of samples: 500
-# of samples in agreement: 204
-# of samples in disagreement: 296
-# of false positives: 179
-# of false negatives: 117
+# of samples in agreement: 210
+# of samples in disagreement: 290
+# of false positives: 176
+# of false negatives: 114

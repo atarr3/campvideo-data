@@ -1,10 +1,10 @@
 import pandas as pd
 
-from os.path import abspath, join, dirname
+from os.path import join
 from sklearn.metrics import confusion_matrix
 
 # root folder for replication repo
-ROOT = dirname(dirname(abspath(__file__)))
+ROOT = '..'
 
 # wmp/cmag data
 WMP_DIR = join(ROOT, 'data', 'wmp')
@@ -58,7 +58,7 @@ def main():
             )
     
     # MTurk confusion matrices
-    with open(join(ROOT, 'tables', 'tableS14-5.txt'), 'w') as fh:
+    with open(join(ROOT, 'results', 'tables', 'tableS14-5.txt'), 'w') as fh:
         print("Music Mood Results (Ominous/Tense)", file=fh)
         print("----------------------------------", file=fh)
         print(cm1, file=fh)

@@ -3,11 +3,11 @@ import numpy as np
 import pandas as pd
 
 # from matplotlib import rc
-from os.path import abspath, dirname, join
+from os.path import join
 from sklearn.metrics import auc, roc_curve
 
 # root folder for replication repo
-ROOT = dirname(dirname(abspath(__file__)))
+ROOT = '..'
 
 # seed for replication
 SEED = 2002
@@ -40,7 +40,7 @@ def main():
     f_wmp = np.logical_or(senate.vid.fillna(0), senate.f_picture).astype(float)
     
     # read in our data
-    facerec = pd.read_csv(join(ROOT, 'results', 'facerec_results.csv'), 
+    facerec = pd.read_csv(join(ROOT, 'data', 'facerec_results.csv'), 
                           index_col='creative')
     
     # minimum encoding distances
@@ -110,7 +110,7 @@ def main():
     axs[1].legend(fontsize=9, framealpha=1)
 
     fig.set_constrained_layout_pads(wspace=0.2)
-    plt.savefig(join(ROOT, 'figs','figureS13-8.pdf'), dpi=200, bbox_inches='tight') 
+    plt.savefig(join(ROOT, 'results', 'figs','figureS13-8.pdf'), dpi=200, bbox_inches='tight') 
     
 if __name__ == '__main__':
     main()

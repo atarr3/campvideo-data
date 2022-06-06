@@ -7,7 +7,7 @@ import spacy
 
 from argparse import ArgumentParser
 from campvideo import Keyframes, Text
-from os.path import abspath, dirname, join
+from os.path import join
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
@@ -28,10 +28,10 @@ from string import punctuation
 ROOT = '..'
 
 # video directory
-VID_DIR = join(ROOT, 'data', 'videos')
+VID_DIR = join(ROOT, 'data', 'youtube')
 
-# feature data directory
-FEAT_DIR = join(ROOT, 'data', 'features')
+# auxiliary data directory
+AUX_DIR = join(ROOT, 'data', 'auxiliary')
 
 # wmp/cmag data
 WMP_DIR = join(ROOT, 'data', 'wmp')
@@ -43,20 +43,20 @@ VAL_DIR = join(ROOT, 'data', 'validation')
 MTURK_DIR = join(ROOT, 'data', 'mturk')
 
 # ID encodings
-ID_DIR = join(ROOT, 'data', 'ids')
+ID_DIR = join(AUX_DIR, 'ids')
 
 # metadata
-META_PATH = join(ROOT, 'data', 'metadata.csv')
+META_PATH = join(AUX_DIR, 'metadata.csv')
 
 # issue vocabulary list
-VOCAB_PATH = join(ROOT, 'data', 'issuenames.csv')
+VOCAB_PATH = join(AUX_DIR, 'issuenames.csv')
 VOCAB = pd.read_csv(VOCAB_PATH)
 
 # seed
 SEED = 2002
 
 # lookup table mapping YouTube IDs to CMAG IDs
-with open(join(ROOT, 'data', 'matches', 'matches.json'), 'r') as fh:
+with open(join(AUX_DIR, 'matches.json'), 'r') as fh:
     MATCHES = json.load(fh)
     
 # lookup table mapping CMAG IDs to YouTube IDs
@@ -302,7 +302,7 @@ def parse_arguments():
                         'labels. If specified, the script will '
                         'check the `results` folder for a file called '
                         '`facerec_results.csv`')
-    parser.add_argument('-nim', '--no-mention', dest='im_flag', 
+    parser.add_argument('-nm', '--no-mention', dest='im_flag', 
                         action='store_false', default=True, help='Flag for '
                         'specifying to not perform issue/opponent mentions')
     parser.add_argument('-nn', '--no-negativity', dest='an_flag', 
@@ -353,8 +353,8 @@ def main():
         
     # process videos
     if calculate:
-        # read in features
-        feat = pd.read_csv(join(FEAT_DIR, 'features.csv'), index_col=['creative'])
+        # read in features (full)
+        feat = pd.read_csv(join(AUX_DIR, 'features_full.csv'), index_col=['creative'])
         # replace na with empty strings
         feat = feat.fillna("")
         
@@ -422,7 +422,7 @@ def main():
             iss_pred = iss_pred.reset_index()
             iss_pred.insert(1, 'uid', uids_iss) # after creative
             iss_pred.set_index(['creative', 'uid', 'feature'], inplace=True)
-            iss_pred.to_csv(join(ROOT, 'results', 'mentions_results.csv'))
+            iss_pred.to_csv(join(ROOT, 'data', 'mentions_results.csv'))
             
             # update MTurk results
             iss_mturk = pd.read_csv(join(MTURK_DIR, 'issue_mturk.csv'), 
@@ -899,7 +899,7 @@ def main():
                             ])
     
             # fit classifier (no parameters to tune)
-            print("\t\t", end="", flush=True)
+            print("\t\tFitting 1 fold for each of 1 candidate, totalling 1 fit", flush=True)
             nb_m = pipe
             nb_m.fit(x_train, y_train)
     
@@ -961,11 +961,11 @@ def main():
             neg_pred.insert(1, 'uid', uids_neg) # after creative
             
             # save results
-            neg_pred.to_csv(join(ROOT, 'results', 'negativity_results.csv'), 
+            neg_pred.to_csv(join(ROOT, 'data', 'negativity_results.csv'), 
                             index=False)
     
     # read in data
-    iss_pred = pd.read_csv(join(ROOT, 'results', 'mentions_results.csv'),
+    iss_pred = pd.read_csv(join(ROOT, 'data', 'mentions_results.csv'),
                           index_col=['creative', 'feature'])
     
     ## results ##
@@ -1076,7 +1076,7 @@ def main():
     nfn_mturk = nerr_mturk - nfp_mturk
     
     # output
-    with open(join(ROOT, 'performance', 'issue_results.txt'), 'w') as fh:
+    with open(join(ROOT, 'results', 'performance', 'issue_results.txt'), 'w') as fh:
         print("Issue Mention Results", file=fh)
         print("---------------------", file=fh)
         print(file=fh)
@@ -1146,7 +1146,7 @@ def main():
     tp_delta = (cm_oment_both_un.loc[('WMP', 'Yes'), ('Auto', 'Yes')] - 
                 cm_oment_text_un.loc[('WMP', 'Yes'), ('Auto', 'Yes')])
     
-    with open(join(ROOT, 'performance', 'oppment_results.txt'), 'w') as fh:
+    with open(join(ROOT, 'results', 'performance', 'oppment_results.txt'), 'w') as fh:
         print("Opponent Mention Results", file=fh)
         print("------------------------", file=fh)
         print("Total # of videos: {}".format(oment_wmp.shape[0]), file=fh)

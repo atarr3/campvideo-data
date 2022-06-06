@@ -1,14 +1,15 @@
-library("readtext")
 suppressPackageStartupMessages(library("quanteda"))
 library("quanteda.sentiment", warn.conflicts = FALSE)
 
-# working directory check
-here::i_am(file.path("scripts", "tableS14-7.R"))
+# root directory
+ROOT = ".."
+
+# read in transcripts
+features <- read.csv(file.path(ROOT, "data", "auxiliary", "features_full.csv"),
+                     stringsAsFactors=F)
 
 # create corpus
-transcripts <- corpus(readtext(here::here("data" ,"intermediate", "*", 
-                                          "transcript.txt"), 
-                               cache = FALSE))
+transcripts <- corpus(features$transcript, docnames=features$uid)
 
 # LSD
 data("data_dictionary_LSD2015", package = "quanteda.sentiment")
@@ -20,13 +21,13 @@ polarity(data_dictionary_LSD2015) <- list(pos = c("positive", "neg_negative"),
 sentiment <- transcripts %>% textstat_polarity(data_dictionary_LSD2015)
 
 # predict ad tone w/ LSD
-LSD.all <- data.frame(uid=sapply(sentiment$doc_id, dirname),
+LSD.all <- data.frame(uid=sentiment$doc_id,
                       tone=as.numeric(sentiment$sentiment >= 0)
                      )
 LSD.all <- LSD.all[order(LSD.all$uid), ]
 
 # read in WMP data
-tone.wmp <- read.csv(here::here("data", "wmp", "wmp_final.csv"), stringsAsFactors=F)
+tone.wmp <- read.csv(file.path(ROOT, "data", "wmp", "wmp_final.csv"), stringsAsFactors=F)
 tone.wmp <- tone.wmp[order(tone.wmp$uid), ]
 
 # drop "N/A" and "CONTRAST"
@@ -43,7 +44,7 @@ WMP <- as.integer(tone.wmp.sub$tonecmag %in% c("POSITIVE", "POS"))
 cm.full <- format(round(table(WMP, LSD) / length(LSD) * 100, 2), nsmall=2)
 
 # read in predictions
-tone.pred <- read.csv(here::here("results", "negativity_results.csv"), 
+tone.pred <- read.csv(file.path(ROOT, "data", "negativity_results.csv"), 
                       stringsAsFactors=F)
 
 # subset to test set for non-linear SVM
@@ -60,8 +61,8 @@ AUTO <- tone.pred$tone
 cm.ours <- format(round(table(WMP, AUTO) / length(LSD) * 100, 2), nsmall=2)
 
 # save
-cat("LSD Results (Full)\n", file=here::here("tables", "tableS14-7.txt")) # overwrites existing file
-sink(file=here::here("tables", "tableS14-7.txt"), append=T)
+cat("LSD Results (Full)\n", file=file.path(ROOT, "results", "tables", "tableS14-7.txt")) # overwrites existing file
+sink(file=file.path(ROOT, "results", "tables", "tableS14-7.txt"), append=T)
 cat("------------------\n")
 print(cm.full)
 cat("\n")

@@ -1,16 +1,16 @@
 import pandas as pd
 
-from os.path import abspath, dirname, join
+from os.path import join
 from sklearn.metrics import confusion_matrix
 
 # root folder for replication repo
-ROOT = dirname(dirname(abspath(__file__)))
+ROOT = '..'
 
 # wmp/cmag data
 WMP_DIR = join(ROOT, 'data', 'wmp')
 
 # issue vocabulary list
-VOCAB_PATH = join(ROOT, 'data', 'issuenames.csv')
+VOCAB_PATH = join(ROOT, 'data', 'auxiliary', 'issuenames.csv')
 VOCAB = pd.read_csv(VOCAB_PATH)
 
 # function for reading in WMP / CMAG data
@@ -29,7 +29,7 @@ def main():
     oment_wmp = wmp.loc[:, 'o_mention'].dropna().astype(int)
     
     # read in our predictions
-    iss_pred = pd.read_csv(join(ROOT, 'results', 'mentions_results.csv'),
+    iss_pred = pd.read_csv(join(ROOT, 'data', 'mentions_results.csv'),
                           index_col=['creative', 'feature'])
     
     ## results ##
@@ -58,7 +58,7 @@ def main():
                         columns=cols, index=rows
                         )
     
-    with open(join(ROOT, 'tables', 'table3.txt'), 'w') as fh:
+    with open(join(ROOT, 'results', 'tables', 'table3.txt'), 'w') as fh:
         print("Opponent Mention (Text Only)", file=fh)
         print("----------------------------", file=fh)
         print(cm_oment_text, file=fh)

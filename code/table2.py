@@ -1,17 +1,17 @@
 import numpy as np
 import pandas as pd
 
-from os.path import abspath, dirname, join
+from os.path import join
 from sklearn.metrics import confusion_matrix
 
 # root folder for replication repo
-ROOT = dirname(dirname(abspath(__file__)))
+ROOT = '..'
 
 # wmp/cmag data
 WMP_DIR = join(ROOT, 'data', 'wmp')
 
 # issue vocabulary list
-VOCAB_PATH = join(ROOT, 'data', 'issuenames.csv')
+VOCAB_PATH = join(ROOT, 'data', 'auxiliary', 'issuenames.csv')
 VOCAB = pd.read_csv(VOCAB_PATH)
 
 # function for reading in WMP / CMAG data
@@ -72,7 +72,7 @@ def main():
                         )
 
     # save results
-    with open(join(ROOT, 'tables', 'table2.txt'), 'w') as fh:
+    with open(join(ROOT, 'results', 'tables', 'table2.txt'), 'w') as fh:
         print("Issue Mention (Text Only)", file=fh)
         print("-------------------------", file=fh)
         print(cm_iss_text, file=fh)

@@ -4,7 +4,7 @@ import pandas as pd
 
 from argparse import ArgumentParser
 from campvideo.image import Keyframes
-from os.path import abspath, join, dirname
+from os.path import join
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score 
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.svm import LinearSVC
@@ -13,28 +13,28 @@ from sklearn.svm import LinearSVC
 ROOT = '..'
 
 # video directory
-VID_DIR = join(ROOT, 'data', 'videos')
+VID_DIR = join(ROOT, 'data', 'youtube')
 
 # feature data directory
-FEAT_DIR = join(ROOT, 'data', 'features')
+AUX_DIR = join(ROOT, 'data', 'auxiliary')
 
 # wmp/cmag data
 WMP_DIR = join(ROOT, 'data', 'wmp')
 
 # ID encodings
-ID_DIR = join(ROOT, 'data', 'ids')
+ID_DIR = join(AUX_DIR, 'ids')
 
 # validation
 VAL_DIR = join(ROOT, 'data', 'validation')
 
 # metadata
-META_PATH = join(ROOT, 'data', 'metadata.csv')
+META_PATH = join(AUX_DIR, 'metadata.csv')
 
 # seed
 SEED = 2002
 
 # lookup table mapping YouTube IDs to CMAG IDs
-with open(join(ROOT, 'data', 'matches', 'matches.json'), 'r') as fh:
+with open(join(AUX_DIR, 'matches.json'), 'r') as fh:
     MATCHES = json.load(fh)
 
 # function for reading in WMP / CMAG data
@@ -75,7 +75,7 @@ def main():
     # detect opponent and favored appearances
     if calculate:
         # read in feature data
-        feat = pd.read_csv(join(FEAT_DIR, 'features.csv'), index_col=['creative'],
+        feat = pd.read_csv(join(AUX_DIR, 'features_full.csv'), index_col=['creative'],
                            usecols=['creative', 'keyframes'])      
         n = len(senate.index)
         fmins = np.ones(n)
@@ -146,10 +146,10 @@ def main():
                                 'f_picture': f_pred, 'f_dist': fmins, 
                                 'o_picture': o_pred, 'o_dist': omins}, 
                                index=senate.index)
-        facerec.to_csv(join(ROOT, 'results', 'facerec_results.csv'), index=True)
+        facerec.to_csv(join(ROOT, 'data', 'facerec_results.csv'), index=True)
         print("Done!")
     else:
-        facerec = pd.read_csv(join(ROOT, 'results', 'facerec_results.csv'), 
+        facerec = pd.read_csv(join(ROOT, 'data', 'facerec_results.csv'), 
                               index_col='creative')
         
         # minimum encoding distances
@@ -246,7 +246,7 @@ def main():
     a_fav = accuracy_score(f_wmp_corr, f_pred_corr)
         
     # facerec statistics
-    with open(join(ROOT, 'performance', 'facerec_results.txt'), 'w') as fh:
+    with open(join(ROOT, 'results', 'performance', 'facerec_results.txt'), 'w') as fh:
         print("Thresholds", file=fh)
         print("----------", file=fh)
         print(" Original: {:.4}".format(thr_o), file=fh)

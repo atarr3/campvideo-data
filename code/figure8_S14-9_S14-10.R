@@ -1,12 +1,12 @@
-# working directory check
-here::i_am(file.path("scripts", "figure8_S14-9_S14-10.R"))
+# root directory
+ROOT = ".."
 
 # read in WMP data
-mood.wmp <- read.csv(here::here("data", "wmp", "wmp_final.csv"),
+mood.wmp <- read.csv(file.path(ROOT, "data", "wmp", "wmp_final.csv"),
                      stringsAsFactors=F)
 
 # read in MTurk data
-mood.mturk <- read.csv(here::here("data", "mturk", "mood_mturk.csv"),
+mood.mturk <- read.csv(file.path(ROOT, "data", "mturk", "mood_mturk.csv"),
                        stringsAsFactors=F)
 n = nrow(mood.mturk)
 
@@ -35,17 +35,17 @@ for (t in 1:3){
     y.wmp <- mood.wmp.sample$music1
     y.pred <- mood.mturk$music1_pred[seq(1, n, 5)]
     agree <- agree.music1.counts
-    fname <- here::here("figs", "figure8.pdf")
+    fname <- file.path(ROOT, "results", "figs", "figure8.pdf")
   } else if (t == 2) {
     y.wmp <- mood.wmp.sample$music2
     y.pred <- mood.mturk$music2_pred[seq(1, n, 5)]
     agree <- agree.music2.counts
-    fname <- here::here("figs", "figureS14-9.pdf")
+    fname <- file.path(ROOT, "results", "figs", "figureS14-9.pdf")
   } else {
     y.wmp <- mood.wmp.sample$music3
     y.pred <- mood.mturk$music3_pred[seq(1, n, 5)]
     agree <- agree.music3.counts
-    fname <- here::here("figs", "figureS14-10.pdf")
+    fname <- file.path(ROOT, "results", "figs", "figureS14-10.pdf")
   }
   
   # set up figure
@@ -77,7 +77,7 @@ for (t in 1:3){
       # floating text
       text(2, 80, paste('No. of videos:', length(sub)), adj=0)
       text(2, 72, paste('Mean:', sprintf('%.2f', mean(sub))), adj=0)
-      text(2, 64, paste('St. dev.:', sprintf('%.2f', sd(sub))), adj=0)
+      text(2, 64, paste('Std. dev.:', sprintf('%.2f', sd(sub))), adj=0)
     }
   }
   

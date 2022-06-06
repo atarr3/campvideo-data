@@ -1,13 +1,13 @@
 import numpy as np
 import pandas as pd
 
-from os.path import abspath, dirname, join
+from os.path import join
 from sklearn.metrics import confusion_matrix 
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.svm import LinearSVC
 
 # root folder for replication repo
-ROOT = dirname(dirname(abspath(__file__)))
+ROOT = '..'
 
 # seed for replication
 SEED = 2002
@@ -37,7 +37,7 @@ def main():
     f_wmp = np.logical_or(senate.vid.fillna(0), senate.f_picture).astype(float)
     
     # read in our data
-    facerec = pd.read_csv(join(ROOT, 'results', 'facerec_results.csv'), 
+    facerec = pd.read_csv(join(ROOT, 'data', 'facerec_results.csv'), 
                           index_col='creative')
     
     # minimum encoding distances
@@ -77,7 +77,7 @@ def main():
                 )
     
     # confusion matrix (uncorrected, Table 4)
-    with open(join(ROOT, 'tables', 'table4.txt'), 'w') as fh:
+    with open(join(ROOT, 'results', 'tables', 'table4.txt'), 'w') as fh:
         print("Favored Candidate", file=fh)
         print("-----------------", file=fh)
         print(cm_f, file=fh)

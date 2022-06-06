@@ -1,21 +1,21 @@
 Opponent Mention Results
 ------------------------
 Total # of videos: 2449
-# of disagreements: 90 (4%)
+# of disagreements: 88 (4%)
 Increase in positive samples w/ images: 83 (3%)
 Increase in false positive samples w/ images: 8 (10%)
 Increase in true positive samples w/ images: 75 (90%)
 
 Opponent Mention Validation Study
 ---------------------------------
-# of false positives: 67
-# of false negatives: 23
+# of false positives: 66
+# of false negatives: 22
 
-# mistakes made by WMP for FP: 64
+# mistakes made by WMP for FP: 63
 # mistakes made by us for FP: 3
 # mistakes made by WMP for FN: 7
-# mistakes made by us for FN: 16
+# mistakes made by us for FN: 15
 
-# of FN mistakes made by us due to transcript: 13
+# of FN mistakes made by us due to transcript: 12
 
-Overall accuracy accounting for WMP mistakes: 71 (79%)
+Overall accuracy accounting for WMP mistakes: 70 (80%)

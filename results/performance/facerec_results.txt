@@ -1,35 +1,35 @@
 Thresholds
 ----------
  Original: 0.5135
-Corrected: 0.5154
+Corrected: 0.5146
 
 Mistake Analysis
 ----------------
 f_picture disagreements: 148
 o_picture disagreements: 68
 
-f_picture mistakes (WMP): 18 (12%)
-f_picture mistakes (def): 97 (66%)
-f_picture mistakes (oth): 33 (22%)
+f_picture mistakes (WMP): 20 (14%)
+f_picture mistakes (def): 99 (67%)
+f_picture mistakes (oth): 29 (20%)
 
-o_picture mistakes (WMP): 21 (31%)
-o_picture mistakes (oth): 47 (69%)
+o_picture mistakes (WMP): 22 (32%)
+o_picture mistakes (oth): 46 (68%)
 
 Favored Candidate (Corrected)
 -----------------------------
          Auto       
            No    Yes
-WMP No  5.74%  1.30%
-    Yes 4.82% 88.14%
+WMP No  6.78%  0.00%
+    Yes 3.78% 89.44%
 
 Opposing Candidate (Corrected)
 ------------------------------
           Auto       
             No    Yes
-WMP No  62.58%  1.17%
-    Yes  5.22% 31.03%
+WMP No  62.84%  1.04%
+    Yes  5.08% 31.03%
 
 Classification Metrics
 ----------------------
- Favored Pre, Rec, Acc: 0.99, 0.95, 0.94
-Opposing Pre, Rec, Acc: 0.96, 0.86, 0.94
+ Favored Pre, Rec, Acc: 1.0, 0.96, 0.96
+Opposing Pre, Rec, Acc: 0.97, 0.86, 0.94

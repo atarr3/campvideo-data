@@ -4,14 +4,14 @@ import seaborn as sns
 
 # from matplotlib import rc
 
-from os.path import abspath, dirname, join
+from os.path import join
 
 # root folder for replication repo
-ROOT = dirname(dirname(abspath(__file__)))
+ROOT = '..'
 
 def main():
     # read in data
-    res = pd.read_csv(join(ROOT, 'results', 'summary_results.csv'),
+    res = pd.read_csv(join(ROOT, 'data', 'summary_results.csv'),
                       index_col='uid')
     # plot results
     plt.rcParams['font.sans-serif'] = 'Verdana'
@@ -82,7 +82,7 @@ def main():
     
     # layout and save
     if not constrained_layout: fig.tight_layout()
-    plt.savefig(join(ROOT, 'figs', 'figureS7-4.pdf'), dpi=200, bbox_inches='tight')
+    plt.savefig(join(ROOT, 'results', 'figs', 'figureS7-4.pdf'), dpi=200, bbox_inches='tight')
     
 if __name__ == '__main__':
     main()

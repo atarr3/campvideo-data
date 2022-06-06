@@ -60,7 +60,7 @@ def main():
         end = '\r' if i < n-1 else '\n'
         print("\tProcessing video %d of %d..." % (i+1, n), end=end, flush=True)
         # get video features
-        vid = Video(join(ROOT, 'data', 'videos', fname + '.mp4'))
+        vid = Video(join(ROOT, 'data', 'youtube', fname + '.mp4'))
         labhist, hog = vid.videofeats()
         
         # subset down to non-monochromatic frames

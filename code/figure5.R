@@ -1,7 +1,7 @@
 library(dplyr, warn.conflicts = FALSE)
 
-# working directory check
-here::i_am(file.path("scripts", "figure5.R"))
+# root directory
+ROOT = ".."
 
 # issue names
 issues <- c('prsment','gbush','reagan','gophse','demhse','gopsen','demsen','congmt',
@@ -19,7 +19,7 @@ issues <- c('prsment','gbush','reagan','gophse','demhse','gopsen','demsen','cong
             'issue98')
 
 # read in WMP data
-issue.wmp <- read.csv(here::here("data", "wmp", "wmp_final.csv"),
+issue.wmp <- read.csv(file.path(ROOT, "data", "wmp", "wmp_final.csv"),
                       stringsAsFactors=F)
 
 # merge issue30 (abortion) and issue58 (women's health)
@@ -41,7 +41,7 @@ issue.wmp[, 2:11] <- matrix(as.integer(!((issue.wmp[, 2:11] == 0) |
                             ncol=10)
 
 # read in MTurk data
-issue.mturk <- read.csv(here::here("data", "mturk", "issue_mturk.csv"), 
+issue.mturk <- read.csv(file.path(ROOT, "data", "mturk", "issue_mturk.csv"), 
                         stringsAsFactors=F)
 n = nrow(issue.mturk)
 
@@ -61,7 +61,7 @@ y.pred <- issue.mturk$pred[seq(1, n, 5)]
 agree <- (issue.mturk %>% group_by(creative, issue) 
                       %>% summarise(total=sum(pred == mturk), .groups = 'drop'))$total
 
-fname <- here::here("figs/figure5.pdf")
+fname <- file.path(ROOT, "results", "figs", "figure5.pdf")
 
 # set up figure
 pdf(fname, width=8.5, height=5)
@@ -92,7 +92,7 @@ for (i in 0:1) {
     # floating text
     text(2, 80, paste('No. of videos:', length(sub)), adj=0)
     text(2, 72, paste('Mean:', sprintf('%.2f', mean(sub))), adj=0)
-    text(2, 64, paste('St. dev.:', sprintf('%.2f', sd(sub))), adj=0)
+    text(2, 64, paste('Std. dev.:', sprintf('%.2f', sd(sub))), adj=0)
   }
 }
 

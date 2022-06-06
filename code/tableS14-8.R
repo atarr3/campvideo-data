@@ -3,11 +3,11 @@ suppressPackageStartupMessages({
 	library("stargazer")
 	})
 
-# working directory check
-here::i_am(file.path("scripts", "tableS14-8.R"))
+# root directory
+ROOT = ".."
 
 # read in regression data
-data.full <- read.csv(here::here("data", "issueconv.csv"),
+data.full <- read.csv(file.path(ROOT, "data", "issueconv.csv"),
                       stringsAsFactors=F)
 
 # split into predictions and wmp
@@ -30,10 +30,10 @@ latex <- capture.output(
                     					 "Consensual", "Owned", "Salience"),
                       column.labels=c("WMP Coding", "Automated Coding"),
                       intercept.bottom=T, keep.stat=c("n"), model.numbers=F, 
-                      out=here::here("tables", "tableS14-8.txt"),
+                      out=file.path(ROOT, "results", "tables", "tableS14-8.txt"),
                       header=F),
-            out=here::here("tables", "tableS14-8.txt"))
+            out=file.path(ROOT, "results", "tables", "tableS14-8.txt"))
 
 # add latex code to table file
 cat("\n", paste(latex[1:(length(latex)-1)], collapse = "\n"), 
-    file=here::here("tables", "tableS14-8.txt"), append=TRUE)
+    file=file.path(ROOT, "results", "tables", "tableS14-8.txt"), append=TRUE)

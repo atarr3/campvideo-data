@@ -1,8 +1,8 @@
 options(xtable.comment = FALSE)
 library(xtable)
 
-# working directory check
-here::i_am(file.path("scripts", "tableS1-1.R"))
+# root directory
+ROOT = ".."
 
 # video/candidate counts for all videos
 CMAGCover <- function(df, year=NULL, race=NULL, affiliation=NULL) {
@@ -48,11 +48,11 @@ YoutubeCover <- function(df, race=NULL){
 }
 
 # read in matches
-matches <- read.csv(here::here("data", "matches", "matches_processed.csv"), 
+matches <- read.csv(file.path(ROOT, "data", "auxiliary", "matches_processed.csv"), 
                     stringsAsFactors=F)
 
 # read in YT metadata
-yt.info <- read.csv(here::here("data", "matches", "ytinfo.csv"),
+yt.info <- read.csv(file.path(ROOT, "data", "auxiliary", "ytinfo.csv"),
                     stringsAsFactors=F) 
 
 # create video-candidate coverage table
@@ -107,4 +107,4 @@ print(xtable(yt.tab,
              caption = 'Summary of Channels and Videos Recovered from YouTube',
              digits = c(0, 0, 0, 0, 0, 1, 0, 0, 0, 0)),
       caption.placement = 'top', include.rownames = F,
-      file=here::here("tables", "tableS1-1.txt"))
+      file=file.path(ROOT, "results", "tables", "tableS1-1.txt"))

@@ -1,10 +1,10 @@
 import pandas as pd
 
-from os.path import abspath, join, dirname
+from os.path import join
 from sklearn.metrics import confusion_matrix
 
 # root folder for replication repo
-ROOT = dirname(dirname(abspath(__file__)))
+ROOT = '..'
 
 # video directory
 VID_DIR = join(ROOT, 'data', 'videos')
@@ -36,7 +36,7 @@ def main():
     mood_wmp = wmp.loc[wmp.music1 + wmp.music2 + wmp.music3 >= 1, 
                                     ['music1', 'music2', 'music3']].astype(int)
     # read in our results
-    mood_pred = pd.read_csv(join(ROOT, 'results', 'mood_results.csv'),
+    mood_pred = pd.read_csv(join(ROOT, 'data', 'mood_results.csv'),
                             index_col='creative')
     
     # results
@@ -73,7 +73,7 @@ def main():
             )
     
     # save to txt file
-    with open(join(ROOT, 'tables', 'table5.txt'), 'w') as fh:
+    with open(join(ROOT, 'results', 'tables', 'table5.txt'), 'w') as fh:
         print("Music Mood Results (Ominous/Tense)", file=fh)
         print("----------------------------------", file=fh)
         print(cm1, file=fh)

@@ -2,18 +2,17 @@ import os
 import pandas as pd
 
 from itertools import product
-from os.path import abspath, dirname, join
-from pkg_resources import resource_filename
+from os.path import join
 from sklearn.metrics import confusion_matrix
 
 # root folder for replication repo
-ROOT = dirname(dirname(abspath(__file__)))
+ROOT = '..'
 
 # wmp/cmag data
 WMP_DIR = join(ROOT, 'data', 'wmp')
 
 # issue vocabulary list
-VOCAB_PATH = resource_filename('campvideo','data/issuenames.csv')
+VOCAB_PATH = join(ROOT, 'data', 'auxiliary', 'issuenames.csv')
 VOCAB = pd.read_csv(VOCAB_PATH)
 
 # function for reading in WMP / CMAG data
@@ -31,7 +30,7 @@ def main():
     # get cleaned tonecmag variable
     tone = wmp.dropna(subset=['tonecmag'])
     # drop 'contrast' observations
-    tone.drop(tone.loc[tone.tonecmag == 'CONTRAST'].index, inplace=True)
+    tone = tone.loc[tone.tonecmag != 'CONTRAST']
     # recast tonecmag to 1/0 for sentiment
     tone_wmp = ((tone.tonecmag == 'POS') | 
                 (tone.tonecmag == 'POSITIVE')).astype(int)
@@ -59,8 +58,8 @@ def main():
                                  ).unique()]
     
     # delete old files
-    if os.path.exists(join(ROOT, 'tables', 'tableS14-6.txt')):
-        os.remove(join(ROOT, 'tables', 'tableS14-6.txt'))
+    if os.path.exists(join(ROOT, 'results', 'tables', 'tableS14-6.txt')):
+        os.remove(join(ROOT, 'results', 'tables', 'tableS14-6.txt'))
     
     for model, feature in product(['lsvm', 'knn', 'rf', 'nb'], 
                                   ['text', 'music', 'both']):
@@ -73,7 +72,7 @@ def main():
                          )
     
         # write results
-        with open(join(ROOT, 'tables', 'tableS14-6.txt'), 'a') as fh:
+        with open(join(ROOT, 'results', 'tables', 'tableS14-6.txt'), 'a') as fh:
             # model name
             if feature == 'text': 
                 print("== "+ model_name[model] + " ==", file=fh)

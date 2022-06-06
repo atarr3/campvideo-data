@@ -1,6 +1,13 @@
 #!/bin/bash
 set -ex
 
+# create results subfolders
+mkdir -p ../results/tables
+
+mkdir -p ../results/figs
+
+mkdir -p ../results/performance
+
 # preprocess WMP data
 Rscript preprocess_CMAG.R
 
@@ -10,8 +17,8 @@ python generate_data.py --no-gcp --overwrite
 # summary results
 python summary_validation.py
 
-# issue / opponent mention results
-python --no-negativity text_validation.py
+# issue / opponent mention and ad negativity results
+python text_validation.py
 
 # face recognition results
 python facerec_validation.py
@@ -19,22 +26,34 @@ python facerec_validation.py
 # music mood results
 python mood_validation.py
 
-# ad negativity results
-python --no-mention text_validation.py
-
 # create tables
+Rscript table1.R
+
+python table2.py
+
+python table3.py
+
+python table4.py
+
+python table5.py
+
+python table6.py
+
+Rscript tableS1-1.R
+
+python tableS14-5.py
+
+python tableS14-6.py
+
+Rscript tableS14-7.R
+
+Rscript tableS14-8.R
 
 # create figures
+Rscript figure5.R
 
+Rscript figure8_S14-9_S14-10.R
 
-mkdir -p ../results/unidirectional
-python -u Unidirectional_LSTM.py
-matlab -nodisplay -r "test_train_unidirectional"
+python figureS7-4.py
 
-mkdir -p ../results/bidirectional
-python -u Bidirectional_LSTM.py
-matlab -nodisplay -r "test_train_bidirectional"
-
-mkdir -p ../results/biconcat
-python -u Biconcat_LSTM.py
-matlab -nodisplay -r "test_train_cascaded"
+python figureS13-8.py

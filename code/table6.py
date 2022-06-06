@@ -2,17 +2,17 @@ import os
 import pandas as pd
 
 from itertools import product
-from os.path import abspath, dirname, join
+from os.path import join
 from sklearn.metrics import confusion_matrix
 
 # root folder for replication repo
-ROOT = dirname(dirname(abspath(__file__)))
+ROOT = '..'
 
 # wmp/cmag data
 WMP_DIR = join(ROOT, 'data', 'wmp')
 
 # issue vocabulary list
-VOCAB_PATH = join(ROOT, 'data', 'issuenames.csv')
+VOCAB_PATH = join(ROOT, 'data', 'auxiliary', 'issuenames.csv')
 VOCAB = pd.read_csv(VOCAB_PATH)
 
 # function for reading in WMP / CMAG data
@@ -35,7 +35,7 @@ def main():
                 (tone.tonecmag == 'POSITIVE')).astype(int)
  
     # read in our predictions
-    neg_pred = pd.read_csv(join(ROOT, 'results', 'negativity_results.csv'),
+    neg_pred = pd.read_csv(join(ROOT, 'data', 'negativity_results.csv'),
                            index_col=['creative', 'feature', 'model', 'train']
                           ).drop(columns='uid')
     
@@ -69,7 +69,7 @@ def main():
                          )
     
         # write results
-        with open(join(ROOT, 'tables', 'table6.txt'), 'a') as fh:
+        with open(join(ROOT, 'results', 'tables', 'table6.txt'), 'a') as fh:
             # model name
             if feature == 'text': 
                 print("== "+ model_name[model] + " ==", file=fh)

@@ -21,11 +21,10 @@ subset.cmag <- function(data) {
 }
 
 # read in matches file
-matches <- read.csv(file.path(ROOT, "data", "matches", "matches.csv"), 
+matches <- read.csv(file.path(ROOT, "data", "auxiliary", "matches.csv"), 
                     stringsAsFactors=F)
 
 # load WMP data and drop duplicates
-cat("Reading in 2012 data... ")
 hou12 <- read.dta13(file.path(ROOT, "data", "wmp", "wmp-house-2012-v1.1.dta"), 
                     convert.factors=F)
 hou12 <- hou12[!duplicated(hou12$creative), ]
@@ -40,8 +39,7 @@ wmp12 <- rbind(hou12, sen12, gov12)
 pre12 <- read.dta13(file.path(ROOT, "data", "wmp", "wmp-pres-2012-v1.2_compress.dta"), 
                     convert.factors=F)
 pre12 <- pre12[!duplicated(pre12$creative), ]
-cat("Done!\n")
-cat("Reading in 2014 data... ")
+
 hou14 <- read.dta13(file.path(ROOT, "data", "wmp", "wmp-house-2014-v1.0.dta"), 
                     convert.factors=F)
 hou14 <- hou14[!duplicated(hou14$creative), ]
@@ -52,7 +50,6 @@ gov14 <- read.dta13(file.path(ROOT, "data", "wmp", "wmp-gov-2014-v1.1.dta"),
                     convert.factors=F)
 gov14 <- gov14[!duplicated(gov14$creative), ]
 wmp14 <- rbind(hou14, sen14, gov14)
-cat("Done!\n")
 
 # add year variable
 wmp12$year <- 2012
@@ -107,6 +104,6 @@ uid <- uid[!(uid %in% c("NoMatch", "NoChannel"))]
 final <- cbind(creative=final[, 1], uid=uid, final[, 2:ncol(final)])
 
 # save processed files
-write.csv(matches, file.path(ROOT, "data", "matches", "matches_processed.csv"), 
+write.csv(matches, file.path(ROOT, "data", "auxiliary", "matches_processed.csv"), 
           row.names = F)
 write.csv(final, file.path(ROOT, "data", "wmp", "wmp_final.csv"), row.names = F)
