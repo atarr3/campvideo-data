@@ -16,7 +16,7 @@ ROOT = '..'
 AUX_DIR = join(ROOT, 'data', 'auxiliary')
 
 # manually created summaries
-TRUE_DIR = join(ROOT, 'data', 'validation', 'summary')
+TRUE_DIR = join(ROOT, 'data', 'validation')
    
 # computes representativeness and uniqueness
 def objective(kf_ind, w, d):
