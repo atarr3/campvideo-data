@@ -762,7 +762,8 @@ def main():
                                                             input='content'), -1)],
                                     remainder='drop')),
                         ('dim_red', SelectPercentile(mutual_info_classif)),
-                        ('clf', RandomForestClassifier(class_weight='balanced'))
+                        ('clf', RandomForestClassifier(class_weight='balanced', 
+                                                       random_state=2002))
                             ])
     
             # parameter grid for grid search
@@ -789,7 +790,8 @@ def main():
                         ('feat', ColumnTransformer(
                                     [('ss', 'passthrough', slice(-1))], 
                                     remainder='drop')),
-                        ('clf', RandomForestClassifier(class_weight='balanced'))
+                        ('clf', RandomForestClassifier(class_weight='balanced',
+                                                       random_state=2002))
                             ])
     
             # parameter grid for grid search
@@ -820,7 +822,8 @@ def main():
                         ('feat2', ColumnTransformer(
                                     [("dim_red", SelectPercentile(mutual_info_classif), 
                                       slice(-d))], remainder='passthrough')),
-                        ('clf', RandomForestClassifier(class_weight='balanced'))
+                        ('clf', RandomForestClassifier(class_weight='balanced',
+                                                       random_state=2002))
                             ])
     
             # parameter grid for grid search
@@ -953,7 +956,7 @@ def main():
     
             # predictions
             neg_pred.loc[(neg_feats.index, 'both', 'nb'), 'tone'] = nb_tm.predict(neg_feats)
-            print("\tDone!")
+            print("Done!")
             
             # insert column for YouTube IDs
             uids_neg = [MATCHES_CMAG[ele] for ele in neg_pred.index.get_level_values('creative')]
