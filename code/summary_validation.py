@@ -33,7 +33,7 @@ def objective(kf_ind, w, d):
 
 # script for summarizing a collection of videos and computing statistics
 def main():
-    print("Reading in video summaries...", end='', flush=True)
+    print("Reading in video summaries... ", end='', flush=True)
     # read in data
     true = pd.read_csv(join(TRUE_DIR, 'keyframes.csv'), index_col=['uid'], 
                        usecols=['uid', 'keyframes'])

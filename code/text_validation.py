@@ -663,7 +663,7 @@ def main():
             ## KNN ##
             #########
             
-            print("\tTraining KNN classifiers... ")
+            print("\tFitting KNN classifiers... ")
                 
             ## text only ##
     
@@ -751,7 +751,7 @@ def main():
             ## Random Forest ##
             ###################
             
-            print("\tTraining random forest classifiers... ")
+            print("\tFitting random forest classifiers... ")
                 
             ## text only ##
     

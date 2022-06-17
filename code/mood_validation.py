@@ -114,13 +114,13 @@ def main():
         clf3 = GridSearchCV(pipe3, params, scoring='balanced_accuracy', cv=5)
         clf4 = GridSearchCV(pipe4, params, scoring='accuracy', cv=5)
         
-        print("    Training classifier 1...", end='\r', flush=True)
+        print("\tTraining classifier for music1...", flush=True)
         clf1.fit(feat_tr, mood_tr.music1)
-        print("    Training classifier 2...", end='\r', flush=True)
+        print("\tTraining classifier for music2...", flush=True)
         clf2.fit(feat_tr, mood_tr.music2)
-        print("    Training classifier 3...", end='\r', flush=True)
+        print("\tTraining classifier for music3...", flush=True)
         clf3.fit(feat_tr, mood_tr.music3)
-        print("    Training classifier 4...", end='\n', flush=True)
+        print("\tTraining classifier for music4...", flush=True)
         clf4.fit(feat_tr, mood_tr.music1 | mood_tr.music3)
         print("Done!")
         
@@ -137,15 +137,15 @@ def main():
         mood_pred.sort_index().to_csv(join(ROOT, 'data', 'mood_results.csv'))
         
         # update MTurk file with predictions
-        mood_mturk = pd.read_csv(join(MT_DIR, 'mood_mturk.csv'), 
-                                 index_col=['creative'])
-        mood_mturk['music1_pred'] = mood_pred.loc[mood_mturk.index].music1
-        mood_mturk['music2_pred'] = mood_pred.loc[mood_mturk.index].music2
-        mood_mturk['music3_pred'] = mood_pred.loc[mood_mturk.index].music3
-        mood_mturk['music4_pred'] = mood_pred.loc[mood_mturk.index].music4
+        # mood_mturk = pd.read_csv(join(MT_DIR, 'mood_mturk.csv'), 
+                                 # index_col=['creative'])
+        # mood_mturk['music1_pred'] = mood_pred.loc[mood_mturk.index].music1
+        # mood_mturk['music2_pred'] = mood_pred.loc[mood_mturk.index].music2
+        # mood_mturk['music3_pred'] = mood_pred.loc[mood_mturk.index].music3
+        # mood_mturk['music4_pred'] = mood_pred.loc[mood_mturk.index].music4
         
-        # save MTurk
-        mood_mturk.to_csv(join(MT_DIR, 'mood_mturk.csv'))
+        # # save MTurk
+        # mood_mturk.to_csv(join(MT_DIR, 'mood_mturk.csv'))
         
     else:
         mood_pred = pd.read_csv(join(ROOT, 'data', 'mood_results.csv'),

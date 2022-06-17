@@ -74,6 +74,7 @@ def main():
     
     # detect opponent and favored appearances
     if calculate:
+        print("Detecting faces...")
         # read in feature data
         feat = pd.read_csv(join(AUX_DIR, 'features_full.csv'), index_col=['creative'],
                            usecols=['creative', 'keyframes'])      
@@ -82,7 +83,7 @@ def main():
         omins = np.ones(n)
         for i, creative in enumerate(senate.index):
             end = '\r' if i < n-1 else '\n'
-            print('Processing video %d of %d...' %(i+1, n), end=end, flush=True)
+            print('\tProcessing video %d of %d...' %(i+1, n), end=end, flush=True)
             
             # metadata 
             metadata = meta.loc[creative]
