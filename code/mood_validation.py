@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 from argparse import ArgumentParser
-from os.path import abspath, join, dirname
+from os.path import join
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
