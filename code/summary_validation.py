@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import pandas as pd
 
-
 from campvideo.video import Video
 from functools import partial
 from os.path import join
