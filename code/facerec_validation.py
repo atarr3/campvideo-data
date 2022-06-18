@@ -51,7 +51,7 @@ def parse_arguments():
                         action='store_false', default=True, help='Flag for '
                         'specifying to not detect and compute face encodings and '
                         'distances. If specified, the script will '
-                        'check the `results` folder for a file called '
+                        'check the `data` folder for a file called '
                         '`facerec_results.csv`.')
     
     return parser.parse_args()

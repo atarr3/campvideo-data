@@ -300,8 +300,8 @@ def parse_arguments():
                         action='store_false', default=True, help='Flag for '
                         'specifying to not train text models and predict '
                         'labels. If specified, the script will '
-                        'check the `results` folder for a file called '
-                        '`facerec_results.csv`')
+                        'check the `data` folder for files called '
+                        '`negativity_results.csv` and `mentions_results.csv`')
     parser.add_argument('-nm', '--no-mention', dest='im_flag', 
                         action='store_false', default=True, help='Flag for '
                         'specifying to not perform issue/opponent mentions')

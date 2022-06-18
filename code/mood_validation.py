@@ -44,8 +44,8 @@ def parse_arguments():
     parser.add_argument('-nc', '--no-calculate', dest='calculate', 
                         action='store_false', default=True, help='Flag for '
                         'specifying to not fit models and predict labels. If '
-                        'specified, the script will look for results in '
-                        '`results/mood_results.csv`.')
+                        'specified, the script will check the `data` folder '
+                        'for a file called `mood_results.csv`.')
     
     return parser.parse_args()
 
