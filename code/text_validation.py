@@ -425,13 +425,13 @@ def main():
             iss_pred.to_csv(join(ROOT, 'data', 'mentions_results.csv'))
             
             # update MTurk results
-            iss_mturk = pd.read_csv(join(MTURK_DIR, 'issue_mturk.csv'), 
-                                    index_col=['creative', 'uid', 'issue'])
-            iss_mturk.pred = iss_pred.xs('both', level='feature'
-                                    ).drop(columns=['o_mention']
-                                    ).stack(
-                                    ).loc[iss_mturk.index]
-            iss_mturk.to_csv(join(MTURK_DIR, 'issue_mturk.csv'))
+            # iss_mturk = pd.read_csv(join(MTURK_DIR, 'issue_mturk.csv'), 
+                                    # index_col=['creative', 'uid', 'issue'])
+            # iss_mturk.pred = iss_pred.xs('both', level='feature'
+                                    # ).drop(columns=['o_mention']
+                                    # ).stack(
+                                    # ).loc[iss_mturk.index]
+            # iss_mturk.to_csv(join(MTURK_DIR, 'issue_mturk.csv'))
             print("Done!")
         
         ###################

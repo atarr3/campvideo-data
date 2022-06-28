@@ -55,8 +55,8 @@ def main():
                                  ).index.get_level_values('creative'
                                  ).unique()]
     # delete old files
-    if os.path.exists(join(ROOT, 'tables', 'table6.txt')):
-        os.remove(join(ROOT, 'tables', 'table6.txt'))
+    if os.path.exists(join(ROOT, 'results', 'tables', 'table6.txt')):
+        os.remove(join(ROOT, 'results', 'tables', 'table6.txt'))
     
     for model, feature in product(['nsvm'], 
                                   ['text', 'music', 'both']):

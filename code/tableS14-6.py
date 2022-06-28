@@ -36,7 +36,7 @@ def main():
                 (tone.tonecmag == 'POSITIVE')).astype(int)
     
     # read in our predictions
-    neg_pred = pd.read_csv(join(ROOT, 'results', 'negativity_results.csv'),
+    neg_pred = pd.read_csv(join(ROOT, 'data', 'negativity_results.csv'),
                            index_col=['creative', 'feature', 'model', 'train']
                           ).drop(columns='uid')
     

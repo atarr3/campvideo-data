@@ -42,7 +42,7 @@ def main():
                                            iss_wmp.iloc[:, :10] == 'No')).astype(int)
     
     # read in our predictions
-    iss_pred = pd.read_csv(join(ROOT, 'results', 'mentions_results.csv'),
+    iss_pred = pd.read_csv(join(ROOT, 'data', 'mentions_results.csv'),
                           index_col=['creative', 'feature'])
     
     ## results ##
