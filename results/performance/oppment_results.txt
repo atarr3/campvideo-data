@@ -18,4 +18,4 @@ Opponent Mention Validation Study
 
 # of FN mistakes made by us due to transcript: 12
 
-Overall accuracy accounting for WMP mistakes: 70 (80%)
+Overall accuracy accounting for WMP mistakes: 70 mistakes (80%)

@@ -108,7 +108,7 @@ def main():
                    'clf__C': np.geomspace(0.1, 10, 16)}]
         
         # fit classifiers
-        print("Training classifiers...")
+        print("Classifying mood...")
         clf1 = GridSearchCV(pipe1, params, scoring='accuracy', cv=5)
         clf2 = GridSearchCV(pipe2, params, scoring='accuracy', cv=5)
         clf3 = GridSearchCV(pipe3, params, scoring='balanced_accuracy', cv=5)

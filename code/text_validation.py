@@ -1173,7 +1173,7 @@ def main():
         print(file=fh)
         print("# of FN mistakes made by us due to transcript: {}".format(nmis_trans), file=fh)
         print(file=fh)
-        print("Overall accuracy accounting for WMP mistakes: {} ({:.0%})".format(nmis_wmp, nmis_wmp/nmis_om), file=fh)
+        print("Overall accuracy accounting for WMP mistakes: {} mistakes ({:.0%})".format(nmis_wmp, nmis_wmp/nmis_om), file=fh)
 
     print("Done!")
 if __name__ == '__main__':
