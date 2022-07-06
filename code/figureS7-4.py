@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# from matplotlib import rc
+from matplotlib import rc
 
 from os.path import join
 
@@ -15,7 +15,7 @@ def main():
                       index_col='uid')
     # plot results
     plt.rcParams['font.sans-serif'] = 'Verdana'
-    #rc('text', usetex=True)
+    rc('text', usetex=True)
     constrained_layout = True # use tight layout if False
     
     fig, axs = plt.subplots(1, 3, figsize=(6.5, 4.333), sharey=False, 
