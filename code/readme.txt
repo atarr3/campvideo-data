@@ -1,0 +1,69 @@
+== Description ==
+
+Replication code for "Automated Coding of Political Campaign Advertisement Videos: An Empirical Validation Study" by Alexander Tarr, June Hwang, and Kosuke Imai. This repo is used for replicating all tables, figures, and results contained in the aforementioned paper.
+
+== Contents ==
+
+Folders
+--------
+code - Contains all replication code
+data - Contains all input data
+   auxiliary - Metadata and Google Cloud Platform results needed for all code
+   mturk - CSV files containing Amazon Mechanical Turk study results
+   validation - CSV files containing validation study results
+   wmp - DTA files containing WMP data
+   youtube - YouTube video files in .mp4 format
+results - Contains all tables, figures, and performance metrics
+
+Files
+-----
+data/auxiliary
+   ids/*.npy - Numpy vectors for face encodings of Senate candidates
+   features_gcp.csv - Google Cloud Platform results for automated transcription and image text recognition
+   issuenames.csv - Information about WMP issue mention variables
+   matches.csv - Results from matching YouTube videos to all CMAG videos
+   matches.json - Dictionary mapping YouTube videos to CMAG videos
+   metadata.csv - Information on candidate/opponent names and face encoding path in `ids` folder
+   ytinfo - Video metadata on all collected YouTube videos
+
+data/mturk
+   issue_mturk.csv - MTurk results for issue mentions
+   mood_mturk.csv - MTurk results for music mood classification
+
+data/validation
+   keyframes.csv - Validation results for video summarization
+   issue_validation.csv - Validation results for issue mentions
+   oppment_validation.csv - Validation results for opposing candidate mentions
+   o_picture_validation.csv - Validation results for opposing candidate detection
+   f_picture_validation.csv - Validation results for for favored candidate detection
+
+code
+   preprocess_CMAG.R - Merges and filters WMP .dta files to create a single file for our study
+   generate_data.py - Computes video summaries and music mood feature vector
+   facerec_validation.py - Computes performance results for face recognition
+   mood_validation.py - Computes performance results for music mood classification
+   summary_validation.py - Computes performance results for video summarization
+   text_validation.py - Computes performance results for issue/opponent mentions and negativity classification
+   figure*.py/figure*.R - Replicates the corresponding figure in the paper
+   table*.py/table*.R - Replicates the corresponding table in the paper
+
+issueconv.csv - Regression data for issue convergence replication study
+
+== Specifications ==
+
+Code Ocean
+----------
+AWS Instance - Amazon EC2, type g4dn.2xlarge
+GPUs - 1
+# of cores - 4 (8 vCPU)
+RAM - 32 GiB
+GPU Memory - 16 GiB
+
+Results
+-------
+Number of figures produced by code - 6
+Number of tables produced by code - 11
+
+Code Ocean Runtime
+------------------
+20:33:35 (hh:mm:ss)
