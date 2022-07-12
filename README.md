@@ -5,7 +5,7 @@ The latest version of this repo is maintained on [GitHub](https://github.com/ata
 
 ## Data
 The replication code requires the human-coded labels provided by WMP and YouTube videos, both of which cannot be shared publicly. 
-- The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential (Version 1.2), 2012 Non-Presidential (Version 1.1), and 2014 data (Version 1.0). The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the ``data/wmp`` folder.
+- The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential (Version 1.2), 2012 Non-Presidential (Version 1.1), and 2014 data (Version 1.0). The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the [``data/wmp``](data/wmp) folder.
 - The list of YouTube videos used in this study is found in the [``data/auxiliary/metadata.csv``](data/auxiliary/metadata.csv) file under the ``uid`` column, which denotes the YouTube Video ID. These files should be obtained in .mp4 format and placed in the [``data/youtube``](data/youtube) folder and named according to the YouTube Video ID (e.g., ``Pzepu1vdv78.mp4``).
 
 ## Environment
