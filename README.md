@@ -6,7 +6,7 @@ The latest version of this repo is maintained on [GitHub](https://github.com/ata
 ## Data
 The replication code requires the human-coded labels provided by WMP and YouTube videos, both of which cannot be shared publicly. 
 - The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential (Version 1.2), 2012 Non-Presidential (Version 1.1), and 2014 data (Version 1.0). The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the ``data/wmp`` folder.
-- The list of YouTube videos used in this study is found in the ``data/auxiliary/metadata.csv`` file under the ``uid`` column, which denotes the YouTube Video ID. These files should be obtained in .mp4 format and placed in the ``data/youtube`` folder and named according to the YouTube Video ID (e.g., ``Pzepu1vdv78.mp4``).
+- The list of YouTube videos used in this study is found in the [``data/auxiliary/metadata.csv``](``data/auxiliary/metadata.csv``) file under the ``uid`` column, which denotes the YouTube Video ID. These files should be obtained in .mp4 format and placed in the [``data/youtube``](data/youtube) folder and named according to the YouTube Video ID (e.g., ``Pzepu1vdv78.mp4``).
 
 ## Environment
 All code was tested under Python 3.8 and R 4.1.3 on the following platforms:
@@ -56,15 +56,15 @@ The list of package dependences and corresponding version used to produce the re
 | spacy            | 3.3.0    |
 
 ## Figure and Table Replication
-Full replication is achieved through the ``run.sh`` script, which generates all intermediate files and creates all tables and figures in the ``results`` folder. This script also computes any statistics reported in the text of our paper, which can be found in the ``results/performance`` folder. 
+Full replication is achieved through the [``run.sh``](code/run.sh) script, which generates all intermediate files and creates all tables and figures in the [``results``](results) folder. This script also computes any statistics reported in the text of our paper, which can be found in the [``results/performance``](results/performance) folder. 
 
-Note that by default, all code in ``run.sh`` is commented out. After acquiring and placing the WMP and YouTube data into the appropriate folders, uncomment any line in ``run.sh`` containing a ``python`` or ``Rscript`` command. This file can now be run to replicate all results.
+Note that by default, all code in [``run.sh``](code/run.sh) is commented out. After acquiring and placing the WMP and YouTube data into the appropriate folders, uncomment any line in [``run.sh``](code/run.sh) containing a ``python`` or ``Rscript`` command. This file can now be run to replicate all results.
 
 The full list of figures and tables and associated replication code is given below.
 
 | Result        | Description                                                | Code                       |
 | :------------ | :--------------------------------------------------------- | :------------------------- |
-| Figure 5      | MTurk results for issue mentions                           | ``figure5.R``              |
+| Figure 5      | MTurk results for issue mentions                           | [``figure5.R``](code/figure5.R)              |
 | Figure 8      | MTurk results for ominous/tense mood classification        | ``figure8_S14-9_S14-10.R`` |
 | Figure S7.4   | Video summarization validation study results               | ``figureS7-4.py``          |
 | Figure S13.8  | ROC plots for face recognition                             | ``figureS13-8.py``         |
