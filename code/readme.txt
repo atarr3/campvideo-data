@@ -20,6 +20,7 @@ Files
 data/auxiliary
    ids/*.npy - Numpy vectors for face encodings of Senate candidates
    features_gcp.csv - Google Cloud Platform results for automated transcription and image text recognition
+   features_full.csv - GCP results, automated summaries, and music mood features
    issuenames.csv - Information about WMP issue mention variables
    matches.csv - Results from matching YouTube videos to all CMAG videos
    matches.json - Dictionary mapping YouTube videos to CMAG videos
@@ -47,6 +48,11 @@ code
    figure*.py/figure*.R - Replicates the corresponding figure in the paper
    table*.py/table*.R - Replicates the corresponding table in the paper
 
+facerec_results.csv - Output from facerec_validation.py
+mentions_results.csv - Output from text_validation.py for issue mentions
+negativity_results.csv - Output from text_validation.py for negativity classification
+mood_results.csv - Output from mood_validation.py
+summary_results.csv - Output from summary_validation.py
 issueconv.csv - Regression data for issue convergence replication study
 
 == Specifications ==
