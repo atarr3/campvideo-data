@@ -28,7 +28,7 @@ The list of package dependences and corresponding version used to produce the re
 | ffmpeg    | 4.2.7   |
 | liblapack | Latest  |
 
-With the exception of CUDA and cuDNN, the following packages can be installed with a package manager, such as ``apt-get``. CUDA and cuDNN can be installed following the instructions for your platform [here](https://docs.nvidia.com/cuda/) and [here](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html), respectively.
+With the exception of CUDA and cuDNN, these packages can be installed with a package manager, such as ``apt-get``. CUDA and cuDNN can be installed following the instructions for your platform [here](https://docs.nvidia.com/cuda/) and [here](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html), respectively.
 
 #### R
 
@@ -74,13 +74,13 @@ devtools::install_github("quanteda/quanteda.sentiment")
 
 These packages are installed via
 
-```python
+```bash
 pip install <PACKAGE_NAME>
 ```
 
 The `campvideo` package must be installed via
 
-```python
+```bash
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
 ```
 
