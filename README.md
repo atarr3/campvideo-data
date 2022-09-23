@@ -9,7 +9,7 @@ The replication code requires the human-coded labels provided by WMP and YouTube
 - The list of YouTube videos used in this study is found in the [``data/auxiliary/metadata.csv``](data/auxiliary/metadata.csv) file under the ``uid`` column, which denotes the YouTube Video ID. These files should be obtained in .mp4 format and placed in the [``data/youtube``](data/youtube) folder and named according to the YouTube Video ID (e.g., ``Pzepu1vdv78.mp4``).
 
 ## Environment
-All code was tested under [Python 3.8](https://www.python.org/downloads/)) and [R 4.1.3](https://cran.r-project.org/bin/) on the following platforms:
+All code was tested under [Python 3.8](https://www.python.org/downloads/) and [R 4.1.3](https://cran.r-project.org/bin/) on the following platforms:
 - Windows 10
 - Windows 11
 - Ubuntu 20.04
@@ -82,7 +82,7 @@ Python packages are installed via
 pip install <PACKAGE_NAME>
 ````
 
-#### Post-install Setup
+### Post-install
 After downloading and installing all packages, download the project package ``campvideo`` via
 
 ```
