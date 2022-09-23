@@ -74,7 +74,7 @@ devtools::install_github("quanteda/quanteda.sentiment")
 
 These packages are installed via
 
-```
+```python
 pip install <PACKAGE_NAME>
 ```
 
