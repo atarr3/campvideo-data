@@ -98,8 +98,6 @@ python -m spacy download en_core_web_md
 ## Figure and Table Replication
 Full replication is achieved through the [``run.sh``](code/run.sh) script, which generates all intermediate files and creates all tables and figures in the [``results``](results) folder. This script also computes any statistics reported in the text of our paper, which can be found in the [``results/performance``](results/performance) folder. 
 
-Note that by default, all code in [``run.sh``](code/run.sh) is commented out. After acquiring and placing the WMP and YouTube data into the appropriate folders, uncomment any line in [``run.sh``](code/run.sh) containing a ``python`` or ``Rscript`` command. This file can now be run to replicate all results.
-
 The full list of figures and tables and associated replication code is given below.
 
 | Result        | Description                                                | Code                                                      |
