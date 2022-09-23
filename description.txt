@@ -55,7 +55,7 @@ mood_results.csv - Output from mood_validation.py
 summary_results.csv - Output from summary_validation.py
 issueconv.csv - Regression data for issue convergence replication study
 
-== Specifications ==
+== Run Specifications ==
 
 Code Ocean
 ----------
