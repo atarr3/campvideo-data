@@ -99,21 +99,21 @@ Full replication is achieved through the [``run.sh``](code/run.sh) script, which
 The full list of figures and tables and associated replication code is given below.
 
 | Result        | Description                                                | Code                                                      |
-| :------------ | :--------------------------------------------------------- | :-------------------------------------------------------- |
-| Figure 5      | MTurk results for issue mentions                           | [``figure5.R``](code/figure5.R)                           |
-| Figure 8      | MTurk results for ominous/tense mood classification        | [``figure8_S14-9_S14-10.R``](code/figure8_S14-9_S14-10.R) |
-| Figure S7.4   | Video summarization validation study results               | [``figureS7-4.py``](code/figureS7-4.py)                   |
-| Figure S13.8  | ROC plots for face recognition                             | [``figureS13-8.py``](code/figureS13-8.py)                 |
-| Figure S14.9  | MTurk results for uplifting mood classification            | [``figure8_S14-9_S14-10.R``](code/figure8_S14-9_S14-10.R) |
-| Figure S14.10 | MTurk results for sad/sorrowful mood classification        | [``figure8_S14-9_S14-10.R``](code/figure8_S14-9_S14-10.R) |
-| Table 1       | Matched video coverage table                               | [``table1.R``](code/table1.R)                             |
-| Table 2       | Confusion matrices for issue mentions                      | [``table2.py``](code/table2.py)                           |
-| Table 3       | Confusion matrices for opponent mentions                   | [``table3.py``](code/table3.py)                           |
-| Table 4       | Confusion matrices for face recognition                    | [``table4.py``](code/table4.py)                           |
-| Table 5       | Confusion matrices for mood classiification                | [``table5.py``](code/table5.py)                           |
-| Table 6       | Confusion matrices for ad negativity classification (NSVM) | [``table6.py``](code/table6.py)                           |
-| Table S1.1    | YouTube channel coverage table                             | [``tableS1-1.R``](code/tableS1-1.R)                       |
-| Table S14.5   | Confusion matrix for mood MTurk results                    | [``tableS14-5.py``](code/tableS14-5.py)                   |
-| Table S14.6   | Confusion matrices for ad negativity classification (All)  | [``tableS14-6.py``](code/tableS14-6.py)                   |
-| Table S14.7   | Confusion matrix for LSD results                           | [``tableS14-7.R``](code/tableS14-7.R)                     |
-| Table S14.8   | Regression coefficients for issue convergence study        | [``tableS14-8.R``](code/tableS14-8.R)                     |
+| :-------------------------------------------- | :--------------------------------------------------------- | :-------------------------------------------------------- |
+| [Figure 5](results/figs/figure5.pdf)          | MTurk results for issue mentions                           | [``figure5.R``](code/figure5.R)                           |
+| [Figure 8](results/figs/figure8.pdf)          | MTurk results for ominous/tense mood classification        | [``figure8_S14-9_S14-10.R``](code/figure8_S14-9_S14-10.R) |
+| [Figure S7.4](results/figs/figureS7-4.pdf)    | Video summarization validation study results               | [``figureS7-4.py``](code/figureS7-4.py)                   |
+| [Figure S13.8](results/figs/figure13-8.pdf)   | ROC plots for face recognition                             | [``figureS13-8.py``](code/figureS13-8.py)                 |
+| [Figure S14.9](results/figs/figure14-9.pdf)   | MTurk results for uplifting mood classification            | [``figure8_S14-9_S14-10.R``](code/figure8_S14-9_S14-10.R) |
+| [Figure S14.10](results/figs/figure14-10.pdf) | MTurk results for sad/sorrowful mood classification        | [``figure8_S14-9_S14-10.R``](code/figure8_S14-9_S14-10.R) |
+| [Table 1](results/tables/table1.txt)          | Matched video coverage table                               | [``table1.R``](code/table1.R)                             |
+| [Table 2](results/tables/table2.txt)          | Confusion matrices for issue mentions                      | [``table2.py``](code/table2.py)                           |
+| [Table 3](results/tables/table3.txt)          | Confusion matrices for opponent mentions                   | [``table3.py``](code/table3.py)                           |
+| [Table 4](results/tables/table4.txt)          | Confusion matrices for face recognition                    | [``table4.py``](code/table4.py)                           |
+| [Table 5](results/tables/table5.txt)          | Confusion matrices for mood classiification                | [``table5.py``](code/table5.py)                           |
+| [Table 6](results/tables/table6.txt)          | Confusion matrices for ad negativity classification (NSVM) | [``table6.py``](code/table6.py)                           |
+| [Table S1.1](results/tables/tableS1-1.txt)    | YouTube channel coverage table                             | [``tableS1-1.R``](code/tableS1-1.R)                       |
+| [Table S14.5](results/tables/tableS14-5.txt)  | Confusion matrix for mood MTurk results                    | [``tableS14-5.py``](code/tableS14-5.py)                   |
+| [Table S14.6](results/tables/tableS14-6.txt)  | Confusion matrices for ad negativity classification (All)  | [``tableS14-6.py``](code/tableS14-6.py)                   |
+| [Table S14.7](results/tables/tableS14-7.txt)  | Confusion matrix for LSD results                           | [``tableS14-7.R``](code/tableS14-7.R)                     |
+| [Table S14.8](results/tables/tableS14-8.txt)  | Regression coefficients for issue convergence study        | [``tableS14-8.R``](code/tableS14-8.R)                     |
