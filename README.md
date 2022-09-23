@@ -9,7 +9,7 @@ The replication code requires the human-coded labels provided by WMP and YouTube
 - The list of YouTube videos used in this study is found in the [``data/auxiliary/metadata.csv``](data/auxiliary/metadata.csv) file under the ``uid`` column, which denotes the YouTube Video ID. These files should be obtained in .mp4 format and placed in the [``data/youtube``](data/youtube) folder and named according to the YouTube Video ID (e.g., ``Pzepu1vdv78.mp4``).
 
 ## Environment
-All code was tested under Python 3.8 and R 4.1.3 on the following platforms:
+All code was tested under [Python 3.8](https://www.python.org/downloads/)) and [R 4.1.3](https://cran.r-project.org/bin/) on the following platforms:
 - Windows 10
 - Windows 11
 - Ubuntu 20.04
@@ -30,15 +30,16 @@ The list of package dependences and corresponding version used to produce the re
 | liblapack | Latest  |
 
 #### R
-| Package     | Version |
-| :---------- | :------ |
-| devtools    | 4.2.3   |
-| dplyr       | 1.0.9   |
-| lme4        | 1.1_29  |
-| quanteda    | 3.2.1   |
-| readstata13 | 0.10.0  |
-| stargazer   | 5.2.3   |
-| xtable      | 1.8_4   |
+| Package            | Version |
+| :------------------| :------ |
+| devtools           | 4.2.3   |
+| dplyr              | 1.0.9   |
+| lme4               | 1.1_29  |
+| quanteda           | 3.2.1   |
+| quanteda.sentiment | N/A     |
+| readstata13        | 0.10.0  |
+| stargazer          | 5.2.3   |
+| xtable             | 1.8_4   |
 
 #### Python
 | Package          | Version  |
@@ -54,6 +55,45 @@ The list of package dependences and corresponding version used to produce the re
 | scipy            | 1.8.1    |
 | seaborn          | 0.11.2   |
 | spacy            | 3.3.0    |
+
+### Package Installation
+
+#### General
+
+All packages except for CUDA and cuDNN can be installed with a package manager, such as ``apt-get``. Be sure to download the appropriate version. CUDA and cuDNN can be installed following the instructions for your platform [here](https://docs.nvidia.com/cuda/) and [here](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html).
+
+#### R
+Most packages can be installed from within the R environment via
+
+```r
+install.packages("<PACKAGE_NAME>")
+```
+
+``quanteda.sentiment`` is not available on CRAN and must be installed via
+
+```r
+devtools::install_github("quanteda/quanteda.sentiment")
+```
+
+#### Python
+Python packages are installed via
+
+```
+pip install <PACKAGE_NAME>
+````
+
+#### Post-install Setup
+After downloading and installing all packages, download the project package ``campvideo`` via
+
+```
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
+```
+
+Also download the spaCy text model via
+
+```
+python -m spacy download en_core_web_md
+```
 
 ## Figure and Table Replication
 Full replication is achieved through the [``run.sh``](code/run.sh) script, which generates all intermediate files and creates all tables and figures in the [``results``](results) folder. This script also computes any statistics reported in the text of our paper, which can be found in the [``results/performance``](results/performance) folder. 
