@@ -2,12 +2,12 @@ Favored Candidate
 -----------------
          Auto       
            No    Yes
-WMP No  6.65% 15.38%
-    Yes 3.91% 74.05%
+WMP No  6.91% 15.12%
+    Yes 4.04% 73.92%
 
 Opposing Candidate
 ------------------
           Auto       
             No    Yes
-WMP No  61.93%  2.74%
-    Yes  6.13% 29.20%
+WMP No  61.80%  2.87%
+    Yes  6.26% 29.07%

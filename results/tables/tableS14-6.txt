@@ -14,7 +14,7 @@ Music Only
 
           Auto       
             No    Yes
-WMP No  24.41% 16.35%
+WMP No  24.17% 16.59%
     Yes  9.00% 50.24%
 
 
@@ -23,7 +23,7 @@ Text + Music
 
           Auto       
             No    Yes
-WMP No  32.46%  8.29%
+WMP No  32.70%  8.06%
     Yes  8.53% 50.71%
 
 
@@ -43,8 +43,8 @@ Music Only
 
           Auto       
             No    Yes
-WMP No  18.72% 22.04%
-    Yes 10.66% 48.58%
+WMP No  19.67% 21.09%
+    Yes 10.90% 48.34%
 
 
 Text + Music
@@ -52,8 +52,8 @@ Text + Music
 
           Auto       
             No    Yes
-WMP No  16.82% 23.93%
-    Yes  7.58% 51.66%
+WMP No  16.59% 24.17%
+    Yes  7.82% 51.42%
 
 
 == Random Forest ==
@@ -72,8 +72,8 @@ Music Only
 
           Auto       
             No    Yes
-WMP No  21.33% 19.43%
-    Yes  6.64% 52.61%
+WMP No  20.85% 19.91%
+    Yes  5.69% 53.55%
 
 
 Text + Music
@@ -81,8 +81,8 @@ Text + Music
 
           Auto       
             No    Yes
-WMP No  22.75% 18.01%
-    Yes  4.74% 54.50%
+WMP No  22.04% 18.72%
+    Yes  4.03% 55.21%
 
 
 == Naive Bayes ==
@@ -101,7 +101,7 @@ Music Only
 
           Auto       
             No    Yes
-WMP No  32.23%  8.53%
+WMP No  31.99%  8.77%
     Yes 31.04% 28.20%
 
 

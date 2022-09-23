@@ -3,9 +3,9 @@ Issue Mention Results
 
 Video-Issue Pairs: 204844
 
-Increase in positive samples w/ images: 663 (0.32%)
-Increase in false positive samples w/ images: 408 (62%)
-Increase in true positive samples w/ images: 255 (38%)
+Increase in positive samples w/ images: 661 (0.32%)
+Increase in false positive samples w/ images: 407 (62%)
+Increase in true positive samples w/ images: 254 (38%)
 
 FPR (Text): 0.72%
 FNR (Text): 24%

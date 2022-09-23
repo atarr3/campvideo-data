@@ -7,3 +7,6 @@
 # files created during data preprocessing
 data/wmp/wmp_final.csv
 data/matches/matches_processed.csv
+code/figure1.py
+results/figs/figure1a.pdf
+results/figs/figure1b.pdf

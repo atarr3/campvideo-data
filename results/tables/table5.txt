@@ -2,26 +2,26 @@ Music Mood Results (Ominous/Tense)
 ----------------------------------
           Auto       
             No    Yes
-WMP No  56.67% 11.56%
+WMP No  56.00% 12.22%
     Yes 14.22% 17.56%
 
 Music Mood Results (Uplifting)
 ------------------------------
           Auto       
             No    Yes
-WMP No  12.44% 16.67%
+WMP No  12.22% 16.89%
     Yes  6.67% 64.22%
 
 Music Mood Results (Sad/Sorrowful)
 ----------------------------------
           Auto       
             No    Yes
-WMP No  65.56% 19.78%
+WMP No  65.33% 20.00%
     Yes  5.78%  8.89%
 
 Music Mood Results (Combined)
 -----------------------------
           Auto       
             No    Yes
-WMP No  40.44% 14.22%
-    Yes 12.22% 33.11%
+WMP No  40.00% 14.67%
+    Yes 12.67% 32.67%
