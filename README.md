@@ -103,9 +103,9 @@ The full list of figures and tables and associated replication code is given bel
 | [Figure 5](results/figs/figure5.pdf)          | MTurk results for issue mentions                           | [``figure5.R``](code/figure5.R)                           |
 | [Figure 8](results/figs/figure8.pdf)          | MTurk results for ominous/tense mood classification        | [``figure8_S14-9_S14-10.R``](code/figure8_S14-9_S14-10.R) |
 | [Figure S7.4](results/figs/figureS7-4.pdf)    | Video summarization validation study results               | [``figureS7-4.py``](code/figureS7-4.py)                   |
-| [Figure S13.8](results/figs/figure13-8.pdf)   | ROC plots for face recognition                             | [``figureS13-8.py``](code/figureS13-8.py)                 |
-| [Figure S14.9](results/figs/figure14-9.pdf)   | MTurk results for uplifting mood classification            | [``figure8_S14-9_S14-10.R``](code/figure8_S14-9_S14-10.R) |
-| [Figure S14.10](results/figs/figure14-10.pdf) | MTurk results for sad/sorrowful mood classification        | [``figure8_S14-9_S14-10.R``](code/figure8_S14-9_S14-10.R) |
+| [Figure S13.8](results/figs/figureS13-8.pdf)   | ROC plots for face recognition                             | [``figureS13-8.py``](code/figureS13-8.py)                 |
+| [Figure S14.9](results/figs/figureS14-9.pdf)   | MTurk results for uplifting mood classification            | [``figure8_S14-9_S14-10.R``](code/figure8_S14-9_S14-10.R) |
+| [Figure S14.10](results/figs/figureS14-10.pdf) | MTurk results for sad/sorrowful mood classification        | [``figure8_S14-9_S14-10.R``](code/figure8_S14-9_S14-10.R) |
 | [Table 1](results/tables/table1.txt)          | Matched video coverage table                               | [``table1.R``](code/table1.R)                             |
 | [Table 2](results/tables/table2.txt)          | Confusion matrices for issue mentions                      | [``table2.py``](code/table2.py)                           |
 | [Table 3](results/tables/table3.txt)          | Confusion matrices for opponent mentions                   | [``table3.py``](code/table3.py)                           |
