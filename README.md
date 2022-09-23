@@ -60,7 +60,7 @@ The list of package dependences and corresponding version used to produce the re
 
 #### General
 
-All packages except for CUDA and cuDNN can be installed with a package manager, such as ``apt-get``. Be sure to download the appropriate version. CUDA and cuDNN can be installed following the instructions for your platform [here](https://docs.nvidia.com/cuda/) and [here](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html).
+All packages except for CUDA and cuDNN can be installed with a package manager, such as ``apt-get``. Be sure to download the appropriate version. CUDA and cuDNN can be installed following the instructions for your platform [here](https://docs.nvidia.com/cuda/) and [here](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html), respectively.
 
 #### R
 Most packages can be installed from within the R environment via
