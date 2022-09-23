@@ -1,13 +1,6 @@
 #!/bin/bash
 set -ex
 
-# create results subfolders
-mkdir -p ../results/tables
-
-mkdir -p ../results/figs
-
-mkdir -p ../results/performance
-
 # preprocess WMP data
 # Rscript preprocess_CMAG.R
 
