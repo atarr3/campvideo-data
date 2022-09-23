@@ -80,14 +80,14 @@ pip install <PACKAGE_NAME>
 
 The `campvideo` package must be installed via
 
-```
+```python
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
 ```
 
 ### Post-install
 After downloading and installing all packages, download the spaCy text model via
 
-```
+```bash
 python -m spacy download en_core_web_md
 ```
 
