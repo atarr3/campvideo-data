@@ -94,7 +94,7 @@ python -m spacy download en_core_web_md
 ```
 
 ## Figure and Table Replication
-Full replication is achieved through the [``run.sh``](code/run.sh) script, which generates all intermediate files and creates all tables and figures in the [``results``](results) folder. This script also computes any statistics reported in the text of our paper, which can be found in the [``results/performance``](results/performance) folder. 
+Full replication is achieved through the [``run.sh``](code/run.sh) script, which generates all intermediate files and creates all tables and figures in the [``results``](results) folder. This script also computes any statistics reported in the text of our paper, which can be found in the [``results/performance``](results/performance) folder. Note that all code assumes [``code``](code) is the current working directory.
 
 The full list of figures and tables and associated replication code is given below.
 
