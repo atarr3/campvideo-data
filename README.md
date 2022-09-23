@@ -46,7 +46,7 @@ With the exception of CUDA and cuDNN, these packages can be installed with a pac
 Most of these packages can be installed from within the R environment via
 
 ```r
-install.packages("<PACKAGE_NAME>")
+install.packages("PACKAGE_NAME")
 ```
 
 ``quanteda.sentiment`` is not available on CRAN and must be installed via
@@ -75,7 +75,7 @@ devtools::install_github("quanteda/quanteda.sentiment")
 These packages are installed via
 
 ```bash
-pip install <PACKAGE_NAME>
+pip install PACKAGE_NAME
 ```
 
 The `campvideo` package must be installed via
