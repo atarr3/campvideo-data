@@ -18,6 +18,8 @@ Note that hardware and OS differences may lead to small discrepancies from some 
 The list of package dependences and corresponding version used to produce the results are given below.
 
 #### General
+With the exception of CUDA and cuDNN, the following packages can be installed with a package manager, such as ``apt-get``. CUDA and cuDNN can be installed following the instructions for your platform [here](https://docs.nvidia.com/cuda/) and [here](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html), respectively.
+
 | Package   | Version |
 | :-------- | :------ |
 | libblas   | Latest  |
@@ -28,6 +30,18 @@ The list of package dependences and corresponding version used to produce the re
 | liblapack | Latest  |
 
 #### R
+Most of these packages can be installed from within the R environment via
+
+```r
+install.packages("<PACKAGE_NAME>")
+```
+
+``quanteda.sentiment`` is not available on CRAN and must be installed via
+
+```r
+devtools::install_github("quanteda/quanteda.sentiment")
+```
+
 | Package            | Version |
 | :------------------| :------ |
 | devtools           | 4.2.3   |
@@ -40,8 +54,21 @@ The list of package dependences and corresponding version used to produce the re
 | xtable             | 1.8_4   |
 
 #### Python
+These packages are installed via
+
+```
+pip install <PACKAGE_NAME>
+```
+
+The `campvideo` package must be installed via
+
+```
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
+```
+
 | Package          | Version  |
 | :--------------- | :------- |
+| campvideo        | 1.2.3    |
 | dlib             | 19.24.0  |
 | face_recognition | 1.3.0    |
 | ffmpeg-python    | 0.2.0    |
@@ -54,25 +81,6 @@ The list of package dependences and corresponding version used to produce the re
 | seaborn          | 0.11.2   |
 | spacy            | 3.3.0    |
 
-### Package Installation
-
-#### General
-
-All packages except for CUDA and cuDNN can be installed with a package manager, such as ``apt-get``. Be sure to download the appropriate version. CUDA and cuDNN can be installed following the instructions for your platform [here](https://docs.nvidia.com/cuda/) and [here](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html), respectively.
-
-#### R
-Most packages can be installed from within the R environment via
-
-```r
-install.packages("<PACKAGE_NAME>")
-```
-
-``quanteda.sentiment`` is not available on CRAN and must be installed via
-
-```r
-devtools::install_github("quanteda/quanteda.sentiment")
-```
-
 #### Python
 Python packages are installed via
 
@@ -81,13 +89,7 @@ pip install <PACKAGE_NAME>
 ````
 
 ### Post-install
-After downloading and installing all packages, download the project package ``campvideo`` via
-
-```
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple campvideo
-```
-
-Also download the spaCy text model via
+After downloading and installing all packages, download the spaCy text model via
 
 ```
 python -m spacy download en_core_web_md
