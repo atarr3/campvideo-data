@@ -1,8 +1,6 @@
 # campvideo-data
 Replication data for "Automated Coding of Political Campaign Advertisement Videos: An Empirical Validation Study" by Alexander Tarr, June Hwang, and Kosuke Imai.
 
-The latest version of this repo is maintained on [GitHub](https://github.com/atarr3/campvideo-data/tree/code-ocean).
-
 ## Data
 The replication code requires the human-coded labels provided by WMP and YouTube videos, both of which cannot be shared publicly. 
 - The WMP data can be purchased [here](https://mediaproject.wesleyan.edu/dataaccess/). Our study used the 2012 Presidential (Version 1.2), 2012 Non-Presidential (Version 1.1), and 2014 data (Version 1.0). The data is distributed across 7 Stata files, one for each year and race type (House, Senate, Governor, President). These files should be placed in the [``data/wmp``](data/wmp) folder.
